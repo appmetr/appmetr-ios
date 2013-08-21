@@ -1,0 +1,28 @@
+# old school
+.svn
+
+# osx noise
+.DS_Store
+profile
+
+# win noise
+Thumbs.db
+
+#android noise
+.metadata
+gen
+out
+bin
+build
+R.java
+local.properties
+ant.properties
+proguard-project.txt
+
+#IntelliJ IDEA noise
+.idea
+R.java.d
+*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
