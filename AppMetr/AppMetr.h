@@ -16,6 +16,11 @@
 + (AppMetr *)sharedInstance;
 
 /**
+ * Setting up the application token.
+ */
++ (void)setupWithToken:(NSString *)token;
+
+/**
  * Setting up the application token and set the current thread for processing remote command.
  */
 + (void)setupWithToken:(NSString *)token delegate:(id)delegate;
