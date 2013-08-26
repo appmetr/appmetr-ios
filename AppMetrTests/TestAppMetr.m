@@ -4,7 +4,7 @@
  */
 
 #import "TestAppMetr.h"
-#import "../ios/AppMetr.h"
+#import "../AppMetr/AppMetr.h"
 #import "AppMetr+DirtyHack.h"
 #import "Base64.h"
 #import "CJSONDeserializer.h"

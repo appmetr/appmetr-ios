@@ -115,7 +115,6 @@ AppMetr *gSharedAppMetrMobile = nil;
     [[AppMetr sharedInstance] flushAndUploadAllEvents];
 }
 
-
 + (NSString *)userIdentifier {
     return [[AppMetr sharedInstance] userIdentifier];
 }
