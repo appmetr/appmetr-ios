@@ -984,11 +984,9 @@ extern AppMetr *gSharedAppMetrMobile;
 - (void)processRemoteCommands {
     id <AppMetrDelegate> delegate = [self.delegate retain];
 
-    SEL deprecatedSelector = @selector(executeCommand:withProperties:);
     SEL executeCommandSelector = @selector(executeCommand:);
-    bool hasDeprecatedSelector = [delegate respondsToSelector:deprecatedSelector];
     bool hasSelector = [delegate respondsToSelector:executeCommandSelector];
-    if (delegate && (hasDeprecatedSelector || hasSelector)) {
+    if (delegate && hasSelector) {
         NSDate *now = [NSDate date];
         RemoteCommand *command;
         while ((command = [self nextCommand])) {
@@ -1005,11 +1003,6 @@ extern AppMetr *gSharedAppMetrMobile;
                     NSLog(@"Processing command id: %@", command.uniqueIdentifier);
                     if (hasSelector) {
                         [delegate performSelector:executeCommandSelector
-                                       withObject:command.properties];
-                    }
-                    else {
-                        [delegate performSelector:deprecatedSelector
-                                       withObject:command.uniqueIdentifier
                                        withObject:command.properties];
                     }
 

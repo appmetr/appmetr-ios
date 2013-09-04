@@ -10,15 +10,9 @@
  */
 @protocol AppMetrDelegate <NSObject>
 @optional
-/**
- * Executing a remote command from server
- * @deprecated in v1.3, use -(void)executeCommand: instead
- */
-- (void)executeCommand:(NSString *)commandId withProperties:(NSDictionary *)properties DEPRECATED_ATTRIBUTE;
 
 /**
  * Executing a remote command from server
- * @since v1.3
  */
 - (void)executeCommand:(NSDictionary *)command;
 @end
