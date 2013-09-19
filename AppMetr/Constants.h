@@ -19,6 +19,8 @@ extern NSTimeInterval const kDefaultUploadDataDelay;
 extern NSTimeInterval const kPullRemoteCommandsDelay;
 /** The delay in seconds, used for track app method when app comes from background mode. */
 extern NSTimeInterval const kTrackApplicationDelay;
+/** The url string of AppMetr api. */
+extern NSString *const kAppMetrDefaultUrl;
 /** The version string of AppMetr library. */
 extern NSString *const kAppMetrVersionString;
 

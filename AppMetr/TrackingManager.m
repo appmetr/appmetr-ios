@@ -205,8 +205,12 @@ extern AppMetr *gSharedAppMetrMobile;
 
     assert(([mVersion length] != 0) && "CFBundleShortVersionString or CFBundleVersion should be presented in Info.plist");
 
-    mServerAddress = [info objectForKey:@"appmetrUrl"];
-    assert(([mServerAddress length] != 0) && "appmetrUrl should be presented in Info.plist");
+
+    mServerAddress = kAppMetrDefaultUrl;
+    if ([info objectForKey:@"appmetrUrl"] != nil) {
+        mServerAddress = [info objectForKey:@"appmetrUrl"];
+    }
+    assert(([mServerAddress length] != 0) && "appmetrUrl should be not empty");
 
     mTrackInstallByApp = YES;
     if ([info objectForKey:@"trackInstallByApp"] != nil) {

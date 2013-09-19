@@ -12,7 +12,8 @@ NSTimeInterval const kPullRemoteCommandsDelay = 70.0;            // 70seconds
 
 NSTimeInterval const kTrackApplicationDelay = 15.0 * 60.0;        // 15(minutes) * 60(seconds)
 
-NSString *const kAppMetrVersionString = @"1.6";
+NSString *const kAppMetrDefaultUrl = @"http://appmetr.com/api";
+NSString *const kAppMetrVersionString = @"1.6.1";
 
 // Generic constants
 
