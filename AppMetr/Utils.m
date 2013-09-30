@@ -100,7 +100,7 @@ NSString *const kMethodGetCommands = @"server.getCommands";
                           userIdentifier:(NSString *)userIdentifier {
     UIDevice *currentDevice = [UIDevice currentDevice];
     NSString *requestParameters;
-    requestParameters = [NSString stringWithFormat:@"?timestamp=%llu&method=%@&token=%@&userId=%@&mobMac=%@"
+    requestParameters = [NSString stringWithFormat:@"?timestamp=%llu&method=%@&token=%@&userId=%@"
                                                            "&mobOpenUDID=%@&mobDeviceType=%@&mobOSVer=%@&mobLibVer=%@",
                                                    [Utils timestamp], method,
                                                    [token stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
@@ -108,6 +108,13 @@ NSString *const kMethodGetCommands = @"server.getCommands";
                                                    [Utils stringWithDeviceMACAddress],
                                                    [PAM_OpenUDID value], [UIDeviceUtil hardwareString],
                                                    [currentDevice systemVersion], kAppMetrVersionString];
+
+    //ntrf: only use MAC-address if it's available and valid
+    {
+        NSString *value = [Utils stringWithDeviceMACAddress];
+        if (value != NULL)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobMac=%@", value];
+    }
 
 #if ENABLDE_DEVICE_UNIQUE_IDENTIFIER
 	// add device uniqueIdentifier
@@ -127,6 +134,9 @@ NSString *const kMethodGetCommands = @"server.getCommands";
     if (classASIdentifierManager != nil) {
         NSString *advertisingIdentifier = [[[classASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvId=%@", advertisingIdentifier];
+
+        BOOL advertisingTrackingEnabled = [[classASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
+        requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvIdEnabled=%@", advertisingTrackingEnabled == YES ? @"true" : @"false"];
     }
 
     NSString *fullAddress = [[address stringByAppendingString:requestParameters]
@@ -316,6 +326,13 @@ NSString *const kMethodGetCommands = @"server.getCommands";
     ifm = (struct if_msghdr *) buf;
     sdl = (struct sockaddr_dl *) (ifm + 1);
     ptr = (unsigned char *) LLADDR(sdl);
+
+    if ((*ptr & 0x02) == 0x02) {    //ntrf: local MAC-address - doesn't globaly identify user
+        printf("Device uses non-uniq MAC address\n");
+        free(buf);
+        return NULL;
+    }
+
     NSString *ret = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X",
                                                *ptr, *(ptr + 1), *(ptr + 2), *(ptr + 3), *(ptr + 4), *(ptr + 5)];
     free(buf);
