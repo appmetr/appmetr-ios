@@ -6,7 +6,7 @@
 #import "TestAppMetr.h"
 #import "../AppMetr/AppMetr.h"
 #import "AppMetr+DirtyHack.h"
-#import "Base64.h"
+#import "AMBase64Util.h"
 #import "CJSONDeserializer.h"
 #import "RemoteCommandPacket.h"
 
@@ -305,7 +305,7 @@
 
     NSString *encodeBatchData = nil;
     STAssertNoThrow(encodeBatchData = [testLibrary dirtyCreateBatchData], @"Failed to create batch data");
-    NSData *decodedData = [Base64 decode:encodeBatchData];
+    NSData *decodedData = [AMBase64Util decode:encodeBatchData];
 
     NSError *error = nil;
     NSDictionary *bathes = [[CJSONDeserializer deserializer] deserializeAsDictionary:decodedData
@@ -349,7 +349,7 @@
     NSString *content = [NSString stringWithContentsOfFile:batchFile encoding:NSUTF8StringEncoding error:&error];
     STAssertNil(error, @"Error while reading batch file: %@", [error localizedDescription]);
 
-    NSData *decodedData = [Base64 decode:content];
+    NSData *decodedData = [AMBase64Util decode:content];
 
     error = nil;
     NSDictionary *batches = [[CJSONDeserializer deserializer] deserializeAsDictionary:decodedData
@@ -447,7 +447,7 @@
 
 - (void)testUrlSafeBase64 {
     NSData *data = [[NSString stringWithFormat:@"%s", BASE_TEST_STRING] dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *res = [Base64 encode:data];
+    NSString *res = [AMBase64Util encode:data];
 
     STAssertTrue([res isEqualToString:BASE_TEST_RESULT], @"Base64 not URL safe");
 }

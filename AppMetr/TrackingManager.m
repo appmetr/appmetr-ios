@@ -7,7 +7,7 @@
 #import "AppMetr.h"
 
 #import "CJSONSerializer.h"
-#import "Base64.h"
+#import "AMBase64Util.h"
 #import "Constants.h"
 #import "Utils.h"
 #import "SessionData.h"
@@ -819,7 +819,7 @@ extern AppMetr *gSharedAppMetrMobile;
         [backTrace appendFormat:@"%@\n", stackItem];
     }
 
-    NSString *decodedData = [Base64 encode:[backTrace dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString *decodedData = [AMBase64Util encode:[backTrace dataUsingEncoding:NSUTF8StringEncoding]];
     [properties setObject:decodedData forKey:@"backtrace"];
 
     [self trackCommand:commandID

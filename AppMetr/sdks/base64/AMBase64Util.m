@@ -1,22 +1,22 @@
 //
-//  Base64.m
+//  AMBase64Util.m
 //  CryptTest
 //
 //  Created by Kiichi Takeuchi on 4/20/10.
 //  Copyright 2010 ObjectGraph LLC. All rights reserved.
 //
 
-#import "Base64.h"
+#import "AMBase64Util.h"
 
 
-@implementation Base64
+@implementation AMBase64Util
 #define ArrayLength(x) (sizeof(x)/sizeof(*(x)))
 
 static char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 static char decodingTable[128];
 
 + (void)initialize {
-    if (self == [Base64 class]) {
+    if (self == [AMBase64Util class]) {
         memset(decodingTable, 0, ArrayLength(decodingTable));
         for (NSInteger i = 0; i < ArrayLength(encodingTable); i++) {
             decodingTable[encodingTable[i]] = i;

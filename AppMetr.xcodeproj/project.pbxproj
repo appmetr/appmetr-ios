@@ -11,7 +11,7 @@
 		1A344098A4D4AE249226F079 /* TestBatchFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344D59E263FF311DD26318 /* TestBatchFile.m */; };
 		1A344188827804464D268380 /* BatchFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34487A91DA220D350D0B20 /* BatchFile.m */; };
 		1A3441A2B906959229C6E239 /* PAM_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3444E95A8305D83D02AB77 /* PAM_OpenUDID.m */; };
-		1A3441B78765A597500C6ACC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34487F2343611E030B9256 /* Base64.m */; };
+		1A3441B78765A597500C6ACC /* AMBase64Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34487F2343611E030B9256 /* AMBase64Util.m */; };
 		1A3442381F6E5E6B6E87346C /* TestRemoteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34454C5D106271B22E8086 /* TestRemoteCommand.m */; };
 		1A344369931888C125FD3FCF /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344B5FDD3B279CFBD92116 /* Constants.m */; };
 		1A34447679753FB59CB9CC5E /* UIDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344FD5346D3EC8766946B8 /* UIDeviceUtil.m */; };
@@ -120,7 +120,7 @@
 		1A344642E4FFF12011F0076E /* AppMetr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetr.m; sourceTree = "<group>"; };
 		1A34464512439892C64E7040 /* JSONException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONException.h; sourceTree = "<group>"; };
 		1A3446842AE54DEC17560D3B /* TestAppMetr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAppMetr.m; sourceTree = "<group>"; };
-		1A34469A5735EACD48B0BFC9 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		1A34469A5735EACD48B0BFC9 /* AMBase64Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBase64Util.h; sourceTree = "<group>"; };
 		1A34471D2B8F5A1D7BA8E037 /* TestBatchFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBatchFile.h; sourceTree = "<group>"; };
 		1A344740AADF68CF00EB0D42 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1A344748340409A52A6D6AFD /* UIDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceUtil.h; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 		1A344875FD4952E3B1816D10 /* RemoteCommandPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommandPacket.h; sourceTree = "<group>"; };
 		1A34487A91DA220D350D0B20 /* BatchFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchFile.m; sourceTree = "<group>"; };
 		1A34487BFED85FE12E24AD6F /* TestAppMetr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAppMetr.h; sourceTree = "<group>"; };
-		1A34487F2343611E030B9256 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		1A34487F2343611E030B9256 /* AMBase64Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBase64Util.m; sourceTree = "<group>"; };
 		1A3448B30B0077A04AC49463 /* CJSONDeserializer_BlocksExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer_BlocksExtensions.h; sourceTree = "<group>"; };
 		1A3448BAEECA184AEDFF7D0E /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		1A34492D5E1DF13BC2AC7CDD /* TestSessionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSessionData.m; sourceTree = "<group>"; };
@@ -255,8 +255,8 @@
 		1A344238E208ED40D5C9765E /* base64 */ = {
 			isa = PBXGroup;
 			children = (
-				1A34469A5735EACD48B0BFC9 /* Base64.h */,
-				1A34487F2343611E030B9256 /* Base64.m */,
+				1A34469A5735EACD48B0BFC9 /* AMBase64Util.h */,
+				1A34487F2343611E030B9256 /* AMBase64Util.m */,
 			);
 			path = base64;
 			sourceTree = "<group>";
@@ -626,7 +626,7 @@
 				1A3449984CC846BC0A876B7E /* TrackingManager.m in Sources */,
 				1A34447679753FB59CB9CC5E /* UIDeviceUtil.m in Sources */,
 				1A344F59324A1EFEAE592AD9 /* Utils.m in Sources */,
-				1A3441B78765A597500C6ACC /* Base64.m in Sources */,
+				1A3441B78765A597500C6ACC /* AMBase64Util.m in Sources */,
 				1A3441A2B906959229C6E239 /* PAM_OpenUDID.m in Sources */,
 				1A3444770B8DBAFEC1BCB6C3 /* CJSONScanner.m in Sources */,
 				1A344A16B82C4A8E547E2C83 /* CJSONSerializer.m in Sources */,

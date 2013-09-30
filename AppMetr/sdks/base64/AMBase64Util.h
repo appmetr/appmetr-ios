@@ -1,5 +1,5 @@
 //
-//  Base64.h
+//  AMBase64Util.h
 //  CryptTest
 //
 //  Created by Kiichi Takeuchi on 4/20/10.
@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Base64 : NSObject {
+@interface AMBase64Util : NSObject {
 
 }
 
