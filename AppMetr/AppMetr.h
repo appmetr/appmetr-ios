@@ -118,6 +118,11 @@
 + (void)trackExperimentEnd:(NSString *)experiment;
 
 /**
+* Identify user
+*/
++ (void)identify:(NSString *)userId;
+
+/**
  * Pull remote commands
  */
 + (void)pullCommands;

@@ -107,6 +107,10 @@ AppMetr *gSharedAppMetrMobile = nil;
     [[AppMetr sharedInstance] trackExperimentEnd:experiment];
 }
 
++ (void)identify:(NSString *)userId {
+    [[AppMetr sharedInstance] identify:userId];
+}
+
 + (void)pullCommands {
     [[AppMetr sharedInstance] pullCommands];
 }
