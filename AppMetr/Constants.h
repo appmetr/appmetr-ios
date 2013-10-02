@@ -40,6 +40,7 @@ extern NSString *const kActionTrackCommand;
 extern NSString *const kActionTrackCommandBatch;
 extern NSString *const kActionTrackOptions;
 extern NSString *const kActionTrackExperiment;
+extern NSString *const kActionIdentify;
 
 extern NSString *const kActionCountryKeyName;
 extern NSString *const kPreferencesBatchNumberKeyName;

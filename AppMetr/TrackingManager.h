@@ -160,6 +160,11 @@
 - (void)trackExperimentEnd:(NSString *)experiment;
 
 /**
+* Identify user
+*/
+- (void)identify:(NSString *)userId;
+
+/**
  * Called when application goes into background mode
  */
 - (void)applicationDidEnterBackground;

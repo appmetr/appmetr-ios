@@ -13,7 +13,7 @@ NSTimeInterval const kPullRemoteCommandsDelay = 70.0;            // 70seconds
 NSTimeInterval const kTrackApplicationDelay = 15.0 * 60.0;        // 15(minutes) * 60(seconds)
 
 NSString *const kAppMetrDefaultUrl = @"http://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.6.2";
+NSString *const kAppMetrVersionString = @"1.6.3";
 
 // Generic constants
 
@@ -32,6 +32,7 @@ NSString *const kActionTrackCommand = @"trackCommand";
 NSString *const kActionTrackCommandBatch = @"trackCommandBatch";
 NSString *const kActionTrackOptions = @"trackOptions";
 NSString *const kActionTrackExperiment = @"trackExperiment";
+NSString *const kActionIdentify = @"identify";
 
 NSString *const kActionCountryKeyName = @"$country";
 NSString *const kPreferencesBatchNumberKeyName = @"AppMetr-BatchID";

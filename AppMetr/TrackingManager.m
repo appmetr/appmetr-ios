@@ -789,6 +789,17 @@ extern AppMetr *gSharedAppMetrMobile;
     [self track:action];
 }
 
+- (void)identify:(NSString *)userId {
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionIdentify
+               forKey:kActionKeyName];
+    [action setObject:userId
+               forKey:@"userId"];
+
+    [self track:action];
+}
+
+
 - (void)trackCommand:(NSString *)commandID status:(NSString *)status properties:(NSDictionary *)properties; {
     NSMutableDictionary *action = (properties ? properties : [NSMutableDictionary dictionary]);
     [action setObject:kActionTrackCommand
