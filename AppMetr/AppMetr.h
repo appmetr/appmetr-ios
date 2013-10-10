@@ -43,6 +43,11 @@
 
 /**
  * Updating information about the user
+ */
++ (void)attachProperties;
+
+/**
+ * Updating information about the user
  * @param properties Information about the user
  */
 + (void)attachProperties:(NSDictionary *)properties;

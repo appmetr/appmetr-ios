@@ -47,6 +47,10 @@ AppMetr *gSharedAppMetrMobile = nil;
 
 #pragma mark - Class (lazy)methods
 
++ (void)attachProperties {
+    [[AppMetr sharedInstance] attachProperties:nil];
+}
+
 + (void)attachProperties:(NSDictionary *)properties {
     [[AppMetr sharedInstance] attachProperties:properties];
 }
