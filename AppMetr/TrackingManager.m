@@ -505,6 +505,10 @@ extern AppMetr *gSharedAppMetrMobile;
     [updatedTrackProperties release];
 }
 
+- (void)attachProperties {
+    [AppMetr attachProperties:nil];
+}
+
 - (void)attachProperties:(NSDictionary *)properties {
     NSMutableDictionary *userProperties;
     if (properties != nil)
