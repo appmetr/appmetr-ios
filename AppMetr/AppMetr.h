@@ -156,4 +156,7 @@
 /** Returns an unique identifier of current installation instance */
 + (NSString *)instanceIdentifier;
 
+/** Return NSDictionary object which was converted from JSON string. Used for external calls */
++ (NSDictionary *)stringToDictionary:(NSString *)json;
+
 @end

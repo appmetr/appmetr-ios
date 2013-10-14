@@ -100,15 +100,27 @@ NSString *const kMethodGetCommands = @"server.getCommands";
                           userIdentifier:(NSString *)userIdentifier {
     UIDevice *currentDevice = [UIDevice currentDevice];
     NSString *requestParameters;
-    requestParameters = [NSString stringWithFormat:@"?timestamp=%llu&method=%@&token=%@&userId=%@"
-                                                           "&mobOpenUDID=%@&mobDeviceType=%@&mobOSVer=%@&mobLibVer=%@",
+    requestParameters = [NSString stringWithFormat:@"?timestamp=%llu&method=%@&token=%@&userId=%@&mobLibVer=%@",
                                                    [Utils timestamp], method,
                                                    [token stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                                                    [userIdentifier stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                                                   [Utils stringWithDeviceMACAddress],
-                                                   [PAM_OpenUDID value], [UIDeviceUtil hardwareString],
-                                                   [currentDevice systemVersion], kAppMetrVersionString];
+                                                   kAppMetrVersionString];
 
+    {
+        NSString *value = [PAM_OpenUDID value];
+        if (value != NULL)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobOpenUDID=%@", value];
+    }
+    {
+        NSString *value = [UIDeviceUtil hardwareString];
+        if (value != NULL)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", value];
+    }
+    {
+        NSString *value = [currentDevice systemVersion];
+        if (value != NULL)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobOSVer=%@", value];
+    }
     //ntrf: only use MAC-address if it's available and valid
     {
         NSString *value = [Utils stringWithDeviceMACAddress];

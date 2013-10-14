@@ -4,6 +4,7 @@
  */
 
 #import "AppMetr.h"
+#import "CJSONDeserializer.h"
 
 // Global variables
 AppMetr *gSharedAppMetrMobile = nil;
@@ -141,6 +142,19 @@ AppMetr *gSharedAppMetrMobile = nil;
 
 + (NSString *)instanceIdentifier {
     return [[AppMetr sharedInstance] instanceIdentifier];
+}
+
++ (NSDictionary *)stringToDictionary:(NSString *)json {
+    NSError *deserializeError = nil;
+    NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
+
+    if (deserializeError) {
+        NSLog(@"JSON deserializer error: %@", deserializeError.description);
+        [NSException raise:NSGenericException
+                    format:@"%@", deserializeError.description];
+    }
+
+    return result;
 }
 
 @end

@@ -372,7 +372,7 @@ extern AppMetr *gSharedAppMetrMobile;
     NSData *data = [[CJSONSerializer serializer] serializeDictionary:batches
                                                                error:&serializeError];
     if (serializeError) {
-        NSLog(@"JSON srializer erro: %@", serializeError.description);
+        NSLog(@"JSON serializer error: %@", serializeError.description);
         [NSException raise:NSGenericException
                     format:@"%@", serializeError.description];
     }
