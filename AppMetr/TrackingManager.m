@@ -216,12 +216,6 @@ extern AppMetr *gSharedAppMetrMobile;
     if ([info objectForKey:@"trackInstallByApp"] != nil) {
         mTrackInstallByApp = [[info objectForKey:@"trackInstallByApp"] boolValue];
     }
-
-    mTrackSessionByApp = YES;
-    if ([info objectForKey:@"trackSessionByApp"] != nil) {
-        mTrackSessionByApp = [[info objectForKey:@"trackSessionByApp"] boolValue];
-    }
-
 }
 
 #pragma mark - Setting up
@@ -668,47 +662,18 @@ extern AppMetr *gSharedAppMetrMobile;
 
 - (void)trackAppStart {
     // Skip track session and install if it doesn't set in plist file or set to true
-    if (mTrackInstallByApp && mTrackSessionByApp) {
+    if (mTrackInstallByApp) {
         return;
     }
 
-    // track app every time when app starts, so initially static flag must be TRUE.
-    static BOOL trackApp = YES;
-
-    if (!trackApp) {
-        NSTimeInterval elepsedTime = -1.0;
-        @synchronized (mEnterBackgroundDate) {
-            elepsedTime *= [mEnterBackgroundDate timeIntervalSinceNow];
-        }
-        if (elepsedTime >= kTrackApplicationDelay) {
-            trackApp = YES;
-        }
+    NSUInteger batchIndex = 0;
+    @synchronized (mSessionData) {
+        batchIndex = mSessionData.batchIndex;
     }
 
-    if (trackApp) {
-        NSUInteger batchIndex = 0;
-        @synchronized (mSessionData) {
-            batchIndex = mSessionData.batchIndex;
-        }
-
-        // Is first time running?
-        if (batchIndex) {
-            if (!mTrackSessionByApp) {
-                // add track session
-                [self trackSession];
-                [self flushAndUploadAllEventsImpl];
-            }
-        }
-        else {
-            if (!mTrackInstallByApp) {
-                // track app installation
-                [self trackInstallBroadcast];
-            }
-        }
-
+    if (batchIndex) {
+        [self trackInstallBroadcast];
     }
-
-    trackApp = NO;
 }
 
 - (void)trackInstallURL:(NSURL *)url {

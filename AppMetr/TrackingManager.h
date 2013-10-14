@@ -39,7 +39,6 @@
     NSString *mUserID;
     NSString *mVersion;
     BOOL mTrackInstallByApp;
-    BOOL mTrackSessionByApp;
 
     NSDate *mEnterBackgroundDate;
 
