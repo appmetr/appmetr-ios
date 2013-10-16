@@ -675,7 +675,7 @@ extern AppMetr *gSharedAppMetrMobile;
         batchIndex = mSessionData.batchIndex;
     }
 
-    if (batchIndex) {
+    if (!batchIndex) {
         [self trackInstallBroadcast];
     }
 }
