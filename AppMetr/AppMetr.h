@@ -3,17 +3,10 @@
  * All rights reserved.
  */
 
-#import "TrackingManager.h"
-
 /**
  * Main library class
  */
 @interface AppMetr
-
-/**
- * Returns the singleton library instance
- */
-+ (TrackingManager *)sharedManager;
 
 /**
  * Setting up the application token.

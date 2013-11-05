@@ -5,6 +5,7 @@
 
 #import "AppMetr.h"
 #import "CJSONDeserializer.h"
+#import "TrackingManager.h"
 
 // Global variables
 TrackingManager *gSharedManager = nil;
