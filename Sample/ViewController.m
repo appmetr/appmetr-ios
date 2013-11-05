@@ -21,6 +21,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)trackSessionTouch:(id)sender {
+    [AppMetr trackSession];
+}
+
 - (IBAction)trackEventTouch:(id)sender {
     [AppMetr trackEvent:@"test"];
 }

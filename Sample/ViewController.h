@@ -6,6 +6,8 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)trackSessionTouch:(id)sender;
+
 - (IBAction)trackEventTouch:(id)sender;
 
 - (IBAction)trackAllTouch:(id)sender;
