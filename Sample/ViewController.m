@@ -25,7 +25,55 @@
     [AppMetr trackEvent:@"test"];
 }
 
+- (IBAction)trackAllTouch:(id)sender {
+    NSDictionary * properties = [NSDictionary dictionaryWithObjectsAndKeys:
+            @"value1", @"text",
+            @"05.11.2013 15:00:00", @"date",
+            [NSNumber numberWithInt:1], @"int",
+            [NSNumber numberWithLong:1], @"long",
+            [NSNumber numberWithDouble:1.5], @"double",
+            [NSDictionary dictionaryWithObjectsAndKeys:
+                          @"innerValue", @"value",
+                    nil
+            ], @"list",
+            nil];
+
+    [AppMetr trackSession];
+    [AppMetr trackSessionWithProperties:properties];
+
+    [AppMetr trackLevel:1];
+    [AppMetr trackLevel:1 properties:properties];
+
+    [AppMetr trackEvent:@"test"];
+    [AppMetr trackEvent:@"test" properties:properties];
+
+    NSDictionary * payment = [NSDictionary dictionaryWithObjectsAndKeys:
+            @"USD", @"psUserSpentCurrencyCode",
+            [NSNumber numberWithDouble:1.99], @"psUserSpentCurrencyAmount",
+            @"test.items.in.test.app", @"orderId",
+            [self getUUID], @"transactionId",
+            @"appCurrency", @"appCurrencyCode",
+            [NSNumber numberWithInt:10], @"appCurrencyAmount",
+            @"appstore", @"processor",
+            nil];
+    [AppMetr trackPayment:payment];
+    [AppMetr trackPayment:payment properties:properties];
+}
+
 - (IBAction)flushTrack:(id)sender {
     [AppMetr flush];
+}
+
+
+-(NSString *)getUUID {
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    NSString * uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    CFRelease(newUniqueId);
+
+    return uuidString;
+}
+ 
+- (void)dealloc {
+    [super dealloc];
 }
 @end

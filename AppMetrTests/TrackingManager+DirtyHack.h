@@ -9,7 +9,7 @@
 // Pre-declare classes
 @class SessionData;
 
-@interface AppMetr (DirtyHack)
+@interface TrackingManager (DirtyHack)
 
 - (id)initAndStopThread;
 

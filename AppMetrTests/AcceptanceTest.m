@@ -4,7 +4,7 @@
  */
 
 #import "AcceptanceTest.h"
-#import "AppMetr+DirtyHack.h"
+#import "TrackingManager+DirtyHack.h"
 #import "SessionData.h"
 
 @implementation AcceptanceTest {
@@ -30,7 +30,7 @@
 }
 
 - (void)_testShortTestWithoutPayment {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     [[testLibrary dirtySessionData].fileList removeAllObjects];
     NSDictionary *properties = [NSDictionary dictionaryWithObjectsAndKeys:@"red", @"abGroup",
@@ -77,7 +77,7 @@
 
 - (void)_testFourFiles {
 
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary setupSizeLimitOfCacheFile:142 * 3];
     [[[testLibrary dirtySessionData] fileList] removeAllObjects];
 
@@ -108,7 +108,7 @@
 // FIXME: recalculate batch size
 - (void)_testThreeFilesWithAllocation // allocation 2 events - 1 event - 1 event
 {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary setupSizeLimitOfCacheFile:12];
     NSUInteger beginTestFilesCount = [[[testLibrary dirtySessionData] fileList] count];
 
@@ -128,11 +128,12 @@
 
     NSUInteger endTestFilesCount = [[[testLibrary dirtySessionData] fileList] count];
     STAssertTrue((3 == (endTestFilesCount - beginTestFilesCount)), @"Failed to create three files");
+    [testLibrary release];
 }
 
 
 - (void)testHundredEvents {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     for (NSUInteger i = 0; i < 100; i++) {
         [testLibrary trackEvent:@"test"];
@@ -140,6 +141,7 @@
 
     NSUInteger count = [[testLibrary getDirtyEventStack] count];
     STAssertEquals((NSUInteger) 100, count, @"Failed to create 100 events");
+    [testLibrary release];
 }
 
 #pragma mark - private function 

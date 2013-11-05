@@ -8,6 +8,8 @@
 
 - (IBAction)trackEventTouch:(id)sender;
 
+- (IBAction)trackAllTouch:(id)sender;
+
 - (IBAction)flushTrack:(id)sender;
 
 @end

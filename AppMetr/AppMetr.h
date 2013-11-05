@@ -8,12 +8,12 @@
 /**
  * Main library class
  */
-@interface AppMetr : TrackingManager
+@interface AppMetr
 
 /**
  * Returns the singleton library instance
  */
-+ (AppMetr *)sharedInstance;
++ (TrackingManager *)sharedManager;
 
 /**
  * Setting up the application token.
@@ -34,12 +34,6 @@
  * Setting up the maximum size of cache file
  */
 + (void)setupSizeLimitOfCacheFile:(NSUInteger)limit;
-
-/**
- * Setting up the user identifier.
- * If value not set, the unique identifier of device will be used by default.
- */
-+ (void)setupWithUserID:(NSString *)userID;
 
 /**
  * Updating information about the user
@@ -136,11 +130,6 @@
 * Force flush events on server
 */
 + (void)flush;
-
-/**
- * Retrieves the user unique identifier used by this library
- */
-+ (NSString *)userIdentifier;
 
 /**
  * Sets the thread for executing remote commands

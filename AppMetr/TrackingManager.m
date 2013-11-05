@@ -22,7 +22,7 @@
 
 
 // Global variables
-extern AppMetr *gSharedAppMetrMobile;
+extern AppMetr *gSharedManager;
 
 #pragma mark - Private category
 
@@ -860,9 +860,9 @@ extern AppMetr *gSharedAppMetrMobile;
     [self flushData];
     [self closeStreams];
 
-    if (gSharedAppMetrMobile == self) {
-        [gSharedAppMetrMobile release];
-        gSharedAppMetrMobile = nil;
+    if (gSharedManager == self) {
+        [gSharedManager release];
+        gSharedManager = nil;
     }
 }
 
@@ -1042,17 +1042,6 @@ extern AppMetr *gSharedAppMetrMobile;
 
 - (NSMutableArray *)getProcessedCommandList {
     return mProcessedCommandList;
-}
-
-#pragma mark - Properties
-
-- (void)setSandboxMode:(BOOL)sandbox {
-    // deprecated, nothing to do
-}
-
-- (BOOL)sandboxMode {
-    // deprecated, nothing to do
-    return NO;
 }
 
 - (NSString *)instanceIdentifier {

@@ -10,10 +10,8 @@ NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;        // 1(minutes) *
 NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;        // 1.5(minutes) * 60(seconds)
 NSTimeInterval const kPullRemoteCommandsDelay = 70.0;            // 70seconds
 
-NSTimeInterval const kTrackApplicationDelay = 15.0 * 60.0;        // 15(minutes) * 60(seconds)
-
 NSString *const kAppMetrDefaultUrl = @"http://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.6.4";
+NSString *const kAppMetrVersionString = @"1.6.5";
 
 // Generic constants
 

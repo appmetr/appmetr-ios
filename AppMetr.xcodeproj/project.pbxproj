@@ -25,7 +25,7 @@
 		1A3446715EC82D9486B4C1AA /* CJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344BD7CE0C62AC952B2CCB /* CJSONSerialization.m */; };
 		1A3446DACCFC6FBF7AC09781 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3449304D5AA750ABEAECA0 /* CDataScanner.m */; };
 		1A344778D6B2C0B67BB2D425 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3446351826C959AF986FAF /* Preferences.m */; };
-		1A344845E109570B720DA230 /* AppMetr+DirtyHack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3442C4B890A9B85B11710A /* AppMetr+DirtyHack.m */; };
+		1A344845E109570B720DA230 /* TrackingManager+DirtyHack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3442C4B890A9B85B11710A /* TrackingManager+DirtyHack.m */; };
 		1A34485C57615CA2F9467B48 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344BFCD84AC82C693CCDB4 /* CJSONDeserializer.m */; };
 		1A3448BA685037819E114940 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344F9AA5F6E49420666F35 /* CDataScanner_Extensions.m */; };
 		1A3449159F633BCE8A4CBAE3 /* RemoteCommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344403176C041692A98C3C /* RemoteCommandPacket.m */; };
@@ -100,7 +100,7 @@
 		1A3441F9FDDC827220A788DA /* AcceptanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptanceTest.m; sourceTree = "<group>"; };
 		1A344242B888D8838F94CFB7 /* SessionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionData.m; sourceTree = "<group>"; };
 		1A3442A5557BEB8623626779 /* TrackingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingManager.h; sourceTree = "<group>"; };
-		1A3442C4B890A9B85B11710A /* AppMetr+DirtyHack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppMetr+DirtyHack.m"; sourceTree = "<group>"; };
+		1A3442C4B890A9B85B11710A /* TrackingManager+DirtyHack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TrackingManager+DirtyHack.m"; sourceTree = "<group>"; };
 		1A3442CA8AF003060AAB9722 /* AppMetrInvalidCommandException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetrInvalidCommandException.m; sourceTree = "<group>"; };
 		1A3442E5FD43F96D1679B55C /* AppMetrUnsatisfiedConditionException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetrUnsatisfiedConditionException.h; sourceTree = "<group>"; };
 		1A344323479056CF8BAAFD3F /* TrackingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingManager.m; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		1A344740AADF68CF00EB0D42 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1A344748340409A52A6D6AFD /* UIDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceUtil.h; sourceTree = "<group>"; };
 		1A34474ABA44496DE9EA32A3 /* CJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONScanner.m; sourceTree = "<group>"; };
-		1A34476A83FD1FF5FEE58730 /* AppMetr+DirtyHack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppMetr+DirtyHack.h"; sourceTree = "<group>"; };
+		1A34476A83FD1FF5FEE58730 /* TrackingManager+DirtyHack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TrackingManager+DirtyHack.h"; sourceTree = "<group>"; };
 		1A3447C552F81BACA74D1A0E /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
 		1A344844C33DAB83D47239F1 /* RemoteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommand.h; sourceTree = "<group>"; };
 		1A34485B0ABFC970CAD16DBF /* TestRemoteCommandPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRemoteCommandPacket.m; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		D26B22AD17C4E64A0062B852 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D26B22B717C4E64A0062B852 /* AppMetrTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppMetrTests-Info.plist"; sourceTree = "<group>"; };
 		D26B22B917C4E64A0062B852 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D26B22CA17C4E9BD0062B852 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D26B22CA17C4E9BD0062B852 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D26B22CD17C4E9BE0062B852 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D26B22D117C4E9BE0062B852 /* Sample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sample-Info.plist"; sourceTree = "<group>"; };
 		D26B22D317C4E9BE0062B852 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -356,8 +356,8 @@
 			children = (
 				1A344FD326FDB4A3FCA802D9 /* AcceptanceTest.h */,
 				1A3441F9FDDC827220A788DA /* AcceptanceTest.m */,
-				1A34476A83FD1FF5FEE58730 /* AppMetr+DirtyHack.h */,
-				1A3442C4B890A9B85B11710A /* AppMetr+DirtyHack.m */,
+				1A34476A83FD1FF5FEE58730 /* TrackingManager+DirtyHack.h */,
+				1A3442C4B890A9B85B11710A /* TrackingManager+DirtyHack.m */,
 				1A34487BFED85FE12E24AD6F /* TestAppMetr.h */,
 				1A3446842AE54DEC17560D3B /* TestAppMetr.m */,
 				1A34471D2B8F5A1D7BA8E037 /* TestBatchFile.h */,
@@ -399,7 +399,7 @@
 			children = (
 				D26B229B17C4E64A0062B852 /* libAppMetr.a */,
 				D26B22AC17C4E64A0062B852 /* AppMetrTests.octest */,
-				D26B22CA17C4E9BD0062B852 /* Sample.app */,
+				D26B22CA17C4E9BD0062B852 /* test.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -537,7 +537,7 @@
 			);
 			name = Sample;
 			productName = Sample;
-			productReference = D26B22CA17C4E9BD0062B852 /* Sample.app */;
+			productReference = D26B22CA17C4E9BD0062B852 /* test.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -647,7 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A344FF519422132B325D372 /* AcceptanceTest.m in Sources */,
-				1A344845E109570B720DA230 /* AppMetr+DirtyHack.m in Sources */,
+				1A344845E109570B720DA230 /* TrackingManager+DirtyHack.m in Sources */,
 				1A34455D3EA427B2BE85AB7E /* TestAppMetr.m in Sources */,
 				1A344098A4D4AE249226F079 /* TestBatchFile.m in Sources */,
 				1A3442381F6E5E6B6E87346C /* TestRemoteCommand.m in Sources */,
@@ -833,7 +833,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "Sample/Sample-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = test;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -851,7 +851,7 @@
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "Sample/Sample-Info.plist";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = test;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

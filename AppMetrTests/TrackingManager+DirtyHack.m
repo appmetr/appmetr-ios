@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-#import "AppMetr+DirtyHack.h"
+#import "TrackingManager+DirtyHack.h"
 
-@implementation AppMetr (DirtyHack)
+@implementation TrackingManager (DirtyHack)
 
 - (id)initAndStopThread {
     self = [self init];

@@ -7,7 +7,7 @@
 #import "CJSONDeserializer.h"
 
 // Global variables
-AppMetr *gSharedAppMetrMobile = nil;
+TrackingManager *gSharedManager = nil;
 
 #pragma mark - Class implementation
 
@@ -15,12 +15,12 @@ AppMetr *gSharedAppMetrMobile = nil;
 
 #pragma mark - Manage shared instance
 
-+ (AppMetr *)sharedInstance {
-    if (!gSharedAppMetrMobile) {
-        gSharedAppMetrMobile = [[AppMetr alloc] init];
++ (TrackingManager *)sharedManager {
+    if (!gSharedManager) {
+        gSharedManager = [[TrackingManager alloc] init];
     }
 
-    return gSharedAppMetrMobile;
+    return gSharedManager;
 }
 
 #pragma mark - Setting up
@@ -34,114 +34,105 @@ AppMetr *gSharedAppMetrMobile = nil;
 }
 
 + (void)setupWithToken:(NSString *)token delegate:(id)delegate commandsThread:(NSThread *)thread {
-    AppMetr *instance = [AppMetr sharedInstance];
-    [instance setupWithToken:token delegate:delegate commandsThread:thread];
+    [[AppMetr sharedManager] setupWithToken:token delegate:delegate commandsThread:thread];
 }
 
 + (void)setupSizeLimitOfCacheFile:(NSUInteger)limit {
-    [[AppMetr sharedInstance] setupSizeLimitOfCacheFile:limit];
-}
-
-+ (void)setupWithUserID:(NSString *)userID {
-    [[AppMetr sharedInstance] setupWithUserID:userID];
+    [[AppMetr sharedManager] setupSizeLimitOfCacheFile:limit];
 }
 
 #pragma mark - Class (lazy)methods
 
 + (void)attachProperties {
-    [[AppMetr sharedInstance] attachProperties:nil];
+    [[AppMetr sharedManager] attachProperties:nil];
 }
 
 + (void)attachProperties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] attachProperties:properties];
+    [[AppMetr sharedManager] attachProperties:properties];
 }
 
 + (void)trackSession {
-    [[AppMetr sharedInstance] trackSession];
+    [[AppMetr sharedManager] trackSession];
 }
 
 + (void)trackSessionWithProperties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] trackSessionWithProperties:properties];
+    [[AppMetr sharedManager] trackSessionWithProperties:properties];
 }
 
 + (void)trackLevel:(int)level {
-    [[AppMetr sharedInstance] trackLevel:level];
+    [[AppMetr sharedManager] trackLevel:level];
 }
 
 + (void)trackLevel:(int)level properties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] trackLevel:level properties:properties];
+    [[AppMetr sharedManager] trackLevel:level properties:properties];
 }
 
 + (void)trackEvent:(NSString *)trackEvent {
-    [[AppMetr sharedInstance] trackEvent:trackEvent];
+    [[AppMetr sharedManager] trackEvent:trackEvent];
 }
 
 + (void)trackEvent:(NSString *)event properties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] trackEvent:event properties:properties];
+    [[AppMetr sharedManager] trackEvent:event properties:properties];
 }
 
 + (void)trackPayment:(NSDictionary *)payment {
-    [[AppMetr sharedInstance] trackPayment:payment];
+    [[AppMetr sharedManager] trackPayment:payment];
 }
 
 + (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] trackPayment:payment properties:properties];
+    [[AppMetr sharedManager] trackPayment:payment properties:properties];
 }
 
 + (void)trackGameState:(NSString *)state properties:(NSDictionary *)properties {
-    [[AppMetr sharedInstance] trackGameState:state properties:properties];
+    [[AppMetr sharedManager] trackGameState:state properties:properties];
 }
 
 + (void)trackInstallURL:(NSURL *)url {
-    [[AppMetr sharedInstance] trackInstallURL:url];
+    [[AppMetr sharedManager] trackInstallURL:url];
 }
 
 + (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId {
-    [[AppMetr sharedInstance] trackOptions:options forCommand:commandId];
+    [[AppMetr sharedManager] trackOptions:options forCommand:commandId];
 }
 
 + (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
-    [[AppMetr sharedInstance] trackOptions:options forCommand:commandId errorCode:code errorMessage:message];
+    [[AppMetr sharedManager] trackOptions:options forCommand:commandId errorCode:code errorMessage:message];
 }
 
 + (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
-    [[AppMetr sharedInstance] trackExperimentStart:experiment group:group];
+    [[AppMetr sharedManager] trackExperimentStart:experiment group:group];
 }
 
 + (void)trackExperimentEnd:(NSString *)experiment {
-    [[AppMetr sharedInstance] trackExperimentEnd:experiment];
+    [[AppMetr sharedManager] trackExperimentEnd:experiment];
 }
 
 + (void)identify:(NSString *)userId {
-    [[AppMetr sharedInstance] identify:userId];
+    [[AppMetr sharedManager] identify:userId];
 }
 
 + (void)pullCommands {
-    [[AppMetr sharedInstance] pullCommands];
+    [[AppMetr sharedManager] pullCommands];
 }
 
 + (void)flush {
-    [[AppMetr sharedInstance] flushAndUploadAllEvents];
-}
-
-+ (NSString *)userIdentifier {
-    return [[AppMetr sharedInstance] userIdentifier];
+    [[AppMetr sharedManager] flushAndUploadAllEvents];
 }
 
 + (void)setCommandThread:(NSThread *)thread {
-    [[AppMetr sharedInstance] setCommandThread:thread];
+    [[AppMetr sharedManager] setCommandThread:thread];
 }
 
 + (void)setDebugLoggingEnabled:(BOOL)debugLoggingEnabled {
-    [[AppMetr sharedInstance] setDebugLoggingEnabled:debugLoggingEnabled];
+    [[AppMetr sharedManager] setDebugLoggingEnabled:debugLoggingEnabled];
 }
 
 + (BOOL)isDebugLoggingEnabled {
-    return [[AppMetr sharedInstance] isDebugLoggingEnabled];
+    return [[AppMetr sharedManager] isDebugLoggingEnabled];
 }
 
 + (NSString *)instanceIdentifier {
-    return [[AppMetr sharedInstance] instanceIdentifier];
+    return [[AppMetr sharedManager] instanceIdentifier];
 }
 
 + (NSDictionary *)stringToDictionary:(NSString *)json {

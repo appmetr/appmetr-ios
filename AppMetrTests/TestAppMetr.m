@@ -5,7 +5,7 @@
 
 #import "TestAppMetr.h"
 #import "../AppMetr/AppMetr.h"
-#import "AppMetr+DirtyHack.h"
+#import "TrackingManager+DirtyHack.h"
 #import "AMBase64Util.h"
 #import "CJSONDeserializer.h"
 #import "RemoteCommandPacket.h"
@@ -74,7 +74,7 @@
 - (void)testTrack {
     unsigned long long startTime = (unsigned long long) ([[NSDate date] timeIntervalSince1970] * 1000.0);
 
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     [testLibrary performSelector:@selector(trackEvent:)
@@ -93,7 +93,7 @@
 }
 
 - (void)testEventStack {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     //Attach properties
@@ -140,7 +140,7 @@
 
 
 - (void)testAttachProperties {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     [testLibrary attachProperties:[self anyProperties]];
@@ -157,7 +157,7 @@
 }
 
 - (void)testTrackSession {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     // test 1
@@ -184,7 +184,7 @@
 }
 
 - (void)testTrackLevel {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     // test 1
@@ -218,7 +218,7 @@
 }
 
 - (void)testTrackEvent {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     // test 1
@@ -261,7 +261,7 @@
 }
 
 - (void)testTrackPayment {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
     // test 1
@@ -293,7 +293,7 @@
 }
 
 - (void)_testCreateBatchData {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     [testLibrary trackEvent:@"event1"];
 
@@ -334,7 +334,7 @@
 }
 
 - (void)_testBatchFiles {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
 
@@ -369,7 +369,7 @@
 
 // FIXME: recalculate batch size
 - (void)_testAmountOfBatchFiles {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
@@ -401,7 +401,7 @@
 }
 
 - (void)testUploadData {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
 
     [testLibrary trackEvent:@"event1"];
@@ -424,7 +424,7 @@
 }
 
 - (void)testGameState {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
 
     [testLibrary trackGameState:@"TestState" properties:[self anyProperties]];
@@ -453,7 +453,7 @@
 }
 
 - (void)testTrackInstallURL {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
 
     [testLibrary trackInstallURL:[NSURL URLWithString:@"http://AppMetr.mobile/unit/test"]];
@@ -462,7 +462,7 @@
 }
 
 - (void)testTrackCommand {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     [testLibrary performSelector:@selector(trackCommand:) withObject:@"test-1"];
     STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(success)");
@@ -483,10 +483,10 @@
 }
 
 - (void)testTrackCommandBatch {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     NSMethodSignature *signature;
-    signature = [AppMetr instanceMethodSignatureForSelector:@selector(trackCommandBatchWithLastCommandID:error:description:)];
+    signature = [TrackingManager instanceMethodSignatureForSelector:@selector(trackCommandBatchWithLastCommandID:error:description:)];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
 
     [invocation setTarget:testLibrary];
@@ -504,25 +504,30 @@
     STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add testTrackCommandBatch");
 
     [((NSMutableArray *) [testLibrary getDirtyEventStack]) removeAllObjects];
+    [testLibrary release];
 }
 
 - (void)testCommandList {
-    AppMetr *testLibrary1 = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary1 = [[TrackingManager alloc] initAndStopThread];
 
     [testLibrary1 performSelector:@selector(setProcessedCommandWithID:) withObject:@"test-cmd-1"];
     STAssertTrue([(id <AppMetrTesting>) testLibrary1 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
 
-    AppMetr *testLibrary2 = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary2 = [[TrackingManager alloc] initAndStopThread];
     STAssertTrue([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
 
     [testLibrary1 performSelector:@selector(setProcessedCommandWithID:) withObject:@"test-cmd-2"];
-    AppMetr *testLibrary3 = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary3 = [[TrackingManager alloc] initAndStopThread];
     STAssertTrue([(id <AppMetrTesting>) testLibrary3 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 does not exist");
     STAssertFalse([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 already exist");
+
+    [testLibrary1 release];
+    [testLibrary2 release];
+    [testLibrary3 release];
 }
 
 - (void)_testRemoteCommandPacket {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSDate *now = [NSDate date];
 
     NSString *data = [NSString stringWithFormat:@"{\"status\":\"OK\", \"commands\":["
@@ -540,10 +545,12 @@
     [testLibrary processRemoteCommands];
     STAssertEquals((NSUInteger) 2, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
     STAssertEquals((NSUInteger) 0, [[testLibrary getDirtyEventStack] count], @"Event list must be empty");
+
+    [testLibrary release];
 }
 
 - (void)_testRemoteCommandWithInvalidTime {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSDate *now = [NSDate date];
 
     NSString *data = [NSString stringWithFormat:@"{\"status\":\"OK\", \"commands\":["
@@ -561,10 +568,12 @@
     [testLibrary processRemoteCommands];
     STAssertEquals((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
     STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
+
+    [testLibrary release];
 }
 
 - (void)_testRemoteCommandWithDuplicateItems {
-    AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSDate *now = [NSDate date];
 
     NSString *data = [NSString stringWithFormat:@"{\"status\":\"OK\", \"commands\":["
@@ -582,21 +591,18 @@
 
     STAssertEquals((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
     STAssertEquals((NSUInteger) 3, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
+
+    [testLibrary release];
 }
 
 - (void)testSendQueryRemoteCommands {
     @autoreleasepool {
-        AppMetr *testLibrary = [[AppMetr alloc] initAndStopThread];
+        TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
         [testLibrary performSelector:@selector(sentQueryRemoteCommandList)];
         STAssertEquals((NSUInteger) 0, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Command list is not empty");
-    }
-}
 
-- (void)testUserIdentifier {
-    @autoreleasepool {
-        [[AppMetr alloc] initAndStopThread];
-        STAssertNotNil([AppMetr userIdentifier], @"Invalid user identifier");
+        [testLibrary release];
     }
 }
 
