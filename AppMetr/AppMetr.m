@@ -112,6 +112,10 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] identify:userId];
 }
 
++ (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey {
+    return [[AppMetr sharedManager] verifyPayment:transaction privateKey:privateKey];
+}
+
 + (void)pullCommands {
     [[AppMetr sharedManager] pullCommands];
 }

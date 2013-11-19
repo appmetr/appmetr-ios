@@ -31,13 +31,24 @@
             logging:(BOOL)logging;
 
 /**
- * Sends the request to the server
+ * Sends commands pull request to the server
  */
 + (NSDictionary *)sendQueryRemoteCommand:(NSString *)address
                                    token:(NSString *)token
                           userIdentifier:(NSString *)userIdentifier
                    lastCommandIdentifier:(NSString *)lastCommandID
                                  logging:(BOOL)logging;
+
+/**
+* Send verify payment request
+*/
++ (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
+                                     token:(NSString *)token
+                            userIdentifier:(NSString *)userIdentifier
+                                  purchase:(NSString *)purchase
+                                   receipt:(NSString *)receipt
+                                      salt:(NSString *)salt
+                                   logging:(BOOL)logging;
 
 /**
  * Returns the timestamp in milliseconds

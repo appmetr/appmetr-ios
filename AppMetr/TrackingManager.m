@@ -18,11 +18,10 @@
 #import "AppMetrInvalidCommandException.h"
 #import "ServerError.h"
 #import "Preferences.h"
-#import <UIKit/UIApplication.h>
 
 
 // Global variables
-extern AppMetr *gSharedManager;
+extern TrackingManager *gSharedManager;
 
 #pragma mark - Private category
 
@@ -768,6 +767,30 @@ extern AppMetr *gSharedManager;
     [self track:action];
 }
 
+- (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey {
+    NSString *purchase = [NSString stringWithFormat:@"{\"productId\":\"%@\", \"transactionId\":\"%@\"}",
+                                                    transaction.payment.productIdentifier,
+                                                    transaction.transactionIdentifier];
+    NSString *receipt = [AMBase64Util encode:[transaction transactionReceipt]];
+    NSString *salt = [Utils md5:[NSString stringWithFormat:@"123567890:%ul", (NSUInteger) time(NULL)]];
+
+    NSDictionary *result = [Utils sendVerifyPaymentRequest:mServerAddress
+                                                     token:mToken
+                                            userIdentifier:mUserID
+                                                  purchase:purchase
+                                                   receipt:receipt
+                                                      salt:salt
+                                                   logging:mDebugLoggingEnabled];
+
+    BOOL succeeded = NO;
+    if([[result objectForKey:@"status"] isEqualToString:@"valid"])
+    {
+        NSString *sigrature = [NSString stringWithFormat:@"%@:%@:%@", transaction.transactionIdentifier, salt, privateKey];
+        succeeded = [[result objectForKey:@"sig"] isEqualToString:[Utils md5:sigrature]];
+    }
+
+    return succeeded;
+}
 
 - (void)trackCommand:(NSString *)commandID status:(NSString *)status properties:(NSDictionary *)properties; {
     NSMutableDictionary *action = (properties ? properties : [NSMutableDictionary dictionary]);

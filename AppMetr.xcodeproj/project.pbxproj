@@ -30,11 +30,7 @@
 		1A3448BA685037819E114940 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344F9AA5F6E49420666F35 /* CDataScanner_Extensions.m */; };
 		1A3449159F633BCE8A4CBAE3 /* RemoteCommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344403176C041692A98C3C /* RemoteCommandPacket.m */; };
 		1A3449984CC846BC0A876B7E /* TrackingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344323479056CF8BAAFD3F /* TrackingManager.m */; };
-		1A3449DC6A0AA4EEC9FD28C6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3449EAB2B7DE9FA950A1D7 /* StoreKit.framework */; };
-		1A3449F8121E8DDA4E3614D1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3449EAB2B7DE9FA950A1D7 /* StoreKit.framework */; };
 		1A344A16B82C4A8E547E2C83 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344DD95E49D0E3C3F458EE /* CJSONSerializer.m */; };
-		1A344A945D2B8CC6DB12F92F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3444FC8FCB1E49A823A2CF /* AdSupport.framework */; };
-		1A344A962ED28332775E011A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3449EAB2B7DE9FA950A1D7 /* StoreKit.framework */; };
 		1A344AD9142F4AEF8F9E93F1 /* JSONException.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3445B69BC6F2D40FD11ACF /* JSONException.m */; };
 		1A344B2C18D2F57462FB0C4C /* AppMetrUnsatisfiedConditionException.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34403C0E9E5DA1E32DD46A /* AppMetrUnsatisfiedConditionException.m */; };
 		1A344B61AAAF02CEDB5781D1 /* CJSONSerializedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344464E54C3761A042E02B /* CJSONSerializedData.m */; };
@@ -61,6 +57,8 @@
 		D26B22E317C4E9BE0062B852 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D26B22E117C4E9BE0062B852 /* MainStoryboard_iPhone.storyboard */; };
 		D26B22E617C4E9BE0062B852 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D26B22E417C4E9BE0062B852 /* MainStoryboard_iPad.storyboard */; };
 		D26B22E917C4E9BE0062B852 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D26B22E817C4E9BE0062B852 /* ViewController.m */; };
+		D26F55DA183BAA5900A733A8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26F55D9183BAA5800A733A8 /* AdSupport.framework */; };
+		D26F55DC183BAA6700A733A8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26F55DB183BAA6700A733A8 /* StoreKit.framework */; };
 		D2A9281B17C4EC9A00EE0A0D /* libAppMetr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229B17C4E64A0062B852 /* libAppMetr.a */; };
 		D2A9282217C50FA700EE0A0D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A344EE6B8B878FDE756E690 /* libz.dylib */; };
 /* End PBXBuildFile section */
@@ -111,7 +109,6 @@
 		1A344464E54C3761A042E02B /* CJSONSerializedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializedData.m; sourceTree = "<group>"; };
 		1A3444BFB9BDE3A403563886 /* TestRemoteCommandPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRemoteCommandPacket.h; sourceTree = "<group>"; };
 		1A3444E95A8305D83D02AB77 /* PAM_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAM_OpenUDID.m; sourceTree = "<group>"; };
-		1A3444FC8FCB1E49A823A2CF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = ../../../../../Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = "<group>"; };
 		1A34450ACDBAE9C810E7C260 /* SessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionData.h; sourceTree = "<group>"; };
 		1A34454C5D106271B22E8086 /* TestRemoteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRemoteCommand.m; sourceTree = "<group>"; };
 		1A3445B69BC6F2D40FD11ACF /* JSONException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONException.m; sourceTree = "<group>"; };
@@ -138,7 +135,6 @@
 		1A34492D5E1DF13BC2AC7CDD /* TestSessionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSessionData.m; sourceTree = "<group>"; };
 		1A34492DFE27978563BFF76D /* CFilteringJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFilteringJSONSerializer.m; sourceTree = "<group>"; };
 		1A3449304D5AA750ABEAECA0 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
-		1A3449EAB2B7DE9FA950A1D7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = ../../../../../Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = "<group>"; };
 		1A344A91675D2D74941C896C /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		1A344AD10A1CC1243B360E39 /* CJSONSerializedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerializedData.h; sourceTree = "<group>"; };
 		1A344B0C447AC5625926F942 /* NSDictionary_JSONExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_JSONExtensions.m; sourceTree = "<group>"; };
@@ -190,6 +186,8 @@
 		D26B22E517C4E9BE0062B852 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		D26B22E717C4E9BE0062B852 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D26B22E817C4E9BE0062B852 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D26F55D9183BAA5800A733A8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		D26F55DB183BAA6700A733A8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D26B229F17C4E64A0062B852 /* Foundation.framework in Frameworks */,
-				1A3449DC6A0AA4EEC9FD28C6 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +206,6 @@
 				D26B22AE17C4E64A0062B852 /* SenTestingKit.framework in Frameworks */,
 				D26B22B117C4E64A0062B852 /* Foundation.framework in Frameworks */,
 				D26B22B417C4E64A0062B852 /* libAppMetr.a in Frameworks */,
-				1A344A962ED28332775E011A /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,13 +213,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D26F55DC183BAA6700A733A8 /* StoreKit.framework in Frameworks */,
+				D26F55DA183BAA5900A733A8 /* AdSupport.framework in Frameworks */,
 				D2A9282217C50FA700EE0A0D /* libz.dylib in Frameworks */,
 				D2A9281B17C4EC9A00EE0A0D /* libAppMetr.a in Frameworks */,
 				D26B22CC17C4E9BE0062B852 /* Foundation.framework in Frameworks */,
 				D26B22CE17C4E9BE0062B852 /* CoreGraphics.framework in Frameworks */,
 				1A3444FE556CCBFE00E0C9B6 /* UIKit.framework in Frameworks */,
-				1A344A945D2B8CC6DB12F92F /* AdSupport.framework in Frameworks */,
-				1A3449F8121E8DDA4E3614D1 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,13 +403,13 @@
 		D26B229D17C4E64A0062B852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D26F55DB183BAA6700A733A8 /* StoreKit.framework */,
+				D26F55D9183BAA5800A733A8 /* AdSupport.framework */,
 				D26B229E17C4E64A0062B852 /* Foundation.framework */,
 				D26B22AD17C4E64A0062B852 /* SenTestingKit.framework */,
 				D26B22CD17C4E9BE0062B852 /* CoreGraphics.framework */,
 				1A344F6991CAC2886EBA5F29 /* UIKit.framework */,
 				1A344EE6B8B878FDE756E690 /* libz.dylib */,
-				1A3444FC8FCB1E49A823A2CF /* AdSupport.framework */,
-				1A3449EAB2B7DE9FA950A1D7 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

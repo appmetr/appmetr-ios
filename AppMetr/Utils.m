@@ -24,6 +24,7 @@
 
 NSString *const kMethodTrack = @"server.track";
 NSString *const kMethodGetCommands = @"server.getCommands";
+NSString *const kMethodVerifyPayment = @"server.verifyPayment";
 
 #define INSTANCE_INDETIFIER_TOKEN_LENGTH (8)
 
@@ -232,44 +233,28 @@ NSString *const kMethodGetCommands = @"server.getCommands";
                                                            [lastCommandID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
 
-    NSURL *url = [NSURL URLWithString:fullAddress];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                                       timeoutInterval:30];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-                                                 returningResponse:&response error:&error];
-    if (error) {
-        NSLog(@"Network error: %@", error.localizedDescription);
-        return nil;
-    }
+    return [self sendRequest:fullAddress logging:logging];
+}
 
-    if (logging) {
-        NSString *responseText = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"Request parameters: '%@' Responce: '%@'", fullAddress, responseText);
-        [responseText release];
-    }
++ (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
+                                     token:(NSString *)token
+                            userIdentifier:(NSString *)userIdentifier
+                                  purchase:(NSString *)purchase
+                                   receipt:(NSString *)receipt
+                                      salt:(NSString *)salt
+                                   logging:(BOOL)logging {
 
-    NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
-    // is HTTP error?
-    if (statusCode >= 400) {
-        [ServerError raiseWithStatusCore:statusCode];
-    }
+    NSString *fullAddress = [Utils requestParametersForMethod:kMethodVerifyPayment
+                                                      address:address
+                                                        token:token
+                                               userIdentifier:userIdentifier];
 
-    NSString *contentType = [[(NSHTTPURLResponse *) response allHeaderFields] objectForKey:@"Content-Type"];
-    if (!contentType || ![contentType isKindOfClass:[NSString class]] ||
-            [contentType rangeOfString:@"application/json"].location == NSNotFound) {
-        [NSException raise:@"Server Error" format:@"Invalid Content-type"];
-    }
+    fullAddress = [fullAddress stringByAppendingFormat:@"&purchase=%@&receipt=%@&salt=%@",
+                                                       [purchase stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+                                                       [receipt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
+                                                       [salt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
-    NSError *jsonError = nil;
-    NSDictionary *serverResponse = [[CJSONDeserializer deserializer] deserializeAsDictionary:responseData
-                                                                                       error:&jsonError];
-    if (jsonError) {
-        [JSONException raiseWithError:jsonError];
-    }
-    return serverResponse;
+    return [self sendRequest:fullAddress logging:logging];;
 }
 
 + (unsigned long long)timestamp {
@@ -449,6 +434,49 @@ NSString *const kMethodGetCommands = @"server.getCommands";
 
     return output;
 
+}
+
+//"private" methods
++ (NSDictionary *)sendRequest:(NSString *)fullAddress
+                      logging:(BOOL)logging {
+    NSURL *url = [NSURL URLWithString:fullAddress];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:30];
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+                                                 returningResponse:&response error:&error];
+    if (error) {
+        NSLog(@"Network error: %@", error.localizedDescription);
+        return nil;
+    }
+
+    if (logging) {
+        NSString *responseText = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        NSLog(@"Request parameters: '%@' Response: '%@'", fullAddress, responseText);
+        [responseText release];
+    }
+
+    NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
+    // is HTTP error?
+    if (statusCode >= 400) {
+        [ServerError raiseWithStatusCore:statusCode];
+    }
+
+    NSString *contentType = [[(NSHTTPURLResponse *) response allHeaderFields] objectForKey:@"Content-Type"];
+    if (!contentType || ![contentType isKindOfClass:[NSString class]] ||
+            [contentType rangeOfString:@"application/json"].location == NSNotFound) {
+        [NSException raise:@"Server Error" format:@"Invalid Content-type"];
+    }
+
+    NSError *jsonError = nil;
+    NSDictionary *serverResponse = [[CJSONDeserializer deserializer] deserializeAsDictionary:responseData
+                                                                                       error:&jsonError];
+    if (jsonError) {
+        [JSONException raiseWithError:jsonError];
+    }
+    return serverResponse;
 }
 
 @end

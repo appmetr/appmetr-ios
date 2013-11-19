@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#import <StoreKit/StoreKit.h>
 #import "AppMetrDelegate.h"
 
 // pre-declare classes
@@ -168,6 +169,11 @@
 * Identify user
 */
 - (void)identify:(NSString *)userId;
+
+/**
+* Verify payment
+*/
+- (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)salt;
 
 /**
  * Called when application goes into background mode

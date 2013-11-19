@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+#import <StoreKit/StoreKit.h>
+
 /**
  * Main library class
  */
@@ -113,6 +115,15 @@
 * Identify user
 */
 + (void)identify:(NSString *)userId;
+
+/**
+* Verify payment
+*
+* @param transaction - SKPaymentTransaction object
+* @param privateKey - set in deploy setting on appmetr server
+* @return YES - if payment is valid, and NO otherwise
+*/
++ (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey;
 
 /**
  * Pull remote commands
