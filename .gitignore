@@ -20,6 +20,7 @@ ant.properties
 proguard-project.txt
 
 #IntelliJ IDEA noise
+AppMetr.xcodeproj/xcuserdata/*
 .idea
 R.java.d
 *.iml

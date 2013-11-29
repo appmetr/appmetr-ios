@@ -785,8 +785,8 @@ extern TrackingManager *gSharedManager;
     BOOL succeeded = NO;
     if([[result objectForKey:@"status"] isEqualToString:@"valid"])
     {
-        NSString *sigrature = [NSString stringWithFormat:@"%@:%@:%@", transaction.transactionIdentifier, salt, privateKey];
-        succeeded = [[result objectForKey:@"sig"] isEqualToString:[Utils md5:sigrature]];
+        NSString *signature = [Utils md5:[NSString stringWithFormat:@"%@:%@:%@", transaction.transactionIdentifier, salt, privateKey]];
+        succeeded = [[result objectForKey:@"sig"] isEqualToString:signature];
     }
 
     return succeeded;
