@@ -858,7 +858,7 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Application lifecycle
 
 - (void)applicationDidEnterBackground {
-    [mSessionData setSessionDuration:[mSessionData sessionDuration] + (long) ([[NSDate date] timeIntervalSince1970] - mStartTime)];
+    [mSessionData setSessionDuration:[mSessionData sessionDuration] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
 
 // 	do not stop the thread to avoid error:0x8badf00d aka "bad food"
 //	[self stopBackgroundThread];
@@ -873,7 +873,7 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)applicationWillTerminate {
-    [mSessionData setSessionDuration:[mSessionData sessionDuration] + (long) ([[NSDate date] timeIntervalSince1970] - mStartTime)];
+    [mSessionData setSessionDuration:[mSessionData sessionDuration] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
 
     [self stopBackgroundThread];
     [self flushData];
