@@ -153,4 +153,17 @@ TrackingManager *gSharedManager = nil;
     return result;
 }
 
++ (NSArray *)stringToArray:(NSString *)json {
+    NSError *deserializeError = nil;
+    NSArray *result = [[CJSONDeserializer deserializer] deserializeAsArray:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
+
+    if (deserializeError) {
+        NSLog(@"JSON deserializer error: %@", deserializeError.description);
+        [NSException raise:NSGenericException
+                    format:@"%@", deserializeError.description];
+    }
+
+    return result;
+}
+
 @end

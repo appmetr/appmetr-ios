@@ -152,4 +152,7 @@
 /** Return NSDictionary object which was converted from JSON string. Used for external calls */
 + (NSDictionary *)stringToDictionary:(NSString *)json;
 
+/** Return NSArray object which was converted from JSON string. Used for external calls */
++ (NSDictionary *)stringToArray:(NSString *)json;
+
 @end
