@@ -6,9 +6,9 @@
 // Configuration
 NSUInteger const kDefaultBatchFileMaxSize = 500;
 NSUInteger const kTokenSizeLimit = 50;
-NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;        // 1(minutes) * 60(seconds)
-NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;        // 1.5(minutes) * 60(seconds)
-NSTimeInterval const kPullRemoteCommandsDelay = 70.0;            // 70seconds
+NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;       // 1(minutes) * 60(seconds)
+NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;      // 1.5(minutes) * 60(seconds)
+NSTimeInterval const kPullRemoteCommandsDelay = 70.0;           // 70seconds
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
 NSString *const kAppMetrVersionString = @"1.7.0";
@@ -33,6 +33,8 @@ NSString *const kActionTrackExperiment = @"trackExperiment";
 NSString *const kActionIdentify = @"identify";
 
 NSString *const kActionCountryKeyName = @"$country";
+NSString *const kSessionDurationKeyName = @"$duration";
+
 NSString *const kPreferencesBatchNumberKeyName = @"AppMetr-BatchID";
 NSString *const kPreferencesFileIndexKeyName = @"AppMetr-FileIndex";
 NSString *const kPreferencesFileListKeyName = @"AppMetr-FileList";
@@ -41,4 +43,5 @@ NSString *const kPreferencesInstallURLKeyName = @"AppMetr-InstallURLTracked";
 NSString *const kPreferencesFirstTrackSessionKeyName = @"AppMetr-FirstTrackSessionSent";
 NSString *const kPreferencesProcessedCommandsKeyName = @"AppMetr-ProcessedCommandList";
 NSString *const kPreferencesLastProcessedCommandIdentifier = @"AppMetr-LastProcessedCommandID";
+NSString *const kPreferencesSessionDuration = @"AppMetr-SessionDuration";
 NSString *const kPreferencesUniqueInstanceIdentifierKeyName = @"AppMetr-UniqueInstanceIdentifier";

@@ -41,6 +41,8 @@ extern NSString *const kActionTrackExperiment;
 extern NSString *const kActionIdentify;
 
 extern NSString *const kActionCountryKeyName;
+extern NSString *const kSessionDurationKeyName;
+
 extern NSString *const kPreferencesBatchNumberKeyName;
 extern NSString *const kPreferencesFileIndexKeyName;
 extern NSString *const kPreferencesFileListKeyName;
@@ -49,4 +51,5 @@ extern NSString *const kPreferencesInstallURLKeyName;
 extern NSString *const kPreferencesFirstTrackSessionKeyName;
 extern NSString *const kPreferencesProcessedCommandsKeyName;
 extern NSString *const kPreferencesLastProcessedCommandIdentifier;
+extern NSString *const kPreferencesSessionDuration;
 extern NSString *const kPreferencesUniqueInstanceIdentifierKeyName;

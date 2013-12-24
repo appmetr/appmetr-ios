@@ -4,7 +4,6 @@
  */
 
 #import "TrackingManager.h"
-#import "AppMetr.h"
 
 #import "CJSONSerializer.h"
 #import "AMBase64Util.h"
@@ -98,8 +97,6 @@ extern TrackingManager *gSharedManager;
         mUploadDataTimeInterval = kDefaultUploadDataDelay;
         mBatchFileMaxSize = kDefaultBatchFileMaxSize;
 
-        mEnterBackgroundDate = [[NSDate alloc] init];
-
         //initialize main stack
         mEventStack = [[NSMutableArray alloc] init];
 
@@ -133,13 +130,14 @@ extern TrackingManager *gSharedManager;
         [notificationCenter addObserver:self selector:@selector(applicationWillTerminate)
                                    name:UIApplicationWillTerminateNotification object:nil];
 
-
         mRemoteCommandList = [[NSMutableArray alloc] init];
         NSArray *savedCommandList = [[NSUserDefaults standardUserDefaults] objectForKey:kPreferencesProcessedCommandsKeyName];
         mProcessedCommandList = (savedCommandList ? [savedCommandList mutableCopy] : [NSMutableArray new]);
 
         // starting background thread
         [self startBackgroundThread];
+
+        mStartTime = [[NSDate date] timeIntervalSince1970];
     }
 
     return self;
@@ -172,10 +170,6 @@ extern TrackingManager *gSharedManager;
 
     @synchronized (self) {
         [mCommandThread release];
-    }
-
-    @synchronized (mEnterBackgroundDate) {
-        [mEnterBackgroundDate release];
     }
 
     @synchronized (mRemoteCommandList) {
@@ -505,7 +499,7 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)attachProperties {
-    [AppMetr attachProperties:nil];
+    [self attachProperties:nil];
 }
 
 - (void)attachProperties:(NSDictionary *)properties {
@@ -516,6 +510,14 @@ extern TrackingManager *gSharedManager;
         userProperties = [[NSMutableDictionary alloc] init];
 
     [userProperties setObject:mVersion forKey:kActionVersionKeyName];
+
+    if ([userProperties objectForKey:kActionCountryKeyName] == nil) {
+        NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+        if (country) {
+            [userProperties setObject:country
+                               forKey:kActionCountryKeyName];
+        }
+    }
 
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionAttachProperties forKey:kActionKeyName];
@@ -528,19 +530,21 @@ extern TrackingManager *gSharedManager;
 
 //Track session
 - (void)trackSession {
-    [self track:[NSDictionary dictionaryWithObject:kActionTrackSession
-                                            forKey:kActionKeyName]];
-
-    if (!mSessionData.isFirstTrackSessionSent) {
-        [self flushAndUploadAllEvents];
-        mSessionData.isFirstTrackSessionSent = YES;
-    }
+    [self trackSessionWithProperties:nil];
 }
 
 - (void)trackSessionWithProperties:(NSDictionary *)properties {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackSession
                forKey:kActionKeyName];
+
+    if (properties == nil) {
+        properties = [NSMutableDictionary dictionary];
+    }
+
+    [properties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
+    [mSessionData setSessionDuration:0];
+
     [action setObject:properties
                forKey:kActionPropertiesKeyName];
 
@@ -630,28 +634,20 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
-//Track session
+//Track install broadcast
 - (void)trackInstallBroadcast {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackInstall
-               forKey:kActionKeyName];
-
-    NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-    if (country) {
-        [action setObject:country
-                   forKey:kActionCountryKeyName];
-    }
-
-    [self track:action];
-    [self flushAndUploadAllEventsImpl];
+    [self trackInstallBroadcast:nil];
 }
 
 - (void)trackInstallBroadcast:(NSDictionary *)properties {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackInstall
                forKey:kActionKeyName];
-    [action setObject:properties
-               forKey:kActionPropertiesKeyName];
+
+    if (properties != nil) {
+        [action setObject:properties
+                   forKey:kActionPropertiesKeyName];
+    }
 
     NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
     if (country) {
@@ -783,8 +779,7 @@ extern TrackingManager *gSharedManager;
                                                    logging:mDebugLoggingEnabled];
 
     BOOL succeeded = NO;
-    if([[result objectForKey:@"status"] isEqualToString:@"valid"])
-    {
+    if ([[result objectForKey:@"status"] isEqualToString:@"valid"]) {
         NSString *signature = [Utils md5:[NSString stringWithFormat:@"%@:%@:%@", transaction.transactionIdentifier, salt, privateKey]];
         succeeded = [[result objectForKey:@"sig"] isEqualToString:signature];
     }
@@ -863,22 +858,23 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Application lifecycle
 
 - (void)applicationDidEnterBackground {
-// 	do not stop the thread to avoid error:0x8badf00d aka "bad food" 
+    [mSessionData setSessionDuration:[mSessionData sessionDuration] + (long) ([[NSDate date] timeIntervalSince1970] - mStartTime)];
+
+// 	do not stop the thread to avoid error:0x8badf00d aka "bad food"
 //	[self stopBackgroundThread];
     [self flushData];
     [self closeStreams];
-
-    @synchronized (mEnterBackgroundDate) {
-        [mEnterBackgroundDate release];
-        mEnterBackgroundDate = [[NSDate alloc] init];
-    }
 }
 
 - (void)applicationWillEnterForeground {
     [self startBackgroundThread];
+
+    mStartTime = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void)applicationWillTerminate {
+    [mSessionData setSessionDuration:[mSessionData sessionDuration] + (long) ([[NSDate date] timeIntervalSince1970] - mStartTime)];
+
     [self stopBackgroundThread];
     [self flushData];
     [self closeStreams];

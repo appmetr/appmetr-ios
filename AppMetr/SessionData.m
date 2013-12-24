@@ -18,6 +18,7 @@
 @synthesize fileList = mFileList;
 @synthesize isInstallURLTracked = mIsInstallURLTracked;
 @synthesize isFirstTrackSessionSent = mIsFirstTrackSessionSent;
+@synthesize sessionDuration = mSessionDuration;
 
 #pragma mark - Initializing
 
@@ -32,6 +33,7 @@
         mFileList = [[preferences objectForKey:kPreferencesFileListKeyName] mutableCopy];
         mIsInstallURLTracked = [[preferences objectForKey:kPreferencesInstallURLKeyName] boolValue];
         mIsFirstTrackSessionSent = [[preferences objectForKey:kPreferencesFirstTrackSessionKeyName] boolValue];
+        mSessionDuration = [[preferences objectForKey:kPreferencesSessionDuration] longValue];
 
         if (!mFileList) {
             mFileList = [[NSMutableArray alloc] init];
@@ -75,6 +77,11 @@
     [SessionData setPreferences:[NSNumber numberWithBool:isFirstTrackSessionSent]
                          forKey:kPreferencesFirstTrackSessionKeyName];
     mIsFirstTrackSessionSent = isFirstTrackSessionSent;
+}
+
+- (void)setSessionDuration:(long)sessionDuration {
+    [SessionData setPreferences:[NSNumber numberWithLong:sessionDuration] forKey:kPreferencesSessionDuration];
+    mSessionDuration = sessionDuration;
 }
 
 #pragma mark - Class methods

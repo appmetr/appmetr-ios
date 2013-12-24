@@ -41,7 +41,7 @@
     NSString *mVersion;
     BOOL mTrackInstallByApp;
 
-    NSDate *mEnterBackgroundDate;
+    NSTimeInterval mStartTime;
 
     NSMutableArray *mRemoteCommandList;
     NSMutableArray *mProcessedCommandList;

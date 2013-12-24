@@ -11,6 +11,7 @@
     NSMutableArray *mFileList;
     BOOL mIsInstallURLTracked;
     BOOL mIsFirstTrackSessionSent;
+    long mSessionDuration;
 }
 
 /** The current batch index */
@@ -23,6 +24,8 @@
 @property(nonatomic, readwrite) BOOL isInstallURLTracked;
 /** Is first trackSession */
 @property(nonatomic, readwrite) BOOL isFirstTrackSessionSent;
+/** Duration of previous session */
+@property(nonatomic, readwrite) long sessionDuration;
 
 /** Returns the index of new batch */
 - (NSUInteger)nextBatchIndex;
