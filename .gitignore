@@ -27,3 +27,5 @@ R.java.d
 *.ipr
 *.iws
 atlassian-ide-plugin.xml
+*.xccheckout
+*.xcsettings
