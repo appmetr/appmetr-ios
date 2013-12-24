@@ -94,12 +94,12 @@
 /**
 * Registering options processing
 */
-+ (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId;
++ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId;
 
 /**
 * Registering options processing error
 */
-+ (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message;
++ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message;
 
 /**
 * Registering start of experiment

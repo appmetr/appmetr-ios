@@ -691,7 +691,7 @@ extern TrackingManager *gSharedManager;
     }
 }
 
-- (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId {
+- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackOptions
                forKey:kActionKeyName];
@@ -700,12 +700,12 @@ extern TrackingManager *gSharedManager;
     [action setObject:@"OK"
                forKey:@"status"];
     [action setObject:options
-               forKey:@"options"];
+			   forKey:@"options"];
 
     [self track:action];
 }
 
-- (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
+- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackOptions
                forKey:kActionKeyName];
@@ -788,7 +788,7 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)trackCommand:(NSString *)commandID status:(NSString *)status properties:(NSDictionary *)properties; {
-    NSMutableDictionary *action = (properties ? properties : [NSMutableDictionary dictionary]);
+    NSMutableDictionary *action = (properties ? [NSMutableDictionary dictionaryWithDictionary: properties] : [NSMutableDictionary dictionary]);
     [action setObject:kActionTrackCommand
                forKey:kActionKeyName];
     [action setObject:commandID

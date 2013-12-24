@@ -92,11 +92,11 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackInstallURL:url];
 }
 
-+ (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId {
++ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId {
     [[AppMetr sharedManager] trackOptions:options forCommand:commandId];
 }
 
-+ (void)trackOptions:(NSDictionary *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
++ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
     [[AppMetr sharedManager] trackOptions:options forCommand:commandId errorCode:code errorMessage:message];
 }
 
