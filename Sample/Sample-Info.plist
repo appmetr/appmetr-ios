@@ -46,8 +46,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>appmetrUrl</key>
-	<string>appmetr_server_url</string>
+	<string>https://appmetr.com/api</string>
 	<key>trackInstallByApp</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

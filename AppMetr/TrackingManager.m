@@ -542,7 +542,11 @@ extern TrackingManager *gSharedManager;
         properties = [NSMutableDictionary dictionary];
     }
 
-    [properties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
+    if (!mSessionData.isFirstTrackSessionSent) {    //Set -1 for first session
+        [properties setValue:[NSNumber numberWithLong:-1] forKey:kSessionDurationKeyName];
+    } else {
+        [properties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
+    }
     [mSessionData setSessionDuration:0];
 
     [action setObject:properties
