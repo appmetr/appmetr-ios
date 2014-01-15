@@ -126,6 +126,17 @@
 + (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey;
 
 /**
+* Verify payment
+*
+* @param productId - Product identifier
+* @param transactionId - Transaction identifier
+* @param receipt - Base64 encoded transaction receipt
+* @param privateKey - set in deploy setting on appmetr server
+* @return YES - if payment is valid, and NO otherwise
+*/
++ (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
+
+/**
  * Pull remote commands
  */
 + (void)pullCommands;

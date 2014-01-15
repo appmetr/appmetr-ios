@@ -704,7 +704,7 @@ extern TrackingManager *gSharedManager;
     [action setObject:@"OK"
                forKey:@"status"];
     [action setObject:options
-			   forKey:@"options"];
+               forKey:@"options"];
 
     [self track:action];
 }
@@ -767,32 +767,32 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
-- (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey {
+- (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey {
     NSString *purchase = [NSString stringWithFormat:@"{\"productId\":\"%@\", \"transactionId\":\"%@\"}",
-                                                    transaction.payment.productIdentifier,
-                                                    transaction.transactionIdentifier];
-    NSString *receipt = [AMBase64Util encode:[transaction transactionReceipt]];
+                                                    productId, transactionId];
+
     NSString *salt = [Utils md5:[NSString stringWithFormat:@"123567890:%ul", (NSUInteger) time(NULL)]];
 
     NSDictionary *result = [Utils sendVerifyPaymentRequest:mServerAddress
                                                      token:mToken
                                             userIdentifier:mUserID
                                                   purchase:purchase
-                                                   receipt:receipt
+                                                   receipt:base64EncodedReceipt
                                                       salt:salt
                                                    logging:mDebugLoggingEnabled];
 
     BOOL succeeded = NO;
     if ([[result objectForKey:@"status"] isEqualToString:@"valid"]) {
-        NSString *signature = [Utils md5:[NSString stringWithFormat:@"%@:%@:%@", transaction.transactionIdentifier, salt, privateKey]];
+        NSString *signature = [Utils md5:[NSString stringWithFormat:@"%@:%@:%@", transactionId, salt, privateKey]];
         succeeded = [[result objectForKey:@"sig"] isEqualToString:signature];
     }
 
     return succeeded;
 }
 
+
 - (void)trackCommand:(NSString *)commandID status:(NSString *)status properties:(NSDictionary *)properties; {
-    NSMutableDictionary *action = (properties ? [NSMutableDictionary dictionaryWithDictionary: properties] : [NSMutableDictionary dictionary]);
+    NSMutableDictionary *action = (properties ? [NSMutableDictionary dictionaryWithDictionary:properties] : [NSMutableDictionary dictionary]);
     [action setObject:kActionTrackCommand
                forKey:kActionKeyName];
     [action setObject:commandID

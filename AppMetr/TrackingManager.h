@@ -173,7 +173,7 @@
 /**
 * Verify payment
 */
-- (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)salt;
+- (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
 
 /**
  * Called when application goes into background mode

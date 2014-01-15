@@ -6,6 +6,7 @@
 #import "AppMetr.h"
 #import "CJSONDeserializer.h"
 #import "TrackingManager.h"
+#import "AMBase64Util.h"
 
 // Global variables
 TrackingManager *gSharedManager = nil;
@@ -113,7 +114,17 @@ TrackingManager *gSharedManager = nil;
 }
 
 + (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey {
-    return [[AppMetr sharedManager] verifyPayment:transaction privateKey:privateKey];
+    return [[AppMetr sharedManager] verifyPaymentWithProductId:transaction.payment.productIdentifier
+                                                 transactionId:transaction.transactionIdentifier
+                                                       receipt:[AMBase64Util encode:[transaction transactionReceipt]]
+                                                    privateKey:privateKey];
+}
+
++ (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey {
+    return [[AppMetr sharedManager] verifyPaymentWithProductId:productId
+                                                 transactionId:transactionId
+                                                       receipt:base64EncodedReceipt
+                                                    privateKey:privateKey];
 }
 
 + (void)pullCommands {
