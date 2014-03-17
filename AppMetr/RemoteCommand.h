@@ -7,21 +7,25 @@
 
 @interface RemoteCommand : NSObject {
     NSString *mCommandID;
+    NSString *mStatus;
     NSString *mType;
     NSDate *mValidTo;
     NSDictionary *mProperties;
 }
 
-/** the unique identifier of this command */
+/** unique identifier of this command */
 @property(readonly, nonatomic) NSString *uniqueIdentifier;
 
-/** the type of this command */
+/** command status */
+@property(readonly, nonatomic) NSString *status;
+
+/** command type */
 @property(readonly, nonatomic) NSString *type;
 
-/** the date, the latest of which this command can run */
+/** date, the latest of which command can run */
 @property(readonly, nonatomic) NSDate *validTo;
 
-/** the parameter of this command */
+/** properties of command */
 @property(readonly, nonatomic) NSDictionary *properties;
 
 /**

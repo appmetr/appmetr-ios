@@ -15,6 +15,7 @@
 #pragma mark - Properties
 
 @synthesize uniqueIdentifier = mCommandID;
+@synthesize status = mStatus;
 @synthesize type = mType;
 @synthesize validTo = mValidTo;
 @synthesize properties = mProperties;
@@ -47,6 +48,9 @@
             [NSException raise:@"invalidFormat" format:@"Batch does not contain valid 'commandId'"];
         }
 
+        mStatus = [[serialized objectForKey:@"status"] retain];
+        [self validateParameter:mStatus name:@"status" requiredClass:[NSString class]];
+
         mType = [[serialized objectForKey:@"type"] retain];
         [self validateParameter:mType name:@"type" requiredClass:[NSString class]];
 
@@ -73,6 +77,7 @@
 
 - (void)dealloc {
     [mCommandID release];
+    [mStatus release];
     [mType release];
     [mValidTo release];
     [mProperties release];

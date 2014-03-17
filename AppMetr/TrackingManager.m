@@ -757,6 +757,17 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
+- (void)trackState:(NSDictionary *)state {
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionTrackState
+               forKey:kActionKeyName];
+    [action setObject:state
+               forKey:@"state"];
+
+    [self track:action];
+}
+
+
 - (void)identify:(NSString *)userId {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionIdentify
@@ -918,6 +929,13 @@ extern TrackingManager *gSharedManager;
 - (void)processPacket:(RemoteCommandPacket *)packet {
     BOOL res = NO;
     for (RemoteCommand *command in packet.commands) {
+
+        //Skip already processed commands (add this when implement identify functional)
+        if (![@"not_sent" isEqualToString:command.status] &&
+                ![@"sent" isEqualToString:command.status]) {
+            continue;
+        }
+
         [self addRemoteCommand:command];
         res = true;
         self.lastReceivedCommandID = command.uniqueIdentifier;

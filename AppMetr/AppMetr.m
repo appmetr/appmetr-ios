@@ -109,6 +109,10 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackExperimentEnd:experiment];
 }
 
++ (void)trackState:(NSDictionary *)state {
+    [[AppMetr sharedManager] trackState:state];
+}
+
 + (void)identify:(NSString *)userId {
     [[AppMetr sharedManager] identify:userId];
 }
