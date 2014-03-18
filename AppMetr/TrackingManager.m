@@ -931,7 +931,7 @@ extern TrackingManager *gSharedManager;
     for (RemoteCommand *command in packet.commands) {
 
         //Skip already processed commands (add this when implement identify functional)
-        if (![@"not_sent" isEqualToString:command.status] &&
+        if (![@"re_sent" isEqualToString:command.status] &&
                 ![@"sent" isEqualToString:command.status]) {
             continue;
         }
