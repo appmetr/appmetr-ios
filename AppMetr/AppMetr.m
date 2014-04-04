@@ -157,7 +157,7 @@ TrackingManager *gSharedManager = nil;
 
 + (NSDictionary *)stringToDictionary:(NSString *)json {
     NSError *deserializeError = nil;
-    NSDictionary *result = [[CJSONDeserializer deserializer] deserializeAsDictionary:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
+    NSDictionary *result = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
 
     if (deserializeError) {
         NSLog(@"JSON deserializer error: %@", deserializeError.description);
@@ -170,7 +170,7 @@ TrackingManager *gSharedManager = nil;
 
 + (NSArray *)stringToArray:(NSString *)json {
     NSError *deserializeError = nil;
-    NSArray *result = [[CJSONDeserializer deserializer] deserializeAsArray:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
+    NSArray *result = [[AMCJSONDeserializer deserializer] deserializeAsArray:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
 
     if (deserializeError) {
         NSLog(@"JSON deserializer error: %@", deserializeError.description);

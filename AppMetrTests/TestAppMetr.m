@@ -308,7 +308,7 @@
     NSData *decodedData = [AMBase64Util decode:encodeBatchData];
 
     NSError *error = nil;
-    NSDictionary *bathes = [[CJSONDeserializer deserializer] deserializeAsDictionary:decodedData
+    NSDictionary *bathes = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:decodedData
                                                                                error:&error];
     STAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
 
@@ -352,7 +352,7 @@
     NSData *decodedData = [AMBase64Util decode:content];
 
     error = nil;
-    NSDictionary *batches = [[CJSONDeserializer deserializer] deserializeAsDictionary:decodedData
+    NSDictionary *batches = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:decodedData
                                                                                 error:&error];
     STAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
 
@@ -538,7 +538,7 @@
                                                         "\"isLastCommandsBatch\":true}",
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) + 100000),
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) + 100000)];
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
 
@@ -561,7 +561,7 @@
                                                         "\"isLastCommandsBatch\":true}",
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) + 100000),
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) - 100000)];
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
 
@@ -584,7 +584,7 @@
                                                         "\"isLastCommandsBatch\":true}",
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) + 100000),
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) - 100000)];
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
     STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");

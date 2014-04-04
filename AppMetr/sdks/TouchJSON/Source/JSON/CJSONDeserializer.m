@@ -29,17 +29,17 @@
 
 #import "CJSONDeserializer.h"
 
-NSString *const kJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
+NSString *const AMkJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
 
-@interface CJSONDeserializer ()
+@interface AMCJSONDeserializer ()
 @end
 
-@implementation CJSONDeserializer
+@implementation AMCJSONDeserializer
 
 @synthesize scanner;
 @synthesize options;
 
-+ (CJSONDeserializer *)deserializer {
++ (AMCJSONDeserializer *)deserializer {
     return ([[[self alloc] init] autorelease]);
 }
 
@@ -58,9 +58,9 @@ NSString *const kJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
 
 #pragma mark -
 
-- (CJSONScanner *)scanner {
+- (AMCJSONScanner *)scanner {
     if (scanner == NULL) {
-        scanner = [[CJSONScanner alloc] init];
+        scanner = [[AMCJSONScanner alloc] init];
     }
     return (scanner);
 }
@@ -88,7 +88,7 @@ NSString *const kJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
 - (id)deserialize:(NSData *)inData error:(NSError **)outError {
     if (inData == NULL || [inData length] == 0) {
         if (outError)
-            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+            *outError = [NSError errorWithDomain:AMkJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
 
         return (NULL);
     }
@@ -105,7 +105,7 @@ NSString *const kJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
 - (id)deserializeAsDictionary:(NSData *)inData error:(NSError **)outError {
     if (inData == NULL || [inData length] == 0) {
         if (outError)
-            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+            *outError = [NSError errorWithDomain:AMkJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
 
         return (NULL);
     }
@@ -122,7 +122,7 @@ NSString *const kJSONDeserializerErrorDomain = @"CJSONDeserializerErrorDomain";
 - (id)deserializeAsArray:(NSData *)inData error:(NSError **)outError {
     if (inData == NULL || [inData length] == 0) {
         if (outError)
-            *outError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+            *outError = [NSError errorWithDomain:AMkJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
 
         return (NULL);
     }

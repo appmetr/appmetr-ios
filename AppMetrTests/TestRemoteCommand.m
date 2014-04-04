@@ -14,7 +14,7 @@
             "\"conditions\": { \"validTo\":1345790143}, "
             "\"properties\": { \"prop1\" : 10, \"prop4\" : {\"sub1\":1, \"sub2\":2}}}";
 
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     RemoteCommand *command = [RemoteCommand commandWithSerializedObject:json];
 
@@ -35,7 +35,7 @@
     NSString *data = @"{ \"commandId\" : \"cmd30120824112718\", \"sendDate\":0, \"type\":\"promo.spentCurrencyDiscount\", "
             "\"conditions\": {\"validTo\":1445792143}}";
 
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     RemoteCommand *command = [RemoteCommand commandWithSerializedObject:json];
 
@@ -49,7 +49,7 @@
 
 - (void)testInvalidType {
     NSString *data = @"{\"commandId\" : \"cmd30120824112718\", \"conditions\": {\"validTo\":1445792143}}";
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertThrows([RemoteCommand commandWithSerializedObject:json], @"Invalid command") ;
 
@@ -66,7 +66,7 @@
 
 - (void)testInvalidCondition {
     NSString *data = @"{\"commandId\" : \"cmd30120824112718\", \"sendDate\":0, \"type\":\"promo.spentCurrencyDiscount\"}";
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertThrows([RemoteCommand commandWithSerializedObject:json], @"Invalid command") ;
 
@@ -83,7 +83,7 @@
 
 - (void)testInvalidValidTo {
     NSString *data = @"{\"commandId\" : \"cmd30120824112718\", \"sendDate\":0, \"type\":\"promo.spentCurrencyDiscount\",\"conditions\":{}}";
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertThrows([RemoteCommand commandWithSerializedObject:json], @"Invalid command") ;
 
@@ -100,7 +100,7 @@
 
 - (void)testInvalidSendDate {
     NSString *data = @"{\"commandId\" : \"cmd30120824112718\", \"type\":\"promo.spentCurrencyDiscount\",\"conditions\":{}}";
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     STAssertThrows([RemoteCommand commandWithSerializedObject:json], @"Invalid command") ;
 

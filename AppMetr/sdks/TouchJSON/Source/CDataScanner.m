@@ -29,7 +29,7 @@
 
 #import "CDataScanner.h"
 
-@interface CDataScanner ()
+@interface AMCDataScanner ()
 @end
 
 #pragma mark -
@@ -45,7 +45,7 @@ inline static unichar CharacterAtPointer(void *start) {
 
 static NSCharacterSet *sDoubleCharacters = NULL;
 
-@implementation CDataScanner
+@implementation AMCDataScanner
 
 - (id)init {
     if ((self = [super init]) != NULL) {

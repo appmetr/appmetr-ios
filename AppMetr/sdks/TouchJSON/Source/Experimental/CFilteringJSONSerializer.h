@@ -12,7 +12,7 @@ typedef NSString *(^JSONConversionTest)(id inObject);
 
 typedef id (^JSONConversionConverter)(id inObject); // TODO replace with value transformers.
 
-@interface CFilteringJSONSerializer : CJSONSerializer {
+@interface AMCFilteringJSONSerializer : AMCJSONSerializer {
     NSSet *tests;
     NSDictionary *convertersByName;
 }

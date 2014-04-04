@@ -8,12 +8,12 @@
 
 #import "CJSONSerializedData.h"
 
-@interface CJSONSerializedData ()
+@interface AMCJSONSerializedData ()
 @end
 
 #pragma mark -
 
-@implementation CJSONSerializedData
+@implementation AMCJSONSerializedData
 
 @synthesize data;
 

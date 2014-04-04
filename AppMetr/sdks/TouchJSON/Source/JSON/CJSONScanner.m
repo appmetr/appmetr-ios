@@ -35,7 +35,7 @@
 #define TREAT_COMMENTS_AS_WHITESPACE 0
 #endif // !defined(TREAT_COMMENTS_AS_WHITESPACE)
 
-NSString *const kJSONScannerErrorDomain = @"kJSONScannerErrorDomain";
+NSString *const AMkJSONScannerErrorDomain = @"kJSONScannerErrorDomain";
 
 inline static int HexToInt(char inCharacter) {
     int theValues[] = {0x0 /* 48 '0' */, 0x1 /* 49 '1' */, 0x2 /* 50 '2' */, 0x3 /* 51 '3' */, 0x4 /* 52 '4' */, 0x5 /* 53 '5' */, 0x6 /* 54 '6' */, 0x7 /* 55 '7' */, 0x8 /* 56 '8' */, 0x9 /* 57 '9' */, -1 /* 58 ':' */, -1 /* 59 ';' */, -1 /* 60 '<' */, -1 /* 61 '=' */, -1 /* 62 '>' */, -1 /* 63 '?' */, -1 /* 64 '@' */, 0xa /* 65 'A' */, 0xb /* 66 'B' */, 0xc /* 67 'C' */, 0xd /* 68 'D' */, 0xe /* 69 'E' */, 0xf /* 70 'F' */, -1 /* 71 'G' */, -1 /* 72 'H' */, -1 /* 73 'I' */, -1 /* 74 'J' */, -1 /* 75 'K' */, -1 /* 76 'L' */, -1 /* 77 'M' */, -1 /* 78 'N' */, -1 /* 79 'O' */, -1 /* 80 'P' */, -1 /* 81 'Q' */, -1 /* 82 'R' */, -1 /* 83 'S' */, -1 /* 84 'T' */, -1 /* 85 'U' */, -1 /* 86 'V' */, -1 /* 87 'W' */, -1 /* 88 'X' */, -1 /* 89 'Y' */, -1 /* 90 'Z' */, -1 /* 91 '[' */, -1 /* 92 '\' */, -1 /* 93 ']' */, -1 /* 94 '^' */, -1 /* 95 '_' */, -1 /* 96 '`' */, 0xa /* 97 'a' */, 0xb /* 98 'b' */, 0xc /* 99 'c' */, 0xd /* 100 'd' */, 0xe /* 101 'e' */, 0xf /* 102 'f' */,};
@@ -48,7 +48,7 @@ inline static int HexToInt(char inCharacter) {
 static id kNSYES = NULL;
 static id kNSNO = NULL;
 
-@interface CJSONScanner ()
+@interface AMCJSONScanner ()
 - (BOOL)scanNotQuoteCharactersIntoString:(NSString **)outValue;
 
 - (NSError *)error:(NSInteger)inCode description:(NSString *)inDescription;
@@ -56,7 +56,7 @@ static id kNSNO = NULL;
 
 #pragma mark -
 
-@implementation CJSONScanner
+@implementation AMCJSONScanner
 
 @synthesize strictEscapeCodes;
 @synthesize nullObject;
@@ -194,7 +194,7 @@ static id kNSNO = NULL;
                         @"Could not scan object. Character not a valid JSON character.", NSLocalizedDescriptionKey,
                         NULL];
                 [theUserInfo addEntriesFromDictionary:self.userInfoForScanLocation];
-                *outError = [NSError errorWithDomain:kJSONScannerErrorDomain code:kJSONScannerErrorCode_CouldNotScanObject userInfo:theUserInfo];
+                *outError = [NSError errorWithDomain:AMkJSONScannerErrorDomain code:kJSONScannerErrorCode_CouldNotScanObject userInfo:theUserInfo];
             }
             break;
     }
@@ -332,7 +332,7 @@ static id kNSNO = NULL;
                         @"Could not scan array. Could not scan a value.", NSLocalizedDescriptionKey,
                         NULL];
                 [theUserInfo addEntriesFromDictionary:self.userInfoForScanLocation];
-                *outError = [NSError errorWithDomain:kJSONScannerErrorDomain code:kJSONScannerErrorCode_ArrayValueScanFailed userInfo:theUserInfo];
+                *outError = [NSError errorWithDomain:AMkJSONScannerErrorDomain code:kJSONScannerErrorCode_ArrayValueScanFailed userInfo:theUserInfo];
             }
             [theArray release];
             return (NO);
@@ -549,7 +549,7 @@ static id kNSNO = NULL;
             inDescription, NSLocalizedDescriptionKey,
             NULL];
     [theUserInfo addEntriesFromDictionary:self.userInfoForScanLocation];
-    NSError *theError = [NSError errorWithDomain:kJSONScannerErrorDomain code:inCode userInfo:theUserInfo];
+    NSError *theError = [NSError errorWithDomain:AMkJSONScannerErrorDomain code:inCode userInfo:theUserInfo];
     return (theError);
 }
 

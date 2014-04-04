@@ -35,12 +35,12 @@ static NSData *kNULL = NULL;
 static NSData *kFalse = NULL;
 static NSData *kTrue = NULL;
 
-@implementation CJSONSerializer
+@implementation AMCJSONSerializer
 
 @synthesize options;
 
 + (void)initialize {
-    if (self == [CJSONSerializer class]) {
+    if (self == [AMCJSONSerializer class]) {
         NSAutoreleasePool *thePool = [[NSAutoreleasePool alloc] init];
 
         if (kNULL == NULL)
@@ -54,7 +54,7 @@ static NSData *kTrue = NULL;
     }
 }
 
-+ (CJSONSerializer *)serializer {
++ (AMCJSONSerializer *)serializer {
     return ([[[self alloc] init] autorelease]);
 }
 

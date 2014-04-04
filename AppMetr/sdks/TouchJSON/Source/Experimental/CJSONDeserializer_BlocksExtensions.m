@@ -8,13 +8,13 @@
 
 #import "CJSONDeserializer_BlocksExtensions.h"
 
-@implementation CJSONDeserializer (CJSONDeserializer_BlocksExtensions)
+@implementation AMCJSONDeserializer (CJSONDeserializer_BlocksExtensions)
 
 - (void)deserializeAsDictionary:(NSData *)inData completionBlock:(void (^)(id result, NSError *error))block {
 
     NSError *noDataError = nil;
     if (inData == NULL || [inData length] == 0) {
-        noDataError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+        noDataError = [NSError errorWithDomain:AMkJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
         block(nil, noDataError);
     }
 
@@ -38,7 +38,7 @@
 
     NSError *nullInDataError = nil;
     if (inData == NULL || [inData length] == 0) {
-        nullInDataError = [NSError errorWithDomain:kJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
+        nullInDataError = [NSError errorWithDomain:AMkJSONDeserializerErrorDomain code:kJSONScannerErrorCode_NothingToScan userInfo:NULL];
         block(nil, nullInDataError);
     }
 

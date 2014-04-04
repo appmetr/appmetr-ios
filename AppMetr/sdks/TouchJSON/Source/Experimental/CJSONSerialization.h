@@ -21,7 +21,7 @@ enum {
 typedef NSUInteger EJSONWritingOptions;
 
 
-@interface CJSONSerialization : NSObject {
+@interface AMCJSONSerialization : NSObject {
 
 }
 
