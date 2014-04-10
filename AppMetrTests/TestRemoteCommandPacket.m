@@ -17,7 +17,7 @@
             "{\"commandId\":\"cmd30120824112718\",\"type\":\"promo.spentCurrencyDiscount\",\"sendDate\":0,\"conditions\": {\"validTo\":1345792143}}],"
             "\"isLastCommandsBatch\":true}";
 
-    NSDictionary *json1 = [[CJSONDeserializer deserializer] deserialize:[data1 dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json1 = [[AMCJSONDeserializer deserializer] deserialize:[data1 dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
 
     RemoteCommandPacket *packet1 = [RemoteCommandPacket packetWithSerializedObject:json1 andDelegate:nil];
@@ -31,7 +31,7 @@
             "\"properties\":{\"prop1\":10, \"prop2\":[1,2,3], \"prop3\":true, \"prop4\" : {\"sub1\":1, \"sub2\":2}}}],"
             "\"isLastCommandsBatch\":false}";
 
-    NSDictionary *json2 = [[CJSONDeserializer deserializer] deserialize:[data2 dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json2 = [[AMCJSONDeserializer deserializer] deserialize:[data2 dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
     RemoteCommandPacket *packet2 = [RemoteCommandPacket packetWithSerializedObject:json2 andDelegate:nil];
     STAssertEquals((NSUInteger) 1, [packet2.commands count], @"Invalid commands");
@@ -44,7 +44,7 @@
             "\"commandId\":\"00000001348839956434#00000000005523218873\",\"sendDate\":0,\"properties\":{},\"modifyDate\":1348839956434,"
             "\"createDate\":1348839956434,\"type\":\"enableBuiltInPromos\"}]}";
 
-    NSDictionary *json = [[CJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
+    NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
 
     RemoteCommandPacket *packet = [RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil];

@@ -29,7 +29,7 @@
 
 #import "CDataScanner.h"
 
-@interface CDataScanner (CDataScanner_Extensions)
+@interface AMCDataScanner (AMCDataScanner_Extensions)
 
 - (BOOL)scanCStyleComment:(NSString **)outComment;
 

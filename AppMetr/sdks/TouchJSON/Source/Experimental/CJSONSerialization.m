@@ -11,23 +11,23 @@
 #import "CJSONDeserializer.h"
 #import "CJSONSerializer.h"
 
-@implementation CJSONSerialization
+@implementation AMCJSONSerialization
 
 + (BOOL)isValidJSONObject:(id)obj {
-    CJSONSerializer *theSerializer = [CJSONSerializer serializer];
+    AMCJSONSerializer *theSerializer = [AMCJSONSerializer serializer];
     return ([theSerializer isValidJSONObject:obj]);
 }
 
 + (NSData *)dataWithJSONObject:(id)obj options:(EJSONWritingOptions)opt error:(NSError **)error {
 #pragma unused (opt)
 
-    CJSONSerializer *theSerializer = [CJSONSerializer serializer];
+    AMCJSONSerializer *theSerializer = [AMCJSONSerializer serializer];
     NSData *theData = [theSerializer serializeObject:obj error:error];
     return (theData);
 }
 
 + (id)JSONObjectWithData:(NSData *)data options:(EJSONReadingOptions)opt error:(NSError **)error {
-    CJSONDeserializer *theDeserializer = [CJSONDeserializer deserializer];
+    AMCJSONDeserializer *theDeserializer = [AMCJSONDeserializer deserializer];
     theDeserializer.options = (opt & kCJSONReadingMutableContainers ? 0 : kJSONDeserializationOptions_MutableContainers)
             | (opt & kCJSONReadingMutableLeaves ? 0 : kJSONDeserializationOptions_MutableLeaves);
     id theObject = [theDeserializer deserialize:data error:error];

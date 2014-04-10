@@ -35,13 +35,13 @@ enum {
 typedef NSUInteger EJSONSerializationOptions;
 
 
-@interface CJSONSerializer : NSObject {
+@interface AMCJSONSerializer : NSObject {
     EJSONSerializationOptions options;
 }
 
 @property(readwrite, nonatomic, assign) EJSONSerializationOptions options;
 
-+ (CJSONSerializer *)serializer;
++ (AMCJSONSerializer *)serializer;
 
 - (BOOL)isValidJSONObject:(id)inObject;
 

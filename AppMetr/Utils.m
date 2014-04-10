@@ -196,7 +196,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
         // is HTTP error?
         if (statusCode < 400) {
             NSError *jsonError = nil;
-            serverResponse = [[CJSONDeserializer deserializer] deserializeAsDictionary:responseData
+            serverResponse = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:responseData
                                                                                  error:&jsonError];
 
             if (jsonError) {
@@ -471,7 +471,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     }
 
     NSError *jsonError = nil;
-    NSDictionary *serverResponse = [[CJSONDeserializer deserializer] deserializeAsDictionary:responseData
+    NSDictionary *serverResponse = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:responseData
                                                                                        error:&jsonError];
     if (jsonError) {
         [JSONException raiseWithError:jsonError];

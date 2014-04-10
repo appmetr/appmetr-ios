@@ -8,7 +8,7 @@
 
 #import "CFilteringJSONSerializer.h"
 
-@implementation CFilteringJSONSerializer
+@implementation AMCFilteringJSONSerializer
 
 @synthesize tests;
 @synthesize convertersByName;

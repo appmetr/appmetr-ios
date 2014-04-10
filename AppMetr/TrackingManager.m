@@ -356,7 +356,7 @@ extern TrackingManager *gSharedManager;
     }
 
     NSError *serializeError = nil;
-    NSData *data = [[CJSONSerializer serializer] serializeDictionary:batches
+    NSData *data = [[AMCJSONSerializer serializer] serializeDictionary:batches
                                                                error:&serializeError];
     if (serializeError) {
         NSLog(@"JSON serializer error: %@", serializeError.description);
