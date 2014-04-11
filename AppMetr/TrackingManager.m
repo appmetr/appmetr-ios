@@ -270,14 +270,14 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)runFromThread:(id)object {
+    // first send app start event
+    [self trackAppStart];
+
     // synchronize with main thread
     [mThreadCondition lock];
     // unlock main thread
     [mThreadCondition broadcast];
     [mThreadCondition unlock];
-
-    // first send app start event
-    [self trackAppStart];
 
     [self createTimers];
 
