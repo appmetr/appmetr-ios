@@ -136,9 +136,9 @@
 - (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties;
 
 /**
- * Registering state of the game
- */
-- (void)trackGameState:(NSString *)state properties:(NSDictionary *)properties;
+* Registering advertising event track
+*/
+- (void)trackAdsEvent:(NSString *)event;
 
 /**
  * Registering the URL of game installation

@@ -61,7 +61,6 @@ extern TrackingManager *gSharedManager;
 
 - (void)trackAppStart;
 
-
 - (void)flushAndUploadAllEventsImpl;
 
 - (void)pullCommands;
@@ -498,6 +497,47 @@ extern TrackingManager *gSharedManager;
     [updatedTrackProperties release];
 }
 
+//Track install broadcast
+- (void)trackInstallBroadcast {
+    [self trackInstallBroadcast:nil];
+}
+
+- (void)trackInstallBroadcast:(NSDictionary *)properties {
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionTrackInstall
+               forKey:kActionKeyName];
+
+    if (properties != nil) {
+        [action setObject:properties
+                   forKey:kActionPropertiesKeyName];
+    }
+
+    NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+    if (country) {
+        [action setObject:country
+                   forKey:kActionCountryKeyName];
+    }
+
+    [self track:action];
+    [self flushAndUploadAllEventsImpl];
+}
+
+- (void)trackAppStart {
+    // Skip track session and install if it doesn't set in plist file or set to true
+    if (mTrackInstallByApp) {
+        return;
+    }
+
+    NSUInteger batchIndex = 0;
+    @synchronized (mSessionData) {
+        batchIndex = mSessionData.batchIndex;
+    }
+
+    if (!batchIndex) {
+        [self trackInstallBroadcast];
+    }
+}
+
 - (void)attachProperties {
     [self attachProperties:nil];
 }
@@ -626,57 +666,16 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
-- (void)trackGameState:(NSString *)state properties:(NSDictionary *)properties {
+//Track custom event
+- (void)trackAdsEvent:(NSString *)event {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackGameState
-               forKey:kActionKeyName];
-    [action setObject:state
-               forKey:@"state"];
-    [action setObject:properties
-               forKey:kActionPropertiesKeyName];
-
-    [self track:action];
-}
-
-//Track install broadcast
-- (void)trackInstallBroadcast {
-    [self trackInstallBroadcast:nil];
-}
-
-- (void)trackInstallBroadcast:(NSDictionary *)properties {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackInstall
+    [action setObject:kActionTrackAdsEvent
                forKey:kActionKeyName];
 
-    if (properties != nil) {
-        [action setObject:properties
-                   forKey:kActionPropertiesKeyName];
-    }
-
-    NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-    if (country) {
-        [action setObject:country
-                   forKey:kActionCountryKeyName];
-    }
+    [action setObject:event
+               forKey:@"event"];
 
     [self track:action];
-    [self flushAndUploadAllEventsImpl];
-}
-
-- (void)trackAppStart {
-    // Skip track session and install if it doesn't set in plist file or set to true
-    if (mTrackInstallByApp) {
-        return;
-    }
-
-    NSUInteger batchIndex = 0;
-    @synchronized (mSessionData) {
-        batchIndex = mSessionData.batchIndex;
-    }
-
-    if (!batchIndex) {
-        [self trackInstallBroadcast];
-    }
 }
 
 - (void)trackInstallURL:(NSURL *)url {

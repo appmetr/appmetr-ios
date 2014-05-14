@@ -32,7 +32,7 @@ extern NSString *const kActionTrackPayment;
 extern NSString *const kActionPropertiesKeyName;
 extern NSString *const kActionVersionKeyName;
 extern NSString *const kActionTrackInstall;
-extern NSString *const kActionTrackGameState;
+extern NSString *const kActionTrackAdsEvent;
 extern NSString *const kActionTrackInstallURL;
 extern NSString *const kActionTrackCommand;
 extern NSString *const kActionTrackCommandBatch;
