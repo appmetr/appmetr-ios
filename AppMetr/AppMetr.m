@@ -85,8 +85,8 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackPayment:payment properties:properties];
 }
 
-+ (void)trackAdsEvent:(NSString *)event {
-    [[AppMetr sharedManager] trackAdsEvent:event];
++ (void)trackAdsEvent:(NSString *)eventName {
+    [[AppMetr sharedManager] trackAdsEvent:eventName];
 }
 
 + (void)trackInstallURL:(NSURL *)url {

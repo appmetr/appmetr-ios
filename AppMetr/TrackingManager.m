@@ -667,12 +667,12 @@ extern TrackingManager *gSharedManager;
 }
 
 //Track custom event
-- (void)trackAdsEvent:(NSString *)event {
+- (void)trackAdsEvent:(NSString *)eventName {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackAdsEvent
                forKey:kActionKeyName];
 
-    [action setObject:event
+    [action setObject:eventName
                forKey:@"event"];
 
     [self track:action];

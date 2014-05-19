@@ -84,7 +84,7 @@
 /**
 * Registering advertising event track
 */
-+ (void)trackAdsEvent:(NSString *)event;
++ (void)trackAdsEvent:(NSString *)eventName;
 
 /**
  * Registering the URL of game installation
