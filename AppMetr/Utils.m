@@ -163,7 +163,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
      userIdentifier:(NSString *)userIdentifier
             batches:(NSData *)batches
             logging:(BOOL)logging {
-    NSString *contentLength = [NSString stringWithFormat:@"%u", batches.length];
+    NSString *contentLength = [NSString stringWithFormat:@"%d", (unsigned int)batches.length];
     NSString *fullAddress = [Utils requestParametersForMethod:kMethodTrack
                                                       address:address
                                                         token:token
@@ -205,7 +205,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
             }
         }
         else {
-            NSLog(@"Server error code %d", statusCode);
+            NSLog(@"Server error code %d", (int)statusCode);
             return NO;
         }
     }
@@ -348,7 +348,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
     strm.next_in = (Bytef *) data.bytes;
-    strm.avail_in = data.length;
+    strm.avail_in = (unsigned int)data.length;
     strm.next_out = compressedBuffer;
     strm.avail_out = destinationLength;
 
@@ -424,7 +424,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
 + (NSString *)md5:(NSString *)input {
     const char *cStr = [input UTF8String];
     unsigned char digest[16];
-    CC_MD5(cStr, strlen(cStr), digest);
+    CC_MD5(cStr, (unsigned int)strlen(cStr), digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
 

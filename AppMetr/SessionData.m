@@ -53,12 +53,12 @@
 
 - (NSUInteger)nextBatchIndex {
     NSUInteger ret = mBatchIndex;
-    [SessionData setPreferences:[NSNumber numberWithUnsignedInt:(++mBatchIndex)] forKey:kPreferencesBatchNumberKeyName];
+    [SessionData setPreferences:[NSNumber numberWithUnsignedInt:((unsigned int)++mBatchIndex)] forKey:kPreferencesBatchNumberKeyName];
     return ret;
 }
 
 - (NSUInteger)nextFileIndex {
-    [SessionData setPreferences:[NSNumber numberWithUnsignedInt:(++mFileIndex)] forKey:kPreferencesFileIndexKeyName];
+    [SessionData setPreferences:[NSNumber numberWithUnsignedInt:((unsigned int)++mFileIndex)] forKey:kPreferencesFileIndexKeyName];
     return mFileIndex;
 }
 

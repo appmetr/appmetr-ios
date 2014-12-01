@@ -8,7 +8,7 @@
 /**
  * Main library class
  */
-@interface AppMetr
+@interface AppMetr : NSObject
 
 /**
  * Setting up the application token.

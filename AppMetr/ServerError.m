@@ -16,7 +16,7 @@
 }
 
 + (void)raiseWithStatusCore:(NSInteger)statusCode {
-    [self raiseWithReason:[NSString stringWithFormat:@"Server return error with code %d", statusCode]];
+    [self raiseWithReason:[NSString stringWithFormat:@"Server return error with code %d", (int)statusCode]];
 }
 
 @end

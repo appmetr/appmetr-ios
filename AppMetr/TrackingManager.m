@@ -216,7 +216,7 @@ extern TrackingManager *gSharedManager;
     if (!mToken) {
         if (token.length > kTokenSizeLimit) {
             [NSException raise:NSInvalidArgumentException
-                        format:@"Invalid token. length should be no more than %u", kTokenSizeLimit];
+                        format:@"Invalid token. length should be no more than %d", (unsigned int)kTokenSizeLimit];
         }
         [mToken release];
         mToken = [token copy];
@@ -781,7 +781,7 @@ extern TrackingManager *gSharedManager;
     NSString *purchase = [NSString stringWithFormat:@"{\"productId\":\"%@\", \"transactionId\":\"%@\"}",
                                                     productId, transactionId];
 
-    NSString *salt = [Utils md5:[NSString stringWithFormat:@"123567890:%ul", (NSUInteger) time(NULL)]];
+    NSString *salt = [Utils md5:[NSString stringWithFormat:@"123567890:%ldl", time(NULL)]];
 
     NSDictionary *result = [Utils sendVerifyPaymentRequest:mServerAddress
                                                      token:mToken

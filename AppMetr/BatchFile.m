@@ -32,9 +32,9 @@ NSString *const kKoma = @",";
 
         NSArray *writablePaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString *documentsPath = [writablePaths lastObject];
-        mFullPath = [[documentsPath stringByAppendingFormat:@"/batch%u", index] retain];
+        mFullPath = [[documentsPath stringByAppendingFormat:@"/batch%u", (unsigned int)index] retain];
         if (!mFullPath) {
-            mFullPath = [[[[NSBundle mainBundle] resourcePath] stringByAppendingFormat:@"/batch%u", index] retain];
+            mFullPath = [[[[NSBundle mainBundle] resourcePath] stringByAppendingFormat:@"/batch%u", (unsigned int)index] retain];
         }
 
         mOutputStream = [[NSOutputStream alloc] initToFileAtPath:mFullPath append:NO];
