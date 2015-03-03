@@ -213,15 +213,24 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Setting up
 
 - (void)setupWithToken:(NSString *)token delegate:(id)delegate commandsThread:(NSThread *)thread {
-    if (!mToken) {
+    if (mToken == nil) {
         if (token.length > kTokenSizeLimit) {
             [NSException raise:NSInvalidArgumentException
                         format:@"Invalid token. length should be no more than %d", (unsigned int)kTokenSizeLimit];
         }
+        else if ([token isKindOfClass:[NSNull class]]) {
+            [NSException raise:NSInvalidArgumentException
+                        format:@"Invalid token. token should not be null: %@", token];
+        }
+    }
+    else {
         [mToken release];
+    }
+    
+    if (token != nil && ![token isKindOfClass:[NSNull class]]) {
         mToken = [token copy];
     }
-
+    
     self.delegate = delegate;
     [self setCommandThread:thread];
 }
@@ -392,6 +401,11 @@ extern TrackingManager *gSharedManager;
 }
 
 - (NSUInteger)uploadData {
+    if (mToken == nil || [mToken isKindOfClass:[NSNull class]]) {
+        NSLog(@"Call setupWithToken before uploadData");
+        return 0;
+    }
+    
     NSUInteger ret = 0;
     NSArray *fileList;
     @synchronized (mSessionData) {

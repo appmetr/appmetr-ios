@@ -36,7 +36,6 @@
     NSLock *mBatchFileLock;
 
     NSString *mServerAddress;
-    NSString *mToken;
     NSString *mUserID;
     NSString *mVersion;
     BOOL mTrackInstallByApp;
