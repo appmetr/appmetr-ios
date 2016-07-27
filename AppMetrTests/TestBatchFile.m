@@ -47,7 +47,7 @@ const NSUInteger kTestBatchFileIndex = 9999999;
 - (void)testFilePath {
     BatchFile *batchFile = [[BatchFile alloc] initWithIndex:kTestBatchFileIndex];
 
-    STAssertTrue([batchFile.fullPath isEqualToString:[TestBatchFile testFilePath]],
+    XCTAssertTrue([batchFile.fullPath isEqualToString:[TestBatchFile testFilePath]],
     @"Expected path: %@, but got %@", [TestBatchFile testFilePath], batchFile.fullPath);
 
     [batchFile release];
@@ -57,7 +57,7 @@ const NSUInteger kTestBatchFileIndex = 9999999;
     BatchFile *batchFile = [[BatchFile alloc] initWithIndex:kTestBatchFileIndex];
 
 
-    STAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:batchFile.fullPath],
+    XCTAssertTrue([[NSFileManager defaultManager] fileExistsAtPath:batchFile.fullPath],
     @"File not exist: %@", batchFile.fullPath);
 
     [batchFile release];
@@ -67,12 +67,12 @@ const NSUInteger kTestBatchFileIndex = 9999999;
 //{
 //	BatchFile* batchFile = [[BatchFile alloc]initWithIndex:kTestBatchFileIndex];
 //
-//	STAssertNoThrow([batchFile addChunk:@"test1"], @"Failed write to file: %@", batchFile.fullPath);
-//	STAssertEquals((NSUInteger)5, batchFile.contentSize,
+//	XCTAssertNoThrow([batchFile addChunk:@"test1"], @"Failed write to file: %@", batchFile.fullPath);
+//	XCTAssertEqual((NSUInteger)5, batchFile.contentSize,
 //	@"Invalid content size, expected 5, but is %u", batchFile.contentSize);
 //
-//	STAssertNoThrow([batchFile addChunk:@"test2"], @"Failed write to file: %@", batchFile.fullPath);
-//	STAssertEquals((NSUInteger)11, batchFile.contentSize,
+//	XCTAssertNoThrow([batchFile addChunk:@"test2"], @"Failed write to file: %@", batchFile.fullPath);
+//	XCTAssertEqual((NSUInteger)11, batchFile.contentSize,
 //	@"Invalid content size, expected 11, but is %u", batchFile.contentSize);
 //
 //	[batchFile release];
@@ -81,7 +81,7 @@ const NSUInteger kTestBatchFileIndex = 9999999;
 //	                                              encoding:NSUTF8StringEncoding
 //			                                         error:nil];
 //
-//	STAssertTrue([content isEqualToString:@"test1$test2"], @"Invalid content of file: '%@'", content);
+//	XCTAssertTrue([content isEqualToString:@"test1$test2"], @"Invalid content of file: '%@'", content);
 //}
 
 @end

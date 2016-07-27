@@ -4,7 +4,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "../AppMetr/AppMetr.h"
+#import "TrackingManager.h"
+#import "SessionData.h"
 
 // Pre-declare classes
 @class SessionData;

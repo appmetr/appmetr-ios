@@ -2,9 +2,9 @@
  * Copyright (c) 2013 AppMetr.
  * All rights reserved.
  */
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface AcceptanceTest : SenTestCase
+@interface AcceptanceTest : XCTestCase
 
 - (NSString *)filePathWithIndex:(NSUInteger)index;
 
