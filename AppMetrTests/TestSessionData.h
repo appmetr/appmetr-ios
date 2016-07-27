@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TestSessionData : SenTestCase
+@interface TestSessionData : XCTestCase
 
 @end

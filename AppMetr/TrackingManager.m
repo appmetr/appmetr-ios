@@ -592,18 +592,19 @@ extern TrackingManager *gSharedManager;
     [action setObject:kActionTrackSession
                forKey:kActionKeyName];
 
-    if (properties == nil) {
-        properties = [NSMutableDictionary dictionary];
+    NSMutableDictionary *mutableProperties = [properties mutableCopy];
+    if (mutableProperties == nil) {
+        mutableProperties = [NSMutableDictionary dictionary];
     }
 
     if (!mSessionData.isFirstTrackSessionSent) {    //Set -1 for first session
-        [properties setValue:[NSNumber numberWithLong:-1] forKey:kSessionDurationKeyName];
+        [mutableProperties setValue:[NSNumber numberWithLong:-1] forKey:kSessionDurationKeyName];
     } else {
-        [properties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
+        [mutableProperties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
     }
     [mSessionData setSessionDuration:0];
 
-    [action setObject:properties
+    [action setObject:mutableProperties
                forKey:kActionPropertiesKeyName];
 
     [self track:action];
