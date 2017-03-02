@@ -12,6 +12,7 @@
     BOOL mIsInstallURLTracked;
     BOOL mIsFirstTrackSessionSent;
     long mSessionDuration;
+    long mSessionDurationCurrent;
 }
 
 /** The current batch index */
@@ -26,6 +27,8 @@
 @property(nonatomic, readwrite) BOOL isFirstTrackSessionSent;
 /** Duration of previous session */
 @property(nonatomic, readwrite) long sessionDuration;
+/** Duration of current session */
+@property(nonatomic, readwrite) long sessionDurationCurrent;
 
 /** Returns the index of new batch */
 - (NSUInteger)nextBatchIndex;
