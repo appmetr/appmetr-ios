@@ -136,6 +136,8 @@ extern TrackingManager *gSharedManager;
         // starting background thread
         [self startBackgroundThread];
 
+        // send previous session duration
+        [self startSession];
         mStartTime = [[NSDate date] timeIntervalSince1970];
     }
 
@@ -591,19 +593,20 @@ extern TrackingManager *gSharedManager;
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackSession
                forKey:kActionKeyName];
-
-    NSMutableDictionary *mutableProperties = [properties mutableCopy];
-    if (mutableProperties == nil) {
-        mutableProperties = [NSMutableDictionary dictionary];
-    }
-
-    if (!mSessionData.isFirstTrackSessionSent) {    //Set -1 for first session
-        [mutableProperties setValue:[NSNumber numberWithLong:-1] forKey:kSessionDurationKeyName];
-    } else {
-        [mutableProperties setValue:[NSNumber numberWithLong:[mSessionData sessionDuration]] forKey:kSessionDurationKeyName];
-    }
+    
+    NSMutableDictionary *mutableProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
+    
+    long duration = [mSessionData sessionDuration];
     [mSessionData setSessionDuration:0];
-
+    //Set -1 for first session or 0-duration session (only tracking params)
+    if (mSessionData.isFirstTrackSessionSent && duration <= 0) {
+        return; // not first launch and session duration is empty, ignoring
+    }
+    if(!mSessionData.isFirstTrackSessionSent) {
+        duration = -1; // first launch, track install
+    }
+    [mutableProperties setValue:[NSNumber numberWithLong:duration] forKey:kSessionDurationKeyName];
+    
     [action setObject:mutableProperties
                forKey:kActionPropertiesKeyName];
 
@@ -887,8 +890,10 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Application lifecycle
 
 - (void)applicationDidEnterBackground {
-    [mSessionData setSessionDuration:[mSessionData sessionDuration] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
-
+    [mSessionData setSessionDurationCurrent:[mSessionData sessionDurationCurrent] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
+    // saves sleep time for calculating pause duration in future
+    mStartTime = [[NSDate date] timeIntervalSince1970];
+    
 // 	do not stop the thread to avoid error:0x8badf00d aka "bad food"
 //	[self stopBackgroundThread];
     [self flushData];
@@ -898,11 +903,15 @@ extern TrackingManager *gSharedManager;
 - (void)applicationWillEnterForeground {
     [self startBackgroundThread];
 
+    // If application was paused more than MAX time
+    if([[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:mStartTime]] >= kSessionMaxPauseState) {
+        [self startSession];
+    }
     mStartTime = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void)applicationWillTerminate {
-    [mSessionData setSessionDuration:[mSessionData sessionDuration] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
+    [mSessionData setSessionDurationCurrent:[mSessionData sessionDurationCurrent] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
 
     [self stopBackgroundThread];
     [self flushData];
@@ -1016,6 +1025,14 @@ extern TrackingManager *gSharedManager;
         mCommandThread = [thread retain];
         [tmpValue release];
     }
+}
+
+- (void)startSession {
+    if(mSessionData.sessionDuration > 0)
+        [self trackSession];
+    long currentDuration = mSessionData.sessionDurationCurrent;
+    mSessionData.sessionDuration = currentDuration;
+    mSessionData.sessionDurationCurrent = 0;
 }
 
 #pragma mark - Remote commands

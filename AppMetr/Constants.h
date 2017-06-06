@@ -17,6 +17,8 @@ extern NSTimeInterval const kDefaultFlashDataDelay;
 extern NSTimeInterval const kDefaultUploadDataDelay;
 /** Time in seconds to query remote commands. */
 extern NSTimeInterval const kPullRemoteCommandsDelay;
+/** Time in seconds for max pause state, after which starts new session */
+extern NSTimeInterval const kSessionMaxPauseState;
 /** The url string of AppMetr api. */
 extern NSString *const kAppMetrDefaultUrl;
 /** The version string of AppMetr library. */
@@ -53,4 +55,5 @@ extern NSString *const kPreferencesFirstTrackSessionKeyName;
 extern NSString *const kPreferencesProcessedCommandsKeyName;
 extern NSString *const kPreferencesLastProcessedCommandIdentifier;
 extern NSString *const kPreferencesSessionDuration;
+extern NSString *const kPreferencesSessionDurationCurrent;
 extern NSString *const kPreferencesUniqueInstanceIdentifierKeyName;

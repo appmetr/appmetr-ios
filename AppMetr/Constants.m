@@ -9,9 +9,10 @@ NSUInteger const kTokenSizeLimit = 50;
 NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;       // 1(minutes) * 60(seconds)
 NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;      // 1.5(minutes) * 60(seconds)
 NSTimeInterval const kPullRemoteCommandsDelay = 70.0;           // 70seconds
+NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.8.4";
+NSString *const kAppMetrVersionString = @"1.8.5";
 
 // Generic constants
 
@@ -45,4 +46,5 @@ NSString *const kPreferencesFirstTrackSessionKeyName = @"AppMetr-FirstTrackSessi
 NSString *const kPreferencesProcessedCommandsKeyName = @"AppMetr-ProcessedCommandList";
 NSString *const kPreferencesLastProcessedCommandIdentifier = @"AppMetr-LastProcessedCommandID";
 NSString *const kPreferencesSessionDuration = @"AppMetr-SessionDuration";
+NSString *const kPreferencesSessionDurationCurrent = @"AppMetr-SessionDurationCurrent";
 NSString *const kPreferencesUniqueInstanceIdentifierKeyName = @"AppMetr-UniqueInstanceIdentifier";
