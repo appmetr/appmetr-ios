@@ -35,6 +35,8 @@ NSString *const kActionTrackState = @"trackState";
 NSString *const kActionIdentify = @"identify";
 
 NSString *const kActionCountryKeyName = @"$country";
+NSString *const kActionLanguageKeyName = @"$language";
+NSString *const kActionLocaleKeyName = @"$locale";
 NSString *const kSessionDurationKeyName = @"$duration";
 
 NSString *const kPreferencesBatchNumberKeyName = @"AppMetr-BatchID";

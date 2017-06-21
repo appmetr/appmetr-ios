@@ -14,4 +14,6 @@
 
 - (IBAction)flushTrack:(id)sender;
 
+- (IBAction)trackAttachProperties:(id)sender;
+
 @end
