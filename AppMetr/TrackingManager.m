@@ -574,6 +574,22 @@ extern TrackingManager *gSharedManager;
                                forKey:kActionCountryKeyName];
         }
     }
+    
+    if ([userProperties objectForKey:kActionLanguageKeyName] == nil || [userProperties objectForKey:kActionLocaleKeyName] == nil) {
+        NSString* language = [NSLocale preferredLanguages].count > 0 ?[[NSLocale preferredLanguages] objectAtIndex:0] : nil;
+        NSString* locale = [[NSLocale currentLocale] localeIdentifier];
+        if(language) {
+            locale = [language stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+            language = [[NSLocale componentsFromLocaleIdentifier:language] objectForKey:NSLocaleLanguageCode];
+        }
+        if (language && [userProperties objectForKey:kActionLanguageKeyName] == nil) {
+            [userProperties setObject:language
+                               forKey:kActionLanguageKeyName];
+        }
+        if(locale && [userProperties objectForKey:kActionLocaleKeyName] == nil) {
+            [userProperties setObject:locale forKey:kActionLocaleKeyName];
+        }
+    }
 
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionAttachProperties forKey:kActionKeyName];

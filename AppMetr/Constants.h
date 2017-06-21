@@ -44,6 +44,8 @@ extern NSString *const kActionTrackState;
 extern NSString *const kActionIdentify;
 
 extern NSString *const kActionCountryKeyName;
+extern NSString *const kActionLanguageKeyName;
+extern NSString *const kActionLocaleKeyName;
 extern NSString *const kSessionDurationKeyName;
 
 extern NSString *const kPreferencesBatchNumberKeyName;
