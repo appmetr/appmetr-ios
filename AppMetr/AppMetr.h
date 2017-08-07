@@ -152,6 +152,11 @@
 + (void)flush;
 
 /**
+ * Force flush events to the disk
+ */
++ (void)flushLocal;
+
+/**
  * Sets the thread for executing remote commands
  */
 + (void)setCommandThread:(NSThread *)thread;

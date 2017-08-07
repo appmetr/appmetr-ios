@@ -200,6 +200,11 @@
 - (void)flushAndUploadAllEvents;
 
 /**
+ * Flushing all events to the disk
+ */
+- (void)flushAllEvents;
+
+/**
  * Processing queue with remote commands
  */
 - (void)processRemoteCommands;

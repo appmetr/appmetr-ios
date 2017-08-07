@@ -903,6 +903,19 @@ extern TrackingManager *gSharedManager;
     [self uploadData];
 }
 
+- (void)flushAllEvents {
+    if(mWorkingThread) {
+        [self performSelector:@selector(flushAllEventsImpl)
+                     onThread:mWorkingThread
+                   withObject:nil waitUntilDone:NO];
+    }
+}
+
+- (void)flushAllEventsImpl {
+    [self flushData];
+    [self closeStreams];
+}
+
 #pragma mark - Application lifecycle
 
 - (void)applicationDidEnterBackground {

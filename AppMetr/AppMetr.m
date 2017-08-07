@@ -139,6 +139,10 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] flushAndUploadAllEvents];
 }
 
++ (void)flushLocal {
+    [[AppMetr sharedManager] flushAllEvents];
+}
+
 + (void)setCommandThread:(NSThread *)thread {
     [[AppMetr sharedManager] setCommandThread:thread];
 }
