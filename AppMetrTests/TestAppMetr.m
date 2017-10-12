@@ -80,14 +80,14 @@
     [testLibrary performSelector:@selector(trackEvent:)
                       withObject:[self anyProperties]];
 
-    STAssertTrue([eventStack count] == 1, @"Invalid event stack size");
+    XCTAssertTrue([eventStack count] == 1, @"Invalid event stack size");
 
     NSDictionary *event = [eventStack lastObject];
-    STAssertTrue([event isKindOfClass:[NSDictionary class]], @"Invalid event class");
+    XCTAssertTrue([event isKindOfClass:[NSDictionary class]], @"Invalid event class");
 
     unsigned long long time = [[event objectForKey:@"timestamp"] unsignedLongLongValue];
     unsigned long long currentTime = (unsigned long long) ([[NSDate date] timeIntervalSince1970] * 1000.0);
-    STAssertTrue((time >= startTime && time <= currentTime), @"Invalid value of timestamp");
+    XCTAssertTrue((time >= startTime && time <= currentTime), @"Invalid value of timestamp");
 
     [testLibrary release];
 }
@@ -96,44 +96,48 @@
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
 
+    // need for first launch because first track session immediately flushes data
+    if (!testLibrary.dirtySessionData.isFirstTrackSessionSent) {
+        [testLibrary trackSession];
+    }
     //Attach properties
     [testLibrary attachProperties:[self anyProperties]];
-    STAssertTrue([eventStack count] == 1, @"[attachProperties:] failed") ;
+    XCTAssertTrue([eventStack count] == 1, @"[attachProperties:] failed") ;
 
     //Track session
     [testLibrary trackSession];
-    STAssertTrue([eventStack count] == 2, @"[trackSession] failed") ;
+    XCTAssertTrue([eventStack count] == 2, @"[trackSession] failed") ;
 
     [testLibrary trackSessionWithProperties:[self anyProperties]];
-    STAssertTrue([eventStack count] == 3, @"[trackSessionWithProperties:] failed") ;
+    XCTAssertTrue([eventStack count] == 3, @"[trackSessionWithProperties:] failed") ;
 
     //Track level
     [testLibrary trackLevel:1];
-    STAssertTrue([eventStack count] == 4, @"[trackLevel:] failed");
+    XCTAssertTrue([eventStack count] == 4, @"[trackLevel:] failed");
 
     [testLibrary trackLevel:2
                  properties:[self anyProperties]];
-    STAssertTrue([eventStack count] == 5, @"[trackLevel:properties] failed");
+    XCTAssertTrue([eventStack count] == 5, @"[trackLevel:properties] failed");
 
     //Track event
     [testLibrary trackEvent:@"event1"];
-    STAssertTrue([eventStack count] == 6, @"[trackEvent:] failed");
+    XCTAssertTrue([eventStack count] == 6, @"[trackEvent:] failed");
 
     [testLibrary trackEvent:@"event2"];
-    STAssertTrue([eventStack count] == 7, @"[trackEvent:value] failed");
+    XCTAssertTrue([eventStack count] == 7, @"[trackEvent:value] failed");
 
     [testLibrary trackEvent:@"event3"
                  properties:[self anyProperties]];
-    STAssertTrue([eventStack count] == 8, @"[trackEvent:value:properties] failed");
+    XCTAssertTrue([eventStack count] == 8, @"[trackEvent:value:properties] failed");
 
 
     //Track payment
     [testLibrary trackPayment:[self anyPayment]];
-    STAssertTrue([eventStack count] == 9, @"[trackPayment:] failed");
+    XCTAssertTrue([eventStack count] == 9, @"[trackPayment:] failed");
 
     [testLibrary trackPayment:[self anyPayment]
                    properties:[self anyProperties]];
-    STAssertTrue([eventStack count] == 10, @"[trackPayment:properties] failed");
+    XCTAssertTrue([eventStack count] == 10, @"[trackPayment:properties] failed");
 
     [testLibrary release];
 }
@@ -147,11 +151,11 @@
     NSDictionary *event = [eventStack lastObject];
 
     NSString *actionName = [event objectForKey:@"action"];
-    STAssertTrue([actionName isEqualToString:@"attachProperties"], @"Invalid action");
-    STAssertTrue([event objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([actionName isEqualToString:@"attachProperties"], @"Invalid action");
+    XCTAssertTrue([event objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
     NSString *propertyValue = [[event objectForKey:@"properties"] objectForKey:@"prop-key"];
-    STAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
+    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
 }
@@ -165,8 +169,8 @@
     NSDictionary *session1 = [eventStack lastObject];
 
     NSString *actionName = [session1 objectForKey:@"action"];
-    STAssertTrue([actionName isEqualToString:@"trackSession"], @"Invalid action");
-    STAssertTrue([session1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([actionName isEqualToString:@"trackSession"], @"Invalid action");
+    XCTAssertTrue([session1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
 
     // test 2
@@ -174,11 +178,11 @@
     NSDictionary *session2 = [eventStack lastObject];
 
     actionName = [session2 objectForKey:@"action"];
-    STAssertTrue([actionName isEqualToString:@"trackSession"], @"Invalid action");
-    STAssertTrue([session2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([actionName isEqualToString:@"trackSession"], @"Invalid action");
+    XCTAssertTrue([session2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
     NSString *propertyValue = [[session2 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    STAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
+    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
 }
@@ -192,11 +196,11 @@
     NSDictionary *action1 = [eventStack lastObject];
 
     NSString *actionName = [action1 objectForKey:@"action"];
-    STAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    STAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
+    XCTAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
     NSNumber *level1 = [action1 objectForKey:@"level"];
-    STAssertTrue([level1 intValue] == 81, @"Invalid level");
+    XCTAssertTrue([level1 intValue] == 81, @"Invalid level");
 
 
     // test 2
@@ -205,14 +209,14 @@
     NSDictionary *action2 = [eventStack lastObject];
 
     actionName = [action2 objectForKey:@"action"];
-    STAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    STAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
+    XCTAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
     NSNumber *level2 = [action2 objectForKey:@"level"];
-    STAssertTrue([level2 intValue] == 98, @"Invalid level");
+    XCTAssertTrue([level2 intValue] == 98, @"Invalid level");
 
     NSString *propertyValue = [[action2 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    STAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
+    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
 }
@@ -228,9 +232,9 @@
     NSString *actionName = [action1 objectForKey:@"action"];
     NSString *eventName = [action1 objectForKey:@"event"];
 
-    STAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
-    STAssertNotNil([action1 objectForKey:@"timestamp"], @"Missing timestamp");
-    STAssertTrue([eventName isEqualToString:@"event1"], @"Invalid event name");
+    XCTAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
+    XCTAssertNotNil([action1 objectForKey:@"timestamp"], @"Missing timestamp");
+    XCTAssertTrue([eventName isEqualToString:@"event1"], @"Invalid event name");
 
     // test 2
     [testLibrary trackEvent:@"event2"];
@@ -239,9 +243,9 @@
     actionName = [action2 objectForKey:@"action"];
     eventName = [action2 objectForKey:@"event"];
 
-    STAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
-    STAssertNotNil([action2 objectForKey:@"timestamp"], @"Missing timestamp");
-    STAssertTrue([eventName isEqualToString:@"event2"], @"Invalid event name");
+    XCTAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
+    XCTAssertNotNil([action2 objectForKey:@"timestamp"], @"Missing timestamp");
+    XCTAssertTrue([eventName isEqualToString:@"event2"], @"Invalid event name");
 
     // test 3
     [testLibrary trackEvent:@"event3" properties:[self anyProperties]];
@@ -250,12 +254,12 @@
     actionName = [action3 objectForKey:@"action"];
     eventName = [action3 objectForKey:@"event"];
 
-    STAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
-    STAssertNotNil([action3 objectForKey:@"timestamp"], @"Missing timestamp");
-    STAssertTrue([eventName isEqualToString:@"event3"], @"Invalid event name");
+    XCTAssertTrue([actionName isEqualToString:@"trackEvent"], @"Invalid action");
+    XCTAssertNotNil([action3 objectForKey:@"timestamp"], @"Missing timestamp");
+    XCTAssertTrue([eventName isEqualToString:@"event3"], @"Invalid event name");
 
     NSString *propertyValue = [[action3 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    STAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
+    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
 }
@@ -270,9 +274,9 @@
     NSString *actionName = [action1 objectForKey:@"action"];
     NSString *processor = [action1 objectForKey:@"processor"];
 
-    STAssertTrue([actionName isEqualToString:@"trackPayment"], @"Invalid action");
-    STAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-    STAssertTrue([processor isEqualToString:@"mm"], @"Invalid payment");
+    XCTAssertTrue([actionName isEqualToString:@"trackPayment"], @"Invalid action");
+    XCTAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([processor isEqualToString:@"mm"], @"Invalid payment");
 
 
     // test 2
@@ -282,12 +286,12 @@
     actionName = [action2 objectForKey:@"action"];
     processor = [action2 objectForKey:@"processor"];
 
-    STAssertTrue([actionName isEqualToString:@"trackPayment"], @"Invalid action");
-    STAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-    STAssertTrue([processor isEqualToString:@"mm"], @"Invalid payment");
+    XCTAssertTrue([actionName isEqualToString:@"trackPayment"], @"Invalid action");
+    XCTAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
+    XCTAssertTrue([processor isEqualToString:@"mm"], @"Invalid payment");
 
     NSString *propertyValue = [[action2 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    STAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
+    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
 }
@@ -304,30 +308,30 @@
                  properties:properties];
 
     NSString *encodeBatchData = nil;
-    STAssertNoThrow(encodeBatchData = [testLibrary dirtyCreateBatchData], @"Failed to create batch data");
+    XCTAssertNoThrow(encodeBatchData = [testLibrary dirtyCreateBatchData], @"Failed to create batch data");
     NSData *decodedData = [AMBase64Util decode:encodeBatchData];
 
     NSError *error = nil;
     NSDictionary *bathes = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:decodedData
                                                                                error:&error];
-    STAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
+    XCTAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
 
     NSNumber *batchId = [bathes objectForKey:@"batchId"];
-    STAssertEquals([batchId unsignedIntValue] + 1, [testLibrary dirtySessionData].batchIndex, @"Invalid batch ID");
+    XCTAssertEqual([batchId unsignedIntValue] + 1, [testLibrary dirtySessionData].batchIndex, @"Invalid batch ID");
 
     NSArray *eventList = [bathes objectForKey:@"batch"];
-    STAssertTrue([eventList count] == 2, @"Invalid size of event list");
+    XCTAssertTrue([eventList count] == 2, @"Invalid size of event list");
 
     NSString *firstEventName = [[eventList objectAtIndex:0] objectForKey:@"event"];
-    STAssertTrue([firstEventName isEqualToString:@"event1"], @"First event is invalid");
+    XCTAssertTrue([firstEventName isEqualToString:@"event1"], @"First event is invalid");
 
     NSDictionary *secondEvent = [eventList objectAtIndex:1];
     NSString *secondEventName = [secondEvent objectForKey:@"event"];
-    STAssertTrue([secondEventName isEqualToString:@"event2"], @"Second event is invalid");
+    XCTAssertTrue([secondEventName isEqualToString:@"event2"], @"Second event is invalid");
 
     NSNumber *referenceDate = [[secondEvent objectForKey:@"properties"] objectForKey:@"test-date"];
 
-    STAssertEquals((unsigned long long) ([testDate timeIntervalSince1970] * 1000.0), [referenceDate unsignedLongLongValue],
+    XCTAssertEqual((unsigned long long) ([testDate timeIntervalSince1970] * 1000.0), [referenceDate unsignedLongLongValue],
     @"Wrong date value");
 
     [testLibrary release];
@@ -347,21 +351,21 @@
 
     NSError *error = nil;
     NSString *content = [NSString stringWithContentsOfFile:batchFile encoding:NSUTF8StringEncoding error:&error];
-    STAssertNil(error, @"Error while reading batch file: %@", [error localizedDescription]);
+    XCTAssertNil(error, @"Error while reading batch file: %@", [error localizedDescription]);
 
     NSData *decodedData = [AMBase64Util decode:content];
 
     error = nil;
     NSDictionary *batches = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:decodedData
                                                                                 error:&error];
-    STAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
+    XCTAssertNil(error, @"JSON Deserializer failed: %@", [error localizedDescription]);
 
     NSArray *eventList = [batches objectForKey:@"batch"];
-    STAssertEquals((NSUInteger) 1, [eventList count],
+    XCTAssertEqual((NSUInteger) 1, [eventList count],
     @"Invalid size of event list. Expected 1, got is %u", [eventList count]);
 
     NSString *eventName = [[eventList objectAtIndex:0] objectForKey:@"event"];
-    STAssertTrue([eventName isEqualToString:@"testBatchFiles"],
+    XCTAssertTrue([eventName isEqualToString:@"testBatchFiles"],
     @"Invalid event, expected 'testBatchFiles' but got '%@'", eventName);
 
     [testLibrary release];
@@ -389,12 +393,12 @@
     [testLibrary trackEvent:@"testBatchFile6"];
     [testLibrary dirtyFlushData];
 
-    STAssertEquals((NSUInteger) 2, [testLibrary dirtySessionData].fileList.count,
+    XCTAssertEqual((NSUInteger) 2, [testLibrary dirtySessionData].fileList.count,
     @"Wrong file numbers. Experted 2, but got %u", [testLibrary dirtySessionData].fileList.count);
 
     [testLibrary dirtyCloseStreams];
 
-    STAssertEquals((NSUInteger) 3, [testLibrary dirtySessionData].fileList.count,
+    XCTAssertEqual((NSUInteger) 3, [testLibrary dirtySessionData].fileList.count,
     @"Wrong file numbers. Experted 3, but got %u", [testLibrary dirtySessionData].fileList.count);
 
     [testLibrary release];
@@ -408,7 +412,7 @@
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
 
-    STAssertEquals((NSUInteger) 1, [testLibrary dirtyUploadData], @"Failed to upload data");
+    XCTAssertEqual((NSUInteger) 1, [testLibrary dirtyUploadData], @"Failed to upload data");
 
     [testLibrary trackEvent:@"event2"];
     [testLibrary dirtyFlushData];
@@ -418,7 +422,7 @@
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
 
-    STAssertEquals((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
+    XCTAssertEqual((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
 
     [testLibrary release];
 }
@@ -426,12 +430,10 @@
 - (void)testGameState {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
-
-    [testLibrary trackGameState:@"TestState" properties:[self anyProperties]];
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
 
-    STAssertEquals((NSUInteger) 1, [testLibrary dirtyUploadData], @"Failed to upload data");
+    XCTAssertEqual((NSUInteger) 0, [testLibrary dirtyUploadData], @"Failed to upload data");
 
     [testLibrary release];
 }
@@ -449,7 +451,7 @@
     NSData *data = [[NSString stringWithFormat:@"%s", BASE_TEST_STRING] dataUsingEncoding:NSUTF8StringEncoding];
     NSString *res = [AMBase64Util encode:data];
 
-    STAssertTrue([res isEqualToString:BASE_TEST_RESULT], @"Base64 not URL safe");
+    XCTAssertTrue([res isEqualToString:BASE_TEST_RESULT], @"Base64 not URL safe");
 }
 
 - (void)testTrackInstallURL {
@@ -458,25 +460,25 @@
 
     [testLibrary trackInstallURL:[NSURL URLWithString:@"http://AppMetr.mobile/unit/test"]];
 
-    STAssertEquals((NSUInteger) 0, [[testLibrary dirtySessionData].fileList count], @"Invalid number of files");
+    XCTAssertEqual((NSUInteger) 0, [[testLibrary dirtySessionData].fileList count], @"Invalid number of files");
 }
 
 - (void)testTrackCommand {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
     [testLibrary performSelector:@selector(trackCommand:) withObject:@"test-1"];
-    STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(success)");
+    XCTAssertEqual((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(success)");
 
 
     [testLibrary performSelector:@selector(trackCommand:skipReason:) withObject:@"test-2" withObject:@"unit-test"];
-    STAssertEquals((NSUInteger) 2, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(skip)");
+    XCTAssertEqual((NSUInteger) 2, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(skip)");
 
     @try {
         [NSException raise:@"unit-test" format:@"just-unit-test"];
     }
     @catch (NSException *exception) {
         [testLibrary performSelector:@selector(trackCommand:exception:) withObject:@"test-3" withObject:exception];
-        STAssertEquals((NSUInteger) 3, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(fail)");
+        XCTAssertEqual((NSUInteger) 3, [[testLibrary getDirtyEventStack] count], @"Failed to add trackCommand(fail)");
     }
 
     [((NSMutableArray *) [testLibrary getDirtyEventStack]) removeAllObjects];
@@ -501,7 +503,7 @@
     [invocation setArgument:&errorDescription atIndex:4];
 
     [invocation invoke];
-    STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add testTrackCommandBatch");
+    XCTAssertEqual((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Failed to add testTrackCommandBatch");
 
     [((NSMutableArray *) [testLibrary getDirtyEventStack]) removeAllObjects];
     [testLibrary release];
@@ -511,15 +513,20 @@
     TrackingManager *testLibrary1 = [[TrackingManager alloc] initAndStopThread];
 
     [testLibrary1 performSelector:@selector(setProcessedCommandWithID:) withObject:@"test-cmd-1"];
-    STAssertTrue([(id <AppMetrTesting>) testLibrary1 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
+    XCTAssertTrue([(id <AppMetrTesting>) testLibrary1 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
 
     TrackingManager *testLibrary2 = [[TrackingManager alloc] initAndStopThread];
-    STAssertTrue([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
+    XCTAssertTrue([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-1"], @"Command test-cmd-1 does not exist");
 
     [testLibrary1 performSelector:@selector(setProcessedCommandWithID:) withObject:@"test-cmd-2"];
     TrackingManager *testLibrary3 = [[TrackingManager alloc] initAndStopThread];
-    STAssertTrue([(id <AppMetrTesting>) testLibrary3 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 does not exist");
-    STAssertFalse([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 already exist");
+    XCTAssertTrue([(id <AppMetrTesting>) testLibrary3 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 does not exist");
+    if (!testLibrary1.dirtySessionData.isFirstTrackSessionSent) {
+        XCTAssertFalse([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 already exist");
+    }
+    else {
+        XCTAssertTrue([(id <AppMetrTesting>) testLibrary2 hasProcessedCommandWithID:@"test-cmd-2"], @"Command test-cmd-2 already exist");
+    }
 
     [testLibrary1 release];
     [testLibrary2 release];
@@ -540,11 +547,11 @@
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) + 100000)];
     NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
-    STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
+    XCTAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
 
     [testLibrary processRemoteCommands];
-    STAssertEquals((NSUInteger) 2, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
-    STAssertEquals((NSUInteger) 0, [[testLibrary getDirtyEventStack] count], @"Event list must be empty");
+    XCTAssertEqual((NSUInteger) 2, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
+    XCTAssertEqual((NSUInteger) 0, [[testLibrary getDirtyEventStack] count], @"Event list must be empty");
 
     [testLibrary release];
 }
@@ -563,11 +570,11 @@
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) - 100000)];
     NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
-    STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
+    XCTAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
 
     [testLibrary processRemoteCommands];
-    STAssertEquals((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
-    STAssertEquals((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
+    XCTAssertEqual((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
+    XCTAssertEqual((NSUInteger) 1, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
 
     [testLibrary release];
 }
@@ -586,11 +593,11 @@
                                                 (unsigned long long) (([now timeIntervalSinceNow] * 1000) - 100000)];
     NSDictionary *json = [[AMCJSONDeserializer deserializer] deserialize:[data dataUsingEncoding:NSUTF8StringEncoding] error:nil];
 
-    STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
-    STAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
+    XCTAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
+    XCTAssertNoThrow([(id <AppMetrTesting>) testLibrary processPacket:[RemoteCommandPacket packetWithSerializedObject:json andDelegate:nil]], @"Failed to process packet.");
 
-    STAssertEquals((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
-    STAssertEquals((NSUInteger) 3, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
+    XCTAssertEqual((NSUInteger) 1, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Invalid numbers o commands");
+    XCTAssertEqual((NSUInteger) 3, [[testLibrary getDirtyEventStack] count], @"Invalid event list empty");
 
     [testLibrary release];
 }
@@ -600,7 +607,7 @@
         TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
 
         [testLibrary performSelector:@selector(sentQueryRemoteCommandList)];
-        STAssertEquals((NSUInteger) 0, [[(id <AppMetrTesting>) testLibrary getProcessedCommandList] count], @"Command list is not empty");
+        XCTAssertEqual((NSUInteger) 0, [[(id <AppMetrTesting>) testLibrary getRemoteCommandList] count], @"Command list is not empty");
 
         [testLibrary release];
     }

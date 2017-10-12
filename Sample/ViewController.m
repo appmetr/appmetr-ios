@@ -68,6 +68,10 @@
     [AppMetr flush];
 }
 
+- (IBAction)trackAttachProperties:(id)sender {
+    [AppMetr attachProperties];
+}
+
 
 -(NSString *)getUUID {
     CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);

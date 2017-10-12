@@ -3,9 +3,9 @@
  * All rights reserved.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TestAppMetr : SenTestCase
+@interface TestAppMetr : XCTestCase
 
 
 @end

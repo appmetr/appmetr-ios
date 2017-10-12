@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TestBatchFile : SenTestCase
+@interface TestBatchFile : XCTestCase
 
 @end

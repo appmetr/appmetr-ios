@@ -59,7 +59,7 @@
     [testLibrary dirtyFlushData];
     [testLibrary dirtyCloseStreams];
 
-    STAssertEquals((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
+    XCTAssertEqual((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
 
     [testLibrary release];
 }
@@ -101,8 +101,8 @@
         [content appendString:contentFile];
     }
 
-    STAssertEquals((NSUInteger) 4, (endTestFilesCount - beginTestFilesCount), @"Invalid file count");
-    STAssertEquals((NSUInteger) 6, [self numOfBatchSplitterInString:content fromIndex:0], @"Invalid batch count");
+    XCTAssertEqual((NSUInteger) 4, (endTestFilesCount - beginTestFilesCount), @"Invalid file count");
+    XCTAssertEqual((NSUInteger) 6, [self numOfBatchSplitterInString:content fromIndex:0], @"Invalid batch count");
 }
 
 // FIXME: recalculate batch size
@@ -127,7 +127,7 @@
     [testLibrary dirtyCloseStreams];
 
     NSUInteger endTestFilesCount = [[[testLibrary dirtySessionData] fileList] count];
-    STAssertTrue((3 == (endTestFilesCount - beginTestFilesCount)), @"Failed to create three files");
+    XCTAssertTrue((3 == (endTestFilesCount - beginTestFilesCount)), @"Failed to create three files");
     [testLibrary release];
 }
 
@@ -140,7 +140,7 @@
     }
 
     NSUInteger count = [[testLibrary getDirtyEventStack] count];
-    STAssertEquals((NSUInteger) 100, count, @"Failed to create 100 events");
+    XCTAssertEqual((NSUInteger) 100, count, @"Failed to create 100 events");
     [testLibrary release];
 }
 
