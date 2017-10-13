@@ -38,7 +38,6 @@
     NSString *mServerAddress;
     NSString *mUserID;
     NSString *mVersion;
-    BOOL mTrackInstallByApp;
 
     NSTimeInterval mStartTime;
 

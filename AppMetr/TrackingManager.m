@@ -55,8 +55,6 @@ extern TrackingManager *gSharedManager;
 /// track methods
 - (void)track:(NSDictionary *)trackProperties;
 
-- (void)trackAppStart;
-
 - (void)flushAndUploadAllEventsImpl;
 
 - (void)pullCommands;
@@ -201,11 +199,6 @@ extern TrackingManager *gSharedManager;
         mServerAddress = [info objectForKey:@"appmetrUrl"];
     }
     assert(([mServerAddress length] != 0) && "appmetrUrl should be not empty");
-
-    mTrackInstallByApp = YES;
-    if ([info objectForKey:@"trackInstallByApp"] != nil) {
-        mTrackInstallByApp = [[info objectForKey:@"trackInstallByApp"] boolValue];
-    }
 }
 
 #pragma mark - Setting up
@@ -276,9 +269,6 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)runFromThread:(id)object {
-    // first send app start event
-    [self trackAppStart];
-
     // synchronize with main thread
     [mThreadCondition lock];
     // unlock main thread
@@ -507,19 +497,6 @@ extern TrackingManager *gSharedManager;
     }
 
     [updatedTrackProperties release];
-}
-
-
-- (void)trackAppStart {
-    // Skip track session and install if it doesn't set in plist file or set to true
-    if (mTrackInstallByApp) {
-        return;
-    }
-
-    NSUInteger batchIndex = 0;
-    @synchronized (mSessionData) {
-        batchIndex = mSessionData.batchIndex;
-    }
 }
 
 - (void)attachProperties {
