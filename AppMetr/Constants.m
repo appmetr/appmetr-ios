@@ -24,7 +24,6 @@ NSString *const kActionTrackEvent = @"trackEvent";
 NSString *const kActionTrackPayment = @"trackPayment";
 NSString *const kActionPropertiesKeyName = @"properties";
 NSString *const kActionVersionKeyName = @"$version";
-NSString *const kActionTrackInstall = @"installBroadcast";
 NSString *const kActionTrackAdsEvent = @"adsEventBroadcast";
 NSString *const kActionTrackInstallURL = @"trackInstallURL";
 NSString *const kActionTrackCommand = @"trackCommand";

@@ -55,10 +55,6 @@ extern TrackingManager *gSharedManager;
 /// track methods
 - (void)track:(NSDictionary *)trackProperties;
 
-- (void)trackInstallBroadcast;
-
-- (void)trackInstallBroadcast:(NSDictionary *)properties;
-
 - (void)trackAppStart;
 
 - (void)flushAndUploadAllEventsImpl;
@@ -513,30 +509,6 @@ extern TrackingManager *gSharedManager;
     [updatedTrackProperties release];
 }
 
-//Track install broadcast
-- (void)trackInstallBroadcast {
-    [self trackInstallBroadcast:nil];
-}
-
-- (void)trackInstallBroadcast:(NSDictionary *)properties {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackInstall
-               forKey:kActionKeyName];
-
-    if (properties != nil) {
-        [action setObject:properties
-                   forKey:kActionPropertiesKeyName];
-    }
-
-    NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-    if (country) {
-        [action setObject:country
-                   forKey:kActionCountryKeyName];
-    }
-
-    [self track:action];
-    [self flushAndUploadAllEventsImpl];
-}
 
 - (void)trackAppStart {
     // Skip track session and install if it doesn't set in plist file or set to true
@@ -547,10 +519,6 @@ extern TrackingManager *gSharedManager;
     NSUInteger batchIndex = 0;
     @synchronized (mSessionData) {
         batchIndex = mSessionData.batchIndex;
-    }
-
-    if (!batchIndex) {
-        [self trackInstallBroadcast];
     }
 }
 
