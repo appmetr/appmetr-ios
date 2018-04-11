@@ -754,6 +754,7 @@ extern TrackingManager *gSharedManager;
                forKey:@"userId"];
 
     [self track:action];
+    [self flushAndUploadAllEvents];
 }
 
 - (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey {
