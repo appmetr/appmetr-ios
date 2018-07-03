@@ -12,7 +12,7 @@ NSTimeInterval const kPullRemoteCommandsDelay = 70.0;           // 70seconds
 NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.9.20";
+NSString *const kAppMetrVersionString = @"1.9.21";
 
 // Generic constants
 
