@@ -12,30 +12,24 @@
 		1A344188827804464D268380 /* BatchFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34487A91DA220D350D0B20 /* BatchFile.m */; };
 		1A3441A2B906959229C6E239 /* PAM_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3444E95A8305D83D02AB77 /* PAM_OpenUDID.m */; };
 		1A3441B78765A597500C6ACC /* AMBase64Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34487F2343611E030B9256 /* AMBase64Util.m */; };
-		1A3442381F6E5E6B6E87346C /* TestRemoteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34454C5D106271B22E8086 /* TestRemoteCommand.m */; };
 		1A344369931888C125FD3FCF /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344B5FDD3B279CFBD92116 /* Constants.m */; };
 		1A34447679753FB59CB9CC5E /* UIDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344FD5346D3EC8766946B8 /* UIDeviceUtil.m */; };
 		1A3444770B8DBAFEC1BCB6C3 /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34474ABA44496DE9EA32A3 /* CJSONScanner.m */; };
 		1A3444FE556CCBFE00E0C9B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A344F6991CAC2886EBA5F29 /* UIKit.framework */; };
-		1A34450CED8DB5ABAF0AE2FB /* AppMetrInvalidCommandException.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3442CA8AF003060AAB9722 /* AppMetrInvalidCommandException.m */; };
 		1A34455D3EA427B2BE85AB7E /* TestAppMetr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3446842AE54DEC17560D3B /* TestAppMetr.m */; };
 		1A34456B3574D7AEB0EDEC65 /* AppMetr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344642E4FFF12011F0076E /* AppMetr.m */; };
-		1A3445CAAED0819E6F362420 /* TestRemoteCommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34485B0ABFC970CAD16DBF /* TestRemoteCommandPacket.m */; };
 		1A34466AD36275CFDCB6B756 /* CJSONDeserializer_BlocksExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344C7F41377A6390FC34DB /* CJSONDeserializer_BlocksExtensions.m */; };
 		1A3446715EC82D9486B4C1AA /* CJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344BD7CE0C62AC952B2CCB /* CJSONSerialization.m */; };
 		1A3446DACCFC6FBF7AC09781 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3449304D5AA750ABEAECA0 /* CDataScanner.m */; };
-		1A344778D6B2C0B67BB2D425 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3446351826C959AF986FAF /* Preferences.m */; };
 		1A344845E109570B720DA230 /* TrackingManager+DirtyHack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3442C4B890A9B85B11710A /* TrackingManager+DirtyHack.m */; };
 		1A34485C57615CA2F9467B48 /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344BFCD84AC82C693CCDB4 /* CJSONDeserializer.m */; };
 		1A3448BA685037819E114940 /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344F9AA5F6E49420666F35 /* CDataScanner_Extensions.m */; };
-		1A3449159F633BCE8A4CBAE3 /* RemoteCommandPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344403176C041692A98C3C /* RemoteCommandPacket.m */; };
 		1A3449984CC846BC0A876B7E /* TrackingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344323479056CF8BAAFD3F /* TrackingManager.m */; };
 		1A344A16B82C4A8E547E2C83 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344DD95E49D0E3C3F458EE /* CJSONSerializer.m */; };
 		1A344AD9142F4AEF8F9E93F1 /* JSONException.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3445B69BC6F2D40FD11ACF /* JSONException.m */; };
 		1A344B2C18D2F57462FB0C4C /* AppMetrUnsatisfiedConditionException.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34403C0E9E5DA1E32DD46A /* AppMetrUnsatisfiedConditionException.m */; };
 		1A344B61AAAF02CEDB5781D1 /* CJSONSerializedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344464E54C3761A042E02B /* CJSONSerializedData.m */; };
 		1A344B717E8FB8DF4E83FF0D /* ServerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344B2984129385C8E2CC93 /* ServerError.m */; };
-		1A344C948B078A2A916DD099 /* RemoteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344C05F747A5937E845D8A /* RemoteCommand.m */; };
 		1A344D3709BE0CCE1E2244C4 /* TestSessionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A34492D5E1DF13BC2AC7CDD /* TestSessionData.m */; };
 		1A344F59324A1EFEAE592AD9 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344A91675D2D74941C896C /* Utils.m */; };
 		1A344FABD4E39312DA02B233 /* SessionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344242B888D8838F94CFB7 /* SessionData.m */; };
@@ -106,21 +100,15 @@
 		1A344242B888D8838F94CFB7 /* SessionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionData.m; sourceTree = "<group>"; };
 		1A3442A5557BEB8623626779 /* TrackingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingManager.h; sourceTree = "<group>"; };
 		1A3442C4B890A9B85B11710A /* TrackingManager+DirtyHack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TrackingManager+DirtyHack.m"; sourceTree = "<group>"; };
-		1A3442CA8AF003060AAB9722 /* AppMetrInvalidCommandException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetrInvalidCommandException.m; sourceTree = "<group>"; };
 		1A3442E5FD43F96D1679B55C /* AppMetrUnsatisfiedConditionException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetrUnsatisfiedConditionException.h; sourceTree = "<group>"; };
 		1A344323479056CF8BAAFD3F /* TrackingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingManager.m; sourceTree = "<group>"; };
 		1A34435FE8EED5F2DE05778C /* CFilteringJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFilteringJSONSerializer.h; sourceTree = "<group>"; };
-		1A344403176C041692A98C3C /* RemoteCommandPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteCommandPacket.m; sourceTree = "<group>"; };
-		1A34441BE7CB499FEED608DD /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
 		1A34442FB72AD0E37C080F65 /* PAM_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAM_OpenUDID.h; sourceTree = "<group>"; };
 		1A344464E54C3761A042E02B /* CJSONSerializedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializedData.m; sourceTree = "<group>"; };
-		1A3444BFB9BDE3A403563886 /* TestRemoteCommandPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRemoteCommandPacket.h; sourceTree = "<group>"; };
 		1A3444E95A8305D83D02AB77 /* PAM_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAM_OpenUDID.m; sourceTree = "<group>"; };
 		1A34450ACDBAE9C810E7C260 /* SessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionData.h; sourceTree = "<group>"; };
-		1A34454C5D106271B22E8086 /* TestRemoteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRemoteCommand.m; sourceTree = "<group>"; };
 		1A3445B69BC6F2D40FD11ACF /* JSONException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONException.m; sourceTree = "<group>"; };
 		1A34462F999551D89354974A /* TestSessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSessionData.h; sourceTree = "<group>"; };
-		1A3446351826C959AF986FAF /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		1A344642E4FFF12011F0076E /* AppMetr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetr.m; sourceTree = "<group>"; };
 		1A34464512439892C64E7040 /* JSONException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONException.h; sourceTree = "<group>"; };
 		1A3446842AE54DEC17560D3B /* TestAppMetr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAppMetr.m; sourceTree = "<group>"; };
@@ -131,9 +119,6 @@
 		1A34474ABA44496DE9EA32A3 /* CJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONScanner.m; sourceTree = "<group>"; };
 		1A34476A83FD1FF5FEE58730 /* TrackingManager+DirtyHack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TrackingManager+DirtyHack.h"; sourceTree = "<group>"; };
 		1A3447C552F81BACA74D1A0E /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
-		1A344844C33DAB83D47239F1 /* RemoteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommand.h; sourceTree = "<group>"; };
-		1A34485B0ABFC970CAD16DBF /* TestRemoteCommandPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRemoteCommandPacket.m; sourceTree = "<group>"; };
-		1A344875FD4952E3B1816D10 /* RemoteCommandPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteCommandPacket.h; sourceTree = "<group>"; };
 		1A34487A91DA220D350D0B20 /* BatchFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchFile.m; sourceTree = "<group>"; };
 		1A34487BFED85FE12E24AD6F /* TestAppMetr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAppMetr.h; sourceTree = "<group>"; };
 		1A34487F2343611E030B9256 /* AMBase64Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBase64Util.m; sourceTree = "<group>"; };
@@ -151,12 +136,10 @@
 		1A344BD7CE0C62AC952B2CCB /* CJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerialization.m; sourceTree = "<group>"; };
 		1A344BF6877AA3ADFFC92D58 /* NSDictionary_JSONExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionary_JSONExtensions.h; sourceTree = "<group>"; };
 		1A344BFCD84AC82C693CCDB4 /* CJSONDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDeserializer.m; sourceTree = "<group>"; };
-		1A344C05F747A5937E845D8A /* RemoteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteCommand.m; sourceTree = "<group>"; };
 		1A344C32D46A387B7383F491 /* ServerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerError.h; sourceTree = "<group>"; };
 		1A344C4E6A1D638033736018 /* AppMetr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetr.h; sourceTree = "<group>"; };
 		1A344C518F5E255184067399 /* CJSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer.h; sourceTree = "<group>"; };
 		1A344C7F41377A6390FC34DB /* CJSONDeserializer_BlocksExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDeserializer_BlocksExtensions.m; sourceTree = "<group>"; };
-		1A344CC1AD8F21FB9126E5B5 /* AppMetrInvalidCommandException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetrInvalidCommandException.h; sourceTree = "<group>"; };
 		1A344D59E263FF311DD26318 /* TestBatchFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBatchFile.m; sourceTree = "<group>"; };
 		1A344DD95E49D0E3C3F458EE /* CJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONSerializer.m; sourceTree = "<group>"; };
 		1A344E7AA994B1E7AFDC6290 /* CJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerialization.h; sourceTree = "<group>"; };
@@ -167,10 +150,8 @@
 		1A344F6991CAC2886EBA5F29 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1A344F7A506567C1EE570B3D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; path = README.md; sourceTree = "<group>"; };
 		1A344F9AA5F6E49420666F35 /* CDataScanner_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner_Extensions.m; sourceTree = "<group>"; };
-		1A344FAB293AED0DDB975407 /* TestRemoteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRemoteCommand.h; sourceTree = "<group>"; };
 		1A344FD326FDB4A3FCA802D9 /* AcceptanceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptanceTest.h; sourceTree = "<group>"; };
 		1A344FD5346D3EC8766946B8 /* UIDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceUtil.m; sourceTree = "<group>"; };
-		1A344FE3EDD5F680A888A376 /* AppMetrDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetrDelegate.h; sourceTree = "<group>"; };
 		2C70C6CF1D48C221003BC24A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2C70C6D11D48C22F003BC24A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2C70C7041D48D3CF003BC24A /* AppMetrTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppMetrTests-Info.plist"; sourceTree = "<group>"; };
@@ -272,12 +253,6 @@
 				1A344B5FDD3B279CFBD92116 /* Constants.m */,
 				1A34464512439892C64E7040 /* JSONException.h */,
 				1A3445B69BC6F2D40FD11ACF /* JSONException.m */,
-				1A34441BE7CB499FEED608DD /* Preferences.h */,
-				1A3446351826C959AF986FAF /* Preferences.m */,
-				1A344844C33DAB83D47239F1 /* RemoteCommand.h */,
-				1A344C05F747A5937E845D8A /* RemoteCommand.m */,
-				1A344875FD4952E3B1816D10 /* RemoteCommandPacket.h */,
-				1A344403176C041692A98C3C /* RemoteCommandPacket.m */,
 				1A344C32D46A387B7383F491 /* ServerError.h */,
 				1A344B2984129385C8E2CC93 /* ServerError.m */,
 				1A34450ACDBAE9C810E7C260 /* SessionData.h */,
@@ -317,9 +292,6 @@
 		1A34440959F20C3E0D913D73 /* Public Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1A344FE3EDD5F680A888A376 /* AppMetrDelegate.h */,
-				1A344CC1AD8F21FB9126E5B5 /* AppMetrInvalidCommandException.h */,
-				1A3442CA8AF003060AAB9722 /* AppMetrInvalidCommandException.m */,
 				1A3442E5FD43F96D1679B55C /* AppMetrUnsatisfiedConditionException.h */,
 				1A34403C0E9E5DA1E32DD46A /* AppMetrUnsatisfiedConditionException.m */,
 				1A344C4E6A1D638033736018 /* AppMetr.h */,
@@ -364,10 +336,6 @@
 				1A3446842AE54DEC17560D3B /* TestAppMetr.m */,
 				1A34471D2B8F5A1D7BA8E037 /* TestBatchFile.h */,
 				1A344D59E263FF311DD26318 /* TestBatchFile.m */,
-				1A344FAB293AED0DDB975407 /* TestRemoteCommand.h */,
-				1A34454C5D106271B22E8086 /* TestRemoteCommand.m */,
-				1A3444BFB9BDE3A403563886 /* TestRemoteCommandPacket.h */,
-				1A34485B0ABFC970CAD16DBF /* TestRemoteCommandPacket.m */,
 				1A34462F999551D89354974A /* TestSessionData.h */,
 				1A34492D5E1DF13BC2AC7CDD /* TestSessionData.m */,
 			);
@@ -611,14 +579,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A34450CED8DB5ABAF0AE2FB /* AppMetrInvalidCommandException.m in Sources */,
 				1A344B2C18D2F57462FB0C4C /* AppMetrUnsatisfiedConditionException.m in Sources */,
 				1A344188827804464D268380 /* BatchFile.m in Sources */,
 				1A344369931888C125FD3FCF /* Constants.m in Sources */,
 				1A344AD9142F4AEF8F9E93F1 /* JSONException.m in Sources */,
-				1A344778D6B2C0B67BB2D425 /* Preferences.m in Sources */,
-				1A344C948B078A2A916DD099 /* RemoteCommand.m in Sources */,
-				1A3449159F633BCE8A4CBAE3 /* RemoteCommandPacket.m in Sources */,
 				1A344B717E8FB8DF4E83FF0D /* ServerError.m in Sources */,
 				1A344FABD4E39312DA02B233 /* SessionData.m in Sources */,
 				1A3449984CC846BC0A876B7E /* TrackingManager.m in Sources */,
@@ -648,8 +612,6 @@
 				1A344845E109570B720DA230 /* TrackingManager+DirtyHack.m in Sources */,
 				1A34455D3EA427B2BE85AB7E /* TestAppMetr.m in Sources */,
 				1A344098A4D4AE249226F079 /* TestBatchFile.m in Sources */,
-				1A3442381F6E5E6B6E87346C /* TestRemoteCommand.m in Sources */,
-				1A3445CAAED0819E6F362420 /* TestRemoteCommandPacket.m in Sources */,
 				1A344D3709BE0CCE1E2244C4 /* TestSessionData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

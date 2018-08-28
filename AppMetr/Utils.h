@@ -31,15 +31,6 @@
             logging:(BOOL)logging;
 
 /**
- * Sends commands pull request to the server
- */
-+ (NSDictionary *)sendQueryRemoteCommand:(NSString *)address
-                                   token:(NSString *)token
-                          userIdentifier:(NSString *)userIdentifier
-                   lastCommandIdentifier:(NSString *)lastCommandID
-                                 logging:(BOOL)logging;
-
-/**
 * Send verify payment request
 */
 + (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address

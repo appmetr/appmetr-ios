@@ -4,7 +4,6 @@
  */
 
 #import <StoreKit/StoreKit.h>
-#import "AppMetrDelegate.h"
 
 // pre-declare classes
 @class SessionData;
@@ -15,16 +14,13 @@
  * A tracking manager
  */
 @interface TrackingManager : NSObject {
-    NSThread *mWorkingThread;
-    NSCondition *mThreadCondition;
-
+    // flush and upload queue
+    dispatch_queue_t mWorkingQueue;
+    
     // timer for
     NSTimer *mFlashDataTimer;
     NSTimer *mUploadDataTimer;
-    NSTimer *mPullRemoteCommandsTimer;
 
-    //
-    volatile BOOL mRunning;
     //
     NSTimeInterval mFlushDataTimeInterval;
     NSTimeInterval mUploadDataTimeInterval;
@@ -40,19 +36,9 @@
     NSString *mVersion;
 
     NSTimeInterval mStartTime;
-
-    NSMutableArray *mRemoteCommandList;
-    NSMutableArray *mProcessedCommandList;
-    NSString *mLastReceivedCommandID;
-    volatile BOOL mPullCommands;
-    id <AppMetrDelegate> mDelegate;
-    NSThread *mCommandThread;
-    Preferences *mPreferences;
+    
     BOOL mDebugLoggingEnabled;
 }
-
-/** The delegate object*/
-@property(assign) id delegate;
 
 /** An application token */
 @property(nonatomic, readonly) NSString *token;
@@ -65,9 +51,9 @@
 
 /**
  * Setting up the application token
- * @since in 1.3
+ * @since in 1.10.0
  */
-- (void)setupWithToken:(NSString *)token delegate:(id)delegate commandsThread:(NSThread *)thread;
+- (void)setupWithToken:(NSString *)token;
 
 /**
  * Setting up the maximum size of cache file
@@ -75,8 +61,6 @@
 - (void)setupSizeLimitOfCacheFile:(NSUInteger)limit;
 
 /**
- * @deprecated in version 1.3 Use setupWithToken:delegate: instead
- * Setting up the user identifier.
  * If value not set, the unique identifier of device will be used by default.
  */
 - (void)setupWithUserID:(NSString *)userID;
@@ -202,21 +186,6 @@
  * Flushing all events to the disk
  */
 - (void)flushAllEvents;
-
-/**
- * Processing queue with remote commands
- */
-- (void)processRemoteCommands;
-
-/**
- * Pull remote commands
- */
-- (void)pullCommands;
-
-/**
- * Sets the thread for executing remote commands
- */
-- (void)setCommandThread:(NSThread *)thread;
 
 /** Returns an unique identifier of current installation instance */
 - (NSString *)instanceIdentifier;

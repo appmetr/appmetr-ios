@@ -218,24 +218,6 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     return [[[serverResponse objectForKey:@"response"] objectForKey:@"status"] isEqualToString:@"OK"];
 }
 
-+ (NSDictionary *)sendQueryRemoteCommand:(NSString *)address
-                                   token:(NSString *)token
-                          userIdentifier:(NSString *)userIdentifier
-                   lastCommandIdentifier:(NSString *)lastCommandID
-                                 logging:(BOOL)logging {
-    NSString *fullAddress = [Utils requestParametersForMethod:kMethodGetCommands
-                                                      address:address
-                                                        token:token
-                                               userIdentifier:userIdentifier];
-
-    if (lastCommandID) {
-        fullAddress = [fullAddress stringByAppendingFormat:@"&lastCommandId=%@",
-                                                           [lastCommandID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    }
-
-    return [self sendRequest:fullAddress logging:logging];
-}
-
 + (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
                                      token:(NSString *)token
                             userIdentifier:(NSString *)userIdentifier

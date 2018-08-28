@@ -15,7 +15,7 @@ NSString *token = @"demo_token";
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [AppMetr setupWithToken:token delegate:self];
+    [AppMetr setupWithToken:token];
     return YES;
 }
 
