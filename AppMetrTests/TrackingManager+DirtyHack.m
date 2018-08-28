@@ -10,7 +10,7 @@
 - (id)initAndStopThread {
     self = [self init];
     if (self) {
-        [self setupWithToken:@"5f294acf-4510-4bd9-a936-e27f59f7b7dd" delegate:nil commandsThread:nil];
+        [self setupWithToken:@"5f294acf-4510-4bd9-a936-e27f59f7b7dd"];
         [self applicationDidEnterBackground];
     }
 

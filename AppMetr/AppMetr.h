@@ -16,16 +16,6 @@
 + (void)setupWithToken:(NSString *)token;
 
 /**
- * Setting up the application token and set the current thread for processing remote command.
- */
-+ (void)setupWithToken:(NSString *)token delegate:(id)delegate;
-
-/**
- * Setting up the application token
- */
-+ (void)setupWithToken:(NSString *)token delegate:(id)delegate commandsThread:(NSThread *)thread;
-
-/**
  * Setting up the maximum size of cache file
  */
 + (void)setupSizeLimitOfCacheFile:(NSUInteger)limit;
@@ -142,11 +132,6 @@
 + (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
 
 /**
- * Pull remote commands
- */
-+ (void)pullCommands;
-
-/**
 * Force flush events on server
 */
 + (void)flush;
@@ -155,11 +140,6 @@
  * Force flush events to the disk
  */
 + (void)flushLocal;
-
-/**
- * Sets the thread for executing remote commands
- */
-+ (void)setCommandThread:(NSThread *)thread;
 
 /** Enabling or disabling debug logging */
 + (void)setDebugLoggingEnabled:(BOOL)debugLoggingEnabled;

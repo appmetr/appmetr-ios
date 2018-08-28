@@ -28,15 +28,7 @@ TrackingManager *gSharedManager = nil;
 #pragma mark - Setting up
 
 + (void)setupWithToken:(NSString *)token {
-    [AppMetr setupWithToken:token delegate:nil];
-}
-
-+ (void)setupWithToken:(NSString *)token delegate:(id)delegate {
-    [AppMetr setupWithToken:token delegate:delegate commandsThread:[NSThread currentThread]];
-}
-
-+ (void)setupWithToken:(NSString *)token delegate:(id)delegate commandsThread:(NSThread *)thread {
-    [[AppMetr sharedManager] setupWithToken:token delegate:delegate commandsThread:thread];
+    [[AppMetr sharedManager] setupWithToken:token];
 }
 
 + (void)setupSizeLimitOfCacheFile:(NSUInteger)limit {
@@ -131,20 +123,12 @@ TrackingManager *gSharedManager = nil;
                                                     privateKey:privateKey];
 }
 
-+ (void)pullCommands {
-    [[AppMetr sharedManager] pullCommands];
-}
-
 + (void)flush {
     [[AppMetr sharedManager] flushAndUploadAllEvents];
 }
 
 + (void)flushLocal {
     [[AppMetr sharedManager] flushAllEvents];
-}
-
-+ (void)setCommandThread:(NSThread *)thread {
-    [[AppMetr sharedManager] setCommandThread:thread];
 }
 
 + (void)setDebugLoggingEnabled:(BOOL)debugLoggingEnabled {

@@ -15,8 +15,6 @@ extern NSUInteger const kTokenSizeLimit;
 extern NSTimeInterval const kDefaultFlashDataDelay;
 /** Time in seconds by default after which data is sent to server. Also known as T2. */
 extern NSTimeInterval const kDefaultUploadDataDelay;
-/** Time in seconds to query remote commands. */
-extern NSTimeInterval const kPullRemoteCommandsDelay;
 /** Time in seconds for max pause state, after which starts new session */
 extern NSTimeInterval const kSessionMaxPauseState;
 /** The url string of AppMetr api. */
@@ -36,8 +34,6 @@ extern NSString *const kActionVersionKeyName;
 extern NSString *const kActionTrackInstall;
 extern NSString *const kActionTrackAdsEvent;
 extern NSString *const kActionTrackInstallURL;
-extern NSString *const kActionTrackCommand;
-extern NSString *const kActionTrackCommandBatch;
 extern NSString *const kActionTrackOptions;
 extern NSString *const kActionTrackExperiment;
 extern NSString *const kActionTrackState;
@@ -54,8 +50,6 @@ extern NSString *const kPreferencesFileListKeyName;
 extern NSString *const kPreferencesUniqueIdentifierKeyName;
 extern NSString *const kPreferencesInstallURLKeyName;
 extern NSString *const kPreferencesFirstTrackSessionKeyName;
-extern NSString *const kPreferencesProcessedCommandsKeyName;
-extern NSString *const kPreferencesLastProcessedCommandIdentifier;
 extern NSString *const kPreferencesSessionDuration;
 extern NSString *const kPreferencesSessionDurationCurrent;
 extern NSString *const kPreferencesUniqueInstanceIdentifierKeyName;
