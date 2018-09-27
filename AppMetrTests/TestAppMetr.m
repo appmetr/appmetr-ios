@@ -8,6 +8,7 @@
 #import "TrackingManager+DirtyHack.h"
 #import "AMBase64Util.h"
 #import "CJSONDeserializer.h"
+#import "../AppMetr/Utils.h"
 
 @protocol AppMetrTesting <NSObject>
 @end
@@ -453,6 +454,41 @@
     [testLibrary trackInstallURL:[NSURL URLWithString:@"http://AppMetr.mobile/unit/test"]];
 
     XCTAssertEqual((NSUInteger) 0, [[testLibrary dirtySessionData].fileList count], @"Invalid number of files");
+}
+
+- (void)testSetTimestamp {
+    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
+    [testLibrary dirtyFlushData];
+    [testLibrary dirtyCloseStreams];
+    NSArray *eventStack = [testLibrary getDirtyEventStack];
+    
+    // test Date as timestamp
+    unsigned long long testDate1 = 1487278800000;
+    NSDictionary* propertiesLong = @{@"timestamp" : [NSNumber numberWithUnsignedLongLong:testDate1]};
+    [testLibrary trackEvent: @"customTimestamp1" properties:propertiesLong];
+    NSDictionary* resultsLong = [eventStack lastObject];
+    XCTAssertTrue([[resultsLong objectForKey:@"action"] isEqualToString:@"trackEvent"], @"Invalid action");
+    XCTAssertTrue([[resultsLong objectForKey:@"event"] isEqualToString:@"customTimestamp1"], @"Invalid event name");
+    XCTAssertTrue([[resultsLong objectForKey:@"timestamp"] unsignedLongLongValue] == testDate1, @"Invalid custom date");
+    
+    // test Date as Date
+    NSDate* testDate2 = [NSDate dateWithTimeIntervalSince1970:1519851600000];
+    NSDictionary* propertiesDate = @{@"timestamp" : testDate2};
+    [testLibrary trackLevel:5 properties:propertiesDate];
+    NSDictionary* resultsDate = [eventStack lastObject];
+    XCTAssertTrue([[resultsDate objectForKey:@"action"] isEqualToString:@"trackLevel"], @"Invalid action");
+    XCTAssertTrue([[resultsDate objectForKey:@"level"] intValue] == 5, @"Invalid level");
+    XCTAssertTrue([[resultsDate objectForKey:@"timestamp"] unsignedLongLongValue] == (unsigned long long)[testDate2 timeIntervalSince1970] * 1000.0, @"Invalid custom date");
+    
+    // test Date as wrong argument
+    NSString* testDate3 = @"2018.04.10 12:00";
+    NSDictionary* propertiesWrong = @{@"timestamp" : testDate3};
+    [testLibrary trackEvent: @"customTimestamp3" properties:propertiesWrong];
+    NSDictionary* resultsWrong = [eventStack lastObject];
+    XCTAssertTrue([[resultsWrong objectForKey:@"action"] isEqualToString:@"trackEvent"], @"Invalid action");
+    XCTAssertTrue([[resultsWrong objectForKey:@"event"] isEqualToString:@"customTimestamp3"], @"Invalid event name");
+    XCTAssertTrue([Utils timestamp] - [[resultsWrong objectForKey:@"timestamp"] unsignedLongLongValue] < 50, @"Invalid custom date");
+    
 }
 
 @end

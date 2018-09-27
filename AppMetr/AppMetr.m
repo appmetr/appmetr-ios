@@ -8,6 +8,8 @@
 #import "TrackingManager.h"
 #import "AMBase64Util.h"
 
+NSString *const kAppmetrPropertyTimestamp = @"timestamp";
+
 // Global variables
 TrackingManager *gSharedManager = nil;
 

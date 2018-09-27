@@ -13,6 +13,7 @@
 #import "BatchFile.h"
 #import "AppMetrUnsatisfiedConditionException.h"
 #import "ServerError.h"
+#import "AppMetr.h"
 
 
 // Global variables
@@ -358,9 +359,24 @@ extern TrackingManager *gSharedManager;
 
 - (void)track:(NSDictionary *)trackProperties {
     NSMutableDictionary *updatedTrackProperties = [trackProperties mutableCopy];
-
-    [updatedTrackProperties setObject:[NSNumber numberWithUnsignedLongLong:[Utils timestamp]]
-                               forKey:@"timestamp"];
+    NSMutableDictionary* properties = [NSMutableDictionary dictionaryWithDictionary:[updatedTrackProperties objectForKey:@"properties"]];
+    id timestamp = [properties objectForKey:kAppmetrPropertyTimestamp];
+    
+    NSNumber* ts;
+    if(timestamp != nil && [timestamp isKindOfClass:[NSNumber class]]) {
+        ts = (NSNumber*)timestamp;
+        [properties removeObjectForKey:kAppmetrPropertyTimestamp];
+    } else if(timestamp != nil && [timestamp isKindOfClass:[NSDate class]]) {
+        ts = [NSNumber numberWithUnsignedLongLong:(unsigned long long) ([(NSDate*)timestamp timeIntervalSince1970] * 1000.0)];
+        [properties removeObjectForKey:kAppmetrPropertyTimestamp];
+    } else {
+        ts = [NSNumber numberWithUnsignedLongLong:[Utils timestamp]];
+    }
+    [updatedTrackProperties setObject:ts forKey:kAppmetrPropertyTimestamp];
+    if(properties.count > 0)
+        [updatedTrackProperties setObject:properties forKey:@"properties"];
+    else
+        [updatedTrackProperties removeObjectForKey:@"properties"];
 
     @synchronized (mEventStack) {
         [mEventStack addObject:updatedTrackProperties];
