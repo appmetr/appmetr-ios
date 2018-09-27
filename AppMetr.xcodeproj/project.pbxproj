@@ -35,11 +35,9 @@
 		1A344FABD4E39312DA02B233 /* SessionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344242B888D8838F94CFB7 /* SessionData.m */; };
 		1A344FE08A8C76FD31AFE3EF /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344B0C447AC5625926F942 /* NSDictionary_JSONExtensions.m */; };
 		1A344FF519422132B325D372 /* AcceptanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3441F9FDDC827220A788DA /* AcceptanceTest.m */; };
-		2C70C7011D48D342003BC24A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D26B22D117C4E9BE0062B852 /* Info.plist */; };
 		2C70C7051D48D3CF003BC24A /* AppMetrTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C70C7041D48D3CF003BC24A /* AppMetrTests-Info.plist */; };
 		D26B229F17C4E64A0062B852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229E17C4E64A0062B852 /* Foundation.framework */; };
 		D26B22B417C4E64A0062B852 /* libAppMetr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229B17C4E64A0062B852 /* libAppMetr.a */; };
-		D26B22BA17C4E64A0062B852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D26B22B817C4E64A0062B852 /* InfoPlist.strings */; };
 		D26B22CC17C4E9BE0062B852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229E17C4E64A0062B852 /* Foundation.framework */; };
 		D26B22CE17C4E9BE0062B852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B22CD17C4E9BE0062B852 /* CoreGraphics.framework */; };
 		D26B22D417C4E9BE0062B852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D26B22D217C4E9BE0062B852 /* InfoPlist.strings */; };
@@ -554,7 +552,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C70C7051D48D3CF003BC24A /* AppMetrTests-Info.plist in Resources */,
-				D26B22BA17C4E64A0062B852 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,7 +559,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C70C7011D48D342003BC24A /* Info.plist in Resources */,
 				D26B22D417C4E9BE0062B852 /* InfoPlist.strings in Resources */,
 				D26B22DC17C4E9BE0062B852 /* Default.png in Resources */,
 				D26B22DE17C4E9BE0062B852 /* Default@2x.png in Resources */,
