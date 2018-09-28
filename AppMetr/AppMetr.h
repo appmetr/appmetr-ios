@@ -6,6 +6,11 @@
 #import <StoreKit/StoreKit.h>
 
 /**
+ * Public constants
+ */
+extern NSString *const kAppmetrPropertyTimestamp;
+
+/**
  * Main library class
  */
 @interface AppMetr : NSObject
