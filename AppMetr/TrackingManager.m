@@ -14,6 +14,7 @@
 #import "AppMetrUnsatisfiedConditionException.h"
 #import "ServerError.h"
 #import "AppMetr.h"
+#import "UploadCacheTask.h"
 
 
 // Global variables
@@ -22,6 +23,8 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Private category
 
 @interface TrackingManager ()
+
+@property(readwrite, retain) UploadCacheTask* uploadCacheTask;
 
 - (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval selector:(SEL)selector;
 
@@ -52,6 +55,7 @@ extern TrackingManager *gSharedManager;
 @synthesize token = mToken;
 @synthesize userIdentifier = mUserID;
 @synthesize debugLoggingEnabled = mDebugLoggingEnabled;
+@synthesize uploadCacheTask;
 
 #pragma mark - Initializing
 
@@ -74,6 +78,9 @@ extern TrackingManager *gSharedManager;
 
         // retrieve version string
         [self readSettingsFromPInfoFile];
+        
+        self.uploadCacheTask = [[UploadCacheTask alloc] initWithSession:mSessionData];
+        self.uploadCacheTask.logging = mDebugLoggingEnabled;
 
         // subscribe notifications
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -120,6 +127,8 @@ extern TrackingManager *gSharedManager;
     [mSessionData release];
     [mBatchFileStream release];
     [mBatchFileLock release];
+    self.uploadCacheTask = nil;
+    
 
     [mToken release];
     [mUserID release];
@@ -227,6 +236,9 @@ extern TrackingManager *gSharedManager;
         [NSException raise:NSGenericException
                     format:@"%@", serializeError.description];
     }
+    
+    if(data)
+        data = [Utils compressData:data];
 
     return data;
 }
@@ -256,66 +268,17 @@ extern TrackingManager *gSharedManager;
     }
 }
 
-- (NSUInteger)uploadData {
+- (void)uploadData {
     if (mToken == nil || [mToken isKindOfClass:[NSNull class]]) {
         NSLog(@"Call setupWithToken before uploadData");
-        return 0;
     }
     
-    NSUInteger ret = 0;
-    NSArray *fileList;
-    @synchronized (mSessionData) {
-        fileList = [mSessionData.fileList copy];
-    }
-
-    for (NSString *fileName in fileList) {
-        NSError *error = nil;
-        if (mDebugLoggingEnabled) {
-            NSLog(@"uploadData: Batches: %@", [NSString stringWithContentsOfFile:fileName
-                                                                        encoding:NSUTF8StringEncoding
-                                                                           error:&error]);
-        }
-
-        NSData *content = [NSData dataWithContentsOfFile:fileName options:0 error:&error];
-        BOOL result = YES;
-        if (!error) {
-            result = [Utils sendRequest:mServerAddress
-                                  token:mToken
-                         userIdentifier:mUserID
-                                batches:[Utils compressData:content]
-                                logging:mDebugLoggingEnabled];
-        }
-        else {
-            NSLog(@"File error: %@", error.localizedDescription);
-        }
-
-        if (result) {
-            @synchronized (mSessionData) {
-                [mSessionData.fileList removeObject:fileName];
-                ret++;
-            }
-
-            NSError *fileError = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:fileName error:&fileError];
-            if (fileError) {
-                NSLog(@"Failed to delete file. Reason: %@", fileError.localizedDescription);
-            }
-        }
-        else {
-            NSLog(@"Server error, break.");
-            break;
-        }
-    }
-
-    if (ret) {
-        @synchronized (mSessionData) {
-            [mSessionData saveFileList];
-        }
-    }
-
-    [fileList release];
-
-    return ret;
+    NSString* requestAddress = [Utils requestParametersForMethod:@"server.track"
+                                                         address:mServerAddress
+                                                           token:mToken
+                                                  userIdentifier:mUserID];
+    self.uploadCacheTask.logging = mDebugLoggingEnabled;
+    [self.uploadCacheTask uploadWithAddress:requestAddress];
 }
 
 - (void)flushTimer:(NSTimer *)timer {
@@ -691,6 +654,7 @@ extern TrackingManager *gSharedManager;
     
     [self flushData];
     [self closeStreams];
+    [self uploadData];
 }
 
 - (void)applicationWillEnterForeground {

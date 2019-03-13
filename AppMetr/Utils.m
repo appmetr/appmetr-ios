@@ -22,7 +22,6 @@
 #include <net/if_dl.h>
 #import <CommonCrypto/CommonDigest.h>
 
-NSString *const kMethodTrack = @"server.track";
 NSString *const kMethodGetCommands = @"server.getCommands";
 NSString *const kMethodVerifyPayment = @"server.verifyPayment";
 
@@ -156,66 +155,6 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
             stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     return fullAddress;
-}
-
-+ (BOOL)sendRequest:(NSString *)address
-              token:(NSString *)token
-     userIdentifier:(NSString *)userIdentifier
-            batches:(NSData *)batches
-            logging:(BOOL)logging {
-    NSString *contentLength = [NSString stringWithFormat:@"%d", (unsigned int)batches.length];
-    NSString *fullAddress = [Utils requestParametersForMethod:kMethodTrack
-                                                      address:address
-                                                        token:token
-                                               userIdentifier:userIdentifier];
-    NSURL *url = [NSURL URLWithString:fullAddress];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:batches];
-    [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:contentLength forHTTPHeaderField:@"Content-Length"];
-
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-                                                 returningResponse:&response error:&error];
-    if (error) {
-        NSLog(@"Network error: %@", error.localizedDescription);
-        return NO;
-    }
-
-    if (logging) {
-        NSString *responseText = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSLog(@"Request parameters: '%@' Responce: '%@'", fullAddress, responseText);
-        [responseText release];
-    }
-
-    NSDictionary *serverResponse;
-    @try {
-        NSInteger statusCode = [(NSHTTPURLResponse *) response statusCode];
-        // is HTTP error?
-        if (statusCode < 400) {
-            NSError *jsonError = nil;
-            serverResponse = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:responseData
-                                                                                 error:&jsonError];
-
-            if (jsonError) {
-                NSLog(@"Failed to parse server response: %@", jsonError.localizedDescription);
-                return NO;
-            }
-        }
-        else {
-            NSLog(@"Server error code %d", (int)statusCode);
-            return NO;
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Fail to parse server response. Invalid JSON: %@", exception.description);
-        return NO;
-    }
-
-
-    return [[[serverResponse objectForKey:@"response"] objectForKey:@"status"] isEqualToString:@"OK"];
 }
 
 + (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address

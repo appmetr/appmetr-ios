@@ -36,6 +36,7 @@
 		1A344FE08A8C76FD31AFE3EF /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A344B0C447AC5625926F942 /* NSDictionary_JSONExtensions.m */; };
 		1A344FF519422132B325D372 /* AcceptanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3441F9FDDC827220A788DA /* AcceptanceTest.m */; };
 		2C70C7051D48D3CF003BC24A /* AppMetrTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C70C7041D48D3CF003BC24A /* AppMetrTests-Info.plist */; };
+		C60F5AD12237C2030036AA52 /* UploadCacheTask.m in Sources */ = {isa = PBXBuildFile; fileRef = C60F5AD02237C2030036AA52 /* UploadCacheTask.m */; };
 		D26B229F17C4E64A0062B852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229E17C4E64A0062B852 /* Foundation.framework */; };
 		D26B22B417C4E64A0062B852 /* libAppMetr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229B17C4E64A0062B852 /* libAppMetr.a */; };
 		D26B22CC17C4E9BE0062B852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26B229E17C4E64A0062B852 /* Foundation.framework */; };
@@ -153,6 +154,8 @@
 		2C70C6CF1D48C221003BC24A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2C70C6D11D48C22F003BC24A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2C70C7041D48D3CF003BC24A /* AppMetrTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AppMetrTests-Info.plist"; sourceTree = "<group>"; };
+		C60F5ACF2237C2030036AA52 /* UploadCacheTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadCacheTask.h; sourceTree = "<group>"; };
+		C60F5AD02237C2030036AA52 /* UploadCacheTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadCacheTask.m; sourceTree = "<group>"; };
 		D26B229B17C4E64A0062B852 /* libAppMetr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppMetr.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D26B229E17C4E64A0062B852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D26B22A217C4E64A0062B852 /* AppMetr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppMetr-Prefix.pch"; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				1A344FD5346D3EC8766946B8 /* UIDeviceUtil.m */,
 				1A344740AADF68CF00EB0D42 /* Utils.h */,
 				1A344A91675D2D74941C896C /* Utils.m */,
+				C60F5ACF2237C2030036AA52 /* UploadCacheTask.h */,
+				C60F5AD02237C2030036AA52 /* UploadCacheTask.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -577,6 +582,7 @@
 			files = (
 				1A344B2C18D2F57462FB0C4C /* AppMetrUnsatisfiedConditionException.m in Sources */,
 				1A344188827804464D268380 /* BatchFile.m in Sources */,
+				C60F5AD12237C2030036AA52 /* UploadCacheTask.m in Sources */,
 				1A344369931888C125FD3FCF /* Constants.m in Sources */,
 				1A344AD9142F4AEF8F9E93F1 /* JSONException.m in Sources */,
 				1A344B717E8FB8DF4E83FF0D /* ServerError.m in Sources */,

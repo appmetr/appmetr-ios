@@ -22,15 +22,6 @@
 + (void)validatePayment:(NSDictionary *)payment;
 
 /**
- * Sends the request to the server
- */
-+ (BOOL)sendRequest:(NSString *)address
-              token:(NSString *)token
-     userIdentifier:(NSString *)userIdentifier
-            batches:(NSData *)batches
-            logging:(BOOL)logging;
-
-/**
 * Send verify payment request
 */
 + (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
