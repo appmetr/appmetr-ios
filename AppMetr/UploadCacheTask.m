@@ -25,7 +25,10 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
 
 +(void)load
 {
-    appmetrUploadTasks = [[NSMutableDictionary dictionary] retain];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        appmetrUploadTasks = [[NSMutableDictionary alloc] init];
+    });
 }
 
 -(instancetype)initWithSession:(SessionData *)session

@@ -55,7 +55,7 @@ extern TrackingManager *gSharedManager;
 @synthesize token = mToken;
 @synthesize userIdentifier = mUserID;
 @synthesize debugLoggingEnabled = mDebugLoggingEnabled;
-@synthesize uploadCacheTask;
+@synthesize uploadCacheTask = mUploadCacheTask;
 
 #pragma mark - Initializing
 
@@ -79,8 +79,8 @@ extern TrackingManager *gSharedManager;
         // retrieve version string
         [self readSettingsFromPInfoFile];
         
-        self.uploadCacheTask = [[UploadCacheTask alloc] initWithSession:mSessionData];
-        self.uploadCacheTask.logging = mDebugLoggingEnabled;
+        mUploadCacheTask = [[UploadCacheTask alloc] initWithSession:mSessionData];
+        mUploadCacheTask.logging = mDebugLoggingEnabled;
 
         // subscribe notifications
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -127,7 +127,7 @@ extern TrackingManager *gSharedManager;
     [mSessionData release];
     [mBatchFileStream release];
     [mBatchFileLock release];
-    self.uploadCacheTask = nil;
+    mUploadCacheTask = nil;
     
 
     [mToken release];
@@ -277,8 +277,8 @@ extern TrackingManager *gSharedManager;
                                                          address:mServerAddress
                                                            token:mToken
                                                   userIdentifier:mUserID];
-    self.uploadCacheTask.logging = mDebugLoggingEnabled;
-    [self.uploadCacheTask uploadWithAddress:requestAddress];
+    mUploadCacheTask.logging = mDebugLoggingEnabled;
+    [mUploadCacheTask uploadWithAddress:requestAddress];
 }
 
 - (void)flushTimer:(NSTimer *)timer {
