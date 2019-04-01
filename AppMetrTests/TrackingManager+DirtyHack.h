@@ -22,8 +22,6 @@
 
 - (void)dirtyFlushData;
 
-- (void)dirtyCloseStreams;
-
 - (NSUInteger)dirtyUploadData;
 
 @end

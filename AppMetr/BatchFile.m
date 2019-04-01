@@ -7,10 +7,6 @@
 
 #pragma mark - Private category
 
-NSString *const kOpeningBracket = @"[";
-NSString *const kClosingBracket = @"]";
-NSString *const kKoma = @",";
-
 @interface BatchFile ()
 - (NSUInteger)write:(char const *)buffer maxLength:(NSUInteger)length;
 
@@ -47,10 +43,6 @@ NSString *const kKoma = @",";
             [self release];
             self = nil;
         }
-        else {
-            // write opening bracket
-            [self writeString:kOpeningBracket];
-        }
     }
 
     return self;
@@ -69,19 +61,12 @@ NSString *const kKoma = @",";
 
 - (void)close {
     if (mOutputStream) {
-        // write closing bracket
-        [self writeString:kClosingBracket];
-
         [mOutputStream close];
         [mOutputStream release], mOutputStream = nil;
     }
 }
 
 - (void)addChunkData:(NSData *)data {
-    if (mContentSize) {
-        mContentSize += [self writeString:kKoma];
-    }
-
     mContentSize += [self writeData:data];
 }
 

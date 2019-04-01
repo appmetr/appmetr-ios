@@ -333,12 +333,10 @@
 - (void)_testBatchFiles {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     [testLibrary trackEvent:@"testBatchFiles"];
 
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     NSString *batchFile = [[testLibrary dirtySessionData].fileList lastObject];
 
@@ -368,10 +366,7 @@
 - (void)_testAmountOfBatchFiles {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
-
-    [testLibrary setupSizeLimitOfCacheFile:300];
 
     [testLibrary trackEvent:@"testBatchFile1"];
     [testLibrary dirtyFlushData];
@@ -389,8 +384,6 @@
     XCTAssertEqual((NSUInteger) 2, [testLibrary dirtySessionData].fileList.count,
     @"Wrong file numbers. Experted 2, but got %u", [testLibrary dirtySessionData].fileList.count);
 
-    [testLibrary dirtyCloseStreams];
-
     XCTAssertEqual((NSUInteger) 3, [testLibrary dirtySessionData].fileList.count,
     @"Wrong file numbers. Experted 3, but got %u", [testLibrary dirtySessionData].fileList.count);
 
@@ -403,17 +396,14 @@
 
     [testLibrary trackEvent:@"event1"];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     XCTAssertEqual((NSUInteger) 1, [testLibrary dirtyUploadData], @"Failed to upload data");
 
     [testLibrary trackEvent:@"event2"];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     [testLibrary trackEvent:@"event3"];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     XCTAssertEqual((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
 
@@ -424,7 +414,6 @@
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [[testLibrary dirtySessionData].fileList removeAllObjects];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     XCTAssertEqual((NSUInteger) 0, [testLibrary dirtyUploadData], @"Failed to upload data");
 
@@ -459,7 +448,6 @@
 - (void)testSetTimestamp {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
     
     // test Date as timestamp

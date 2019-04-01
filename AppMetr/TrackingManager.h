@@ -24,11 +24,9 @@
     //
     NSTimeInterval mFlushDataTimeInterval;
     NSTimeInterval mUploadDataTimeInterval;
-    NSUInteger mBatchFileMaxSize;
 
     NSMutableArray *mEventStack;
     SessionData *mSessionData;
-    BatchFile *mBatchFileStream;
     NSLock *mBatchFileLock;
 
     NSString *mServerAddress;
@@ -54,11 +52,6 @@
  * @since in 1.10.0
  */
 - (void)setupWithToken:(NSString *)token;
-
-/**
- * Setting up the maximum size of cache file
- */
-- (void)setupSizeLimitOfCacheFile:(NSUInteger)limit;
 
 /**
  * If value not set, the unique identifier of device will be used by default.

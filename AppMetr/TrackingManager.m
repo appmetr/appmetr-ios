@@ -40,8 +40,6 @@ extern TrackingManager *gSharedManager;
 // send prepared files to server
 - (void)uploadTimer:(NSTimer *)timer;
 
-- (void)closeStreams;
-
 /// track methods
 - (void)track:(NSDictionary *)trackProperties;
 
@@ -64,7 +62,6 @@ extern TrackingManager *gSharedManager;
     if (self) {
         mFlushDataTimeInterval = kDefaultFlashDataDelay;
         mUploadDataTimeInterval = kDefaultUploadDataDelay;
-        mBatchFileMaxSize = kDefaultBatchFileMaxSize;
 
         //initialize main stack
         mEventStack = [[NSMutableArray alloc] init];
@@ -118,14 +115,12 @@ extern TrackingManager *gSharedManager;
     [mUploadDataTimer release];
     
     [self flushData];
-    [self closeStreams];
 
     @synchronized (mEventStack) {
         [mEventStack release];
     }
 
     [mSessionData release];
-    [mBatchFileStream release];
     [mBatchFileLock release];
     mUploadCacheTask = nil;
     
@@ -180,10 +175,6 @@ extern TrackingManager *gSharedManager;
     if (token != nil && ![token isKindOfClass:[NSNull class]]) {
         mToken = [token copy];
     }
-}
-
-- (void)setupSizeLimitOfCacheFile:(NSUInteger)limit {
-    mBatchFileMaxSize = limit;
 }
 
 - (void)setupWithUserID:(NSString *)userID {
@@ -254,16 +245,14 @@ extern TrackingManager *gSharedManager;
     if (chunk) {
         // lock mutex
         @synchronized (mBatchFileLock) {
-
-            if (!mBatchFileStream) {
-                mBatchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
+            BatchFile* batchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
+            [batchFileStream addChunkData:chunk];
+            [batchFileStream close];
+            @synchronized (mSessionData) {
+                [mSessionData.fileList addObject:batchFileStream.fullPath];
+                [mSessionData saveFileList];
             }
-            else if (mBatchFileStream.contentSize + [chunk length] > mBatchFileMaxSize) {
-                [self closeStreams];
-                mBatchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
-            }
-
-            [mBatchFileStream addChunkData:chunk];
+            [batchFileStream release];
         }
     }
 }
@@ -301,21 +290,6 @@ extern TrackingManager *gSharedManager;
             NSLog(@"Failed to upload data. Reason: %@", [exception description]);
         }
     });
-}
-
-- (void)closeStreams {
-    // lock mutex
-    @synchronized (mBatchFileLock) {
-        if (mBatchFileStream) {
-            [mBatchFileStream close];
-            @synchronized (mSessionData) {
-                [mSessionData.fileList addObject:mBatchFileStream.fullPath];
-                [mSessionData saveFileList];
-            }
-
-            [mBatchFileStream release], mBatchFileStream = nil;
-        }
-    }
 }
 
 #pragma mark - track methods
@@ -633,7 +607,6 @@ extern TrackingManager *gSharedManager;
     dispatch_async(mWorkingQueue, ^{
         // flush and send all events
         [self flushData];
-        [self closeStreams];
         [self uploadData];
     });
 }
@@ -641,7 +614,6 @@ extern TrackingManager *gSharedManager;
 - (void)flushAllEvents {
     dispatch_async(mWorkingQueue, ^{
         [self flushData];
-        [self closeStreams];
     });
 }
 
@@ -653,7 +625,6 @@ extern TrackingManager *gSharedManager;
     mStartTime = [[NSDate date] timeIntervalSince1970];
     
     [self flushData];
-    [self closeStreams];
     [self uploadData];
 }
 
@@ -668,7 +639,6 @@ extern TrackingManager *gSharedManager;
 - (void)applicationWillTerminate {
     [mSessionData setSessionDurationCurrent:[mSessionData sessionDurationCurrent] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
     [self flushData];
-    [self closeStreams];
 
     if (gSharedManager == self) {
         [gSharedManager release];

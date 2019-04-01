@@ -4,7 +4,6 @@
  */
 
 // Configuration
-NSUInteger const kDefaultBatchFileMaxSize = 500;
 NSUInteger const kTokenSizeLimit = 50;
 NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;       // 1(minutes) * 60(seconds)
 NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;      // 1.5(minutes) * 60(seconds)
