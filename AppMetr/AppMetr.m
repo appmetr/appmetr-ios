@@ -33,10 +33,6 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] setupWithToken:token];
 }
 
-+ (void)setupSizeLimitOfCacheFile:(NSUInteger)limit {
-    [[AppMetr sharedManager] setupSizeLimitOfCacheFile:limit];
-}
-
 #pragma mark - Class (lazy)methods
 
 + (void)attachProperties {

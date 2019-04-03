@@ -33,10 +33,6 @@
     [self performSelector:@selector(flushData)];
 }
 
-- (void)dirtyCloseStreams {
-    [self performSelector:@selector(closeStreams)];
-}
-
 - (NSUInteger)dirtyUploadData {
     return (NSUInteger) [self performSelector:@selector(uploadData)];
 }

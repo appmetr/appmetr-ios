@@ -45,7 +45,6 @@
     [testLibrary trackEvent:@"test/test"];
 
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     properties = [NSDictionary dictionaryWithObjectsAndKeys:@"red", @"abGroup",
                                                             @"test", @"adRef", nil];
@@ -57,7 +56,6 @@
     [testLibrary trackEvent:@"test/test2"];
 
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     XCTAssertEqual((NSUInteger) 2, [testLibrary dirtyUploadData], @"Failed to upload data");
 
@@ -78,7 +76,6 @@
 - (void)_testFourFiles {
 
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
-    [testLibrary setupSizeLimitOfCacheFile:142 * 3];
     [[[testLibrary dirtySessionData] fileList] removeAllObjects];
 
     NSUInteger beginTestFilesCount = [[[testLibrary dirtySessionData] fileList] count] + 1;
@@ -87,7 +84,6 @@
         [testLibrary trackEvent:@"test"];
         [testLibrary dirtyFlushData];
     }
-    [testLibrary dirtyCloseStreams];
     [testLibrary applicationWillEnterForeground];
 
     NSUInteger endTestFilesCount = [[[testLibrary dirtySessionData] fileList] count] + 1;
@@ -109,22 +105,18 @@
 - (void)_testThreeFilesWithAllocation // allocation 2 events - 1 event - 1 event
 {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
-    [testLibrary setupSizeLimitOfCacheFile:12];
     NSUInteger beginTestFilesCount = [[[testLibrary dirtySessionData] fileList] count];
 
     [testLibrary trackEvent:@"First test event"];
     [testLibrary trackEvent:@"Second test event"];
 
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     [testLibrary trackEvent:@"Third test event with length > S"];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     [testLibrary trackEvent:@"Fourth test event"];
     [testLibrary dirtyFlushData];
-    [testLibrary dirtyCloseStreams];
 
     NSUInteger endTestFilesCount = [[[testLibrary dirtySessionData] fileList] count];
     XCTAssertTrue((3 == (endTestFilesCount - beginTestFilesCount)), @"Failed to create three files");

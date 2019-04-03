@@ -21,11 +21,6 @@ extern NSString *const kAppmetrPropertyTimestamp;
 + (void)setupWithToken:(NSString *)token;
 
 /**
- * Setting up the maximum size of cache file
- */
-+ (void)setupSizeLimitOfCacheFile:(NSUInteger)limit;
-
-/**
  * Updating information about the user
  */
 + (void)attachProperties;

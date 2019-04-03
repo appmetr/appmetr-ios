@@ -14,6 +14,7 @@
 #import "AppMetrUnsatisfiedConditionException.h"
 #import "ServerError.h"
 #import "AppMetr.h"
+#import "UploadCacheTask.h"
 
 
 // Global variables
@@ -22,6 +23,8 @@ extern TrackingManager *gSharedManager;
 #pragma mark - Private category
 
 @interface TrackingManager ()
+
+@property(readwrite, retain) UploadCacheTask* uploadCacheTask;
 
 - (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval selector:(SEL)selector;
 
@@ -37,8 +40,6 @@ extern TrackingManager *gSharedManager;
 // send prepared files to server
 - (void)uploadTimer:(NSTimer *)timer;
 
-- (void)closeStreams;
-
 /// track methods
 - (void)track:(NSDictionary *)trackProperties;
 
@@ -52,6 +53,7 @@ extern TrackingManager *gSharedManager;
 @synthesize token = mToken;
 @synthesize userIdentifier = mUserID;
 @synthesize debugLoggingEnabled = mDebugLoggingEnabled;
+@synthesize uploadCacheTask = mUploadCacheTask;
 
 #pragma mark - Initializing
 
@@ -60,7 +62,6 @@ extern TrackingManager *gSharedManager;
     if (self) {
         mFlushDataTimeInterval = kDefaultFlashDataDelay;
         mUploadDataTimeInterval = kDefaultUploadDataDelay;
-        mBatchFileMaxSize = kDefaultBatchFileMaxSize;
 
         //initialize main stack
         mEventStack = [[NSMutableArray alloc] init];
@@ -74,6 +75,9 @@ extern TrackingManager *gSharedManager;
 
         // retrieve version string
         [self readSettingsFromPInfoFile];
+        
+        mUploadCacheTask = [[UploadCacheTask alloc] initWithSession:mSessionData];
+        mUploadCacheTask.logging = mDebugLoggingEnabled;
 
         // subscribe notifications
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -111,15 +115,15 @@ extern TrackingManager *gSharedManager;
     [mUploadDataTimer release];
     
     [self flushData];
-    [self closeStreams];
 
     @synchronized (mEventStack) {
         [mEventStack release];
     }
 
     [mSessionData release];
-    [mBatchFileStream release];
     [mBatchFileLock release];
+    mUploadCacheTask = nil;
+    
 
     [mToken release];
     [mUserID release];
@@ -173,10 +177,6 @@ extern TrackingManager *gSharedManager;
     }
 }
 
-- (void)setupSizeLimitOfCacheFile:(NSUInteger)limit {
-    mBatchFileMaxSize = limit;
-}
-
 - (void)setupWithUserID:(NSString *)userID {
     [mUserID release];
     mUserID = [userID retain];
@@ -227,6 +227,9 @@ extern TrackingManager *gSharedManager;
         [NSException raise:NSGenericException
                     format:@"%@", serializeError.description];
     }
+    
+    if(data)
+        data = [Utils compressData:data];
 
     return data;
 }
@@ -242,80 +245,29 @@ extern TrackingManager *gSharedManager;
     if (chunk) {
         // lock mutex
         @synchronized (mBatchFileLock) {
-
-            if (!mBatchFileStream) {
-                mBatchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
+            BatchFile* batchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
+            [batchFileStream addChunkData:chunk];
+            [batchFileStream close];
+            @synchronized (mSessionData) {
+                [mSessionData.fileList addObject:batchFileStream.fullPath];
+                [mSessionData saveFileList];
             }
-            else if (mBatchFileStream.contentSize + [chunk length] > mBatchFileMaxSize) {
-                [self closeStreams];
-                mBatchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
-            }
-
-            [mBatchFileStream addChunkData:chunk];
+            [batchFileStream release];
         }
     }
 }
 
-- (NSUInteger)uploadData {
+- (void)uploadData {
     if (mToken == nil || [mToken isKindOfClass:[NSNull class]]) {
         NSLog(@"Call setupWithToken before uploadData");
-        return 0;
     }
     
-    NSUInteger ret = 0;
-    NSArray *fileList;
-    @synchronized (mSessionData) {
-        fileList = [mSessionData.fileList copy];
-    }
-
-    for (NSString *fileName in fileList) {
-        NSError *error = nil;
-        if (mDebugLoggingEnabled) {
-            NSLog(@"uploadData: Batches: %@", [NSString stringWithContentsOfFile:fileName
-                                                                        encoding:NSUTF8StringEncoding
-                                                                           error:&error]);
-        }
-
-        NSData *content = [NSData dataWithContentsOfFile:fileName options:0 error:&error];
-        BOOL result = YES;
-        if (!error) {
-            result = [Utils sendRequest:mServerAddress
-                                  token:mToken
-                         userIdentifier:mUserID
-                                batches:[Utils compressData:content]
-                                logging:mDebugLoggingEnabled];
-        }
-        else {
-            NSLog(@"File error: %@", error.localizedDescription);
-        }
-
-        if (result) {
-            @synchronized (mSessionData) {
-                [mSessionData.fileList removeObject:fileName];
-                ret++;
-            }
-
-            NSError *fileError = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:fileName error:&fileError];
-            if (fileError) {
-                NSLog(@"Failed to delete file. Reason: %@", fileError.localizedDescription);
-            }
-        }
-        else {
-            NSLog(@"Server error, break.");
-            break;
-        }
-    }
-
-    if (ret) {
-        @synchronized (mSessionData) {
-            [mSessionData saveFileList];
-        }
-    }
-
-    [fileList release];
-
-    return ret;
+    NSString* requestAddress = [Utils requestParametersForMethod:@"server.track"
+                                                         address:mServerAddress
+                                                           token:mToken
+                                                  userIdentifier:mUserID];
+    mUploadCacheTask.logging = mDebugLoggingEnabled;
+    [mUploadCacheTask uploadWithAddress:requestAddress];
 }
 
 - (void)flushTimer:(NSTimer *)timer {
@@ -338,21 +290,6 @@ extern TrackingManager *gSharedManager;
             NSLog(@"Failed to upload data. Reason: %@", [exception description]);
         }
     });
-}
-
-- (void)closeStreams {
-    // lock mutex
-    @synchronized (mBatchFileLock) {
-        if (mBatchFileStream) {
-            [mBatchFileStream close];
-            @synchronized (mSessionData) {
-                [mSessionData.fileList addObject:mBatchFileStream.fullPath];
-                [mSessionData saveFileList];
-            }
-
-            [mBatchFileStream release], mBatchFileStream = nil;
-        }
-    }
 }
 
 #pragma mark - track methods
@@ -670,7 +607,6 @@ extern TrackingManager *gSharedManager;
     dispatch_async(mWorkingQueue, ^{
         // flush and send all events
         [self flushData];
-        [self closeStreams];
         [self uploadData];
     });
 }
@@ -678,7 +614,6 @@ extern TrackingManager *gSharedManager;
 - (void)flushAllEvents {
     dispatch_async(mWorkingQueue, ^{
         [self flushData];
-        [self closeStreams];
     });
 }
 
@@ -690,7 +625,7 @@ extern TrackingManager *gSharedManager;
     mStartTime = [[NSDate date] timeIntervalSince1970];
     
     [self flushData];
-    [self closeStreams];
+    [self uploadData];
 }
 
 - (void)applicationWillEnterForeground {
@@ -704,7 +639,6 @@ extern TrackingManager *gSharedManager;
 - (void)applicationWillTerminate {
     [mSessionData setSessionDurationCurrent:[mSessionData sessionDurationCurrent] + [[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - mStartTime] longValue]];
     [self flushData];
-    [self closeStreams];
 
     if (gSharedManager == self) {
         [gSharedManager release];
