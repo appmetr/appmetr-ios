@@ -52,6 +52,7 @@ extern TrackingManager *gSharedManager;
 
 @synthesize token = mToken;
 @synthesize userIdentifier = mUserID;
+@synthesize deviceKey = mDeviceKey;
 @synthesize debugLoggingEnabled = mDebugLoggingEnabled;
 @synthesize uploadCacheTask = mUploadCacheTask;
 
@@ -68,6 +69,9 @@ extern TrackingManager *gSharedManager;
 
         // restore data from previous sessions
         mSessionData = [[SessionData alloc] init];
+        
+        // safe device identifires
+        mDeviceKey = [[Utils deviceKey] retain];
 
         mBatchFileLock = [[NSLock alloc] init];
 
@@ -127,6 +131,7 @@ extern TrackingManager *gSharedManager;
 
     [mToken release];
     [mUserID release];
+    [mDeviceKey release];
     [mVersion release];
     
     dispatch_release(mWorkingQueue);

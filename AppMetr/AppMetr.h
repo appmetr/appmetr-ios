@@ -150,6 +150,9 @@ extern NSString *const kAppmetrPropertyTimestamp;
 /** Returns an unique identifier of current installation instance */
 + (NSString *)instanceIdentifier;
 
+/** Returns a set of unique identifiers specific to the app, as query string */
++ (NSString *)deviceKey;
+
 /** Return NSDictionary object which was converted from JSON string. Used for external calls */
 + (NSDictionary *)stringToDictionary:(NSString *)json;
 

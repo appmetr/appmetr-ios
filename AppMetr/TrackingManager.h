@@ -31,6 +31,7 @@
 
     NSString *mServerAddress;
     NSString *mUserID;
+    NSString *mDeviceKey;
     NSString *mVersion;
 
     NSTimeInterval mStartTime;
@@ -43,6 +44,9 @@
 
 /** An unique identifier of user */
 @property(nonatomic, readonly) NSString *userIdentifier;
+
+/** Contains a set of unique identifiers specific to the app, as query string */
+@property(nonatomic, readonly) NSString *deviceKey;
 
 /** Enabling or disabling debug logging */
 @property(nonatomic, assign, getter=isDebugLoggingEnabled) BOOL debugLoggingEnabled;
