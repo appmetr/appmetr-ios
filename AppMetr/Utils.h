@@ -43,6 +43,11 @@
 + (NSString *)uniqueIdentifier;
 
 /**
+ * Returns a set of device ids, encoded in a query string
+ */
++ (NSString *)deviceKey;
+
+/**
  * Returns the local MAC address
  */
 + (NSString *)stringWithDeviceMACAddress;

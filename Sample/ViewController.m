@@ -30,6 +30,7 @@
 }
 
 - (IBAction)trackAllTouch:(id)sender {
+    NSLog(@"Device key = %@", [AppMetr deviceKey]);
     NSDictionary * properties = [NSDictionary dictionaryWithObjectsAndKeys:
             @"value1", @"text",
             @"05.11.2013 15:00:00", @"date",

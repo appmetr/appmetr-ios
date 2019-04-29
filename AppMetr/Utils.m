@@ -106,6 +106,23 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
                                                    [userIdentifier stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                                                    kAppMetrVersionString];
 
+    requestParameters = [requestParameters stringByAppendingString:[self getDeviceKeyForDevice:currentDevice includeAdsState:YES]];
+    {
+        NSString *value = [currentDevice systemVersion];
+        if (value != NULL)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobOSVer=%@", value];
+    }
+    
+
+    NSString *fullAddress = [[address stringByAppendingString:requestParameters]
+            stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    return fullAddress;
+}
+
++ (NSString *)getDeviceKeyForDevice:(UIDevice*)device includeAdsState:(BOOL)withAdsState
+{
+    NSString* requestParameters = @"";
     {
         NSString *value = [PAM_OpenUDID value];
         if (value != NULL)
@@ -116,45 +133,39 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
         if (value != NULL)
             requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", value];
     }
-    {
-        NSString *value = [currentDevice systemVersion];
-        if (value != NULL)
-            requestParameters = [requestParameters stringByAppendingFormat:@"&mobOSVer=%@", value];
-    }
+    
     //ntrf: only use MAC-address if it's available and valid
     {
         NSString *value = [Utils stringWithDeviceMACAddress];
         if (value != NULL)
             requestParameters = [requestParameters stringByAppendingFormat:@"&mobMac=%@", value];
     }
-
+    
 #if ENABLDE_DEVICE_UNIQUE_IDENTIFIER
-	// add device uniqueIdentifier
-	if([currentDevice respondsToSelector:@selector(uniqueIdentifier)])
-	{
-		NSString *uniqueIdentifier = [currentDevice performSelector:@selector(uniqueIdentifier)];
-		requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", uniqueIdentifier];
-	}
+    // add device uniqueIdentifier
+    if([device respondsToSelector:@selector(uniqueIdentifier)])
+    {
+        NSString *uniqueIdentifier = [currentDevice performSelector:@selector(uniqueIdentifier)];
+        requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", uniqueIdentifier];
+    }
 #endif
-
-    if ([currentDevice respondsToSelector:@selector(identifierForVendor)]) {
-        NSString *identifierForVendor = [[currentDevice performSelector:@selector(identifierForVendor)] UUIDString];
+    
+    if ([device respondsToSelector:@selector(identifierForVendor)]) {
+        NSString *identifierForVendor = [[device performSelector:@selector(identifierForVendor)] UUIDString];
         requestParameters = [requestParameters stringByAppendingFormat:@"&mobVendorId=%@", identifierForVendor];
     }
-
+    
     Class classASIdentifierManager = NSClassFromString(@"ASIdentifierManager");
     if (classASIdentifierManager != nil) {
         NSString *advertisingIdentifier = [[[classASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
         requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvId=%@", advertisingIdentifier];
-
-        BOOL advertisingTrackingEnabled = [[classASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
-        requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvIdEnabled=%@", advertisingTrackingEnabled == YES ? @"true" : @"false"];
+        
+        if(withAdsState) {
+            BOOL advertisingTrackingEnabled = [[classASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvIdEnabled=%@", advertisingTrackingEnabled == YES ? @"true" : @"false"];
+        }
     }
-
-    NSString *fullAddress = [[address stringByAppendingString:requestParameters]
-            stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-    return fullAddress;
+    return requestParameters;
 }
 
 + (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
@@ -203,6 +214,13 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     }
 
     return ret;
+}
+
++ (NSString *)deviceKey {
+    NSCharacterSet* characterSet = [NSCharacterSet characterSetWithCharactersInString:@"&"];
+    NSString* deviceInfo = [self getDeviceKeyForDevice:[UIDevice currentDevice] includeAdsState:NO];
+    deviceInfo = [deviceInfo stringByTrimmingCharactersInSet:characterSet];
+    return [deviceInfo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)stringWithDeviceMACAddress {

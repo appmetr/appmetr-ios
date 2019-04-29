@@ -141,6 +141,10 @@ TrackingManager *gSharedManager = nil;
     return [[AppMetr sharedManager] instanceIdentifier];
 }
 
++ (NSString *)deviceKey {
+    return [[AppMetr sharedManager] deviceKey];
+}
+
 + (NSDictionary *)stringToDictionary:(NSString *)json {
     NSError *deserializeError = nil;
     NSDictionary *result = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:[json dataUsingEncoding:NSUTF8StringEncoding] error:&deserializeError];
