@@ -9,6 +9,8 @@
 #import "AMBase64Util.h"
 
 NSString *const kAppmetrPropertyTimestamp = @"timestamp";
+NSString *const kAppmetrPropertyUsertime = @"userTime";
+
 
 // Global variables
 TrackingManager *gSharedManager = nil;

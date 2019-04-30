@@ -303,22 +303,22 @@ extern TrackingManager *gSharedManager;
     NSMutableDictionary *updatedTrackProperties = [trackProperties mutableCopy];
     NSMutableDictionary* properties = [NSMutableDictionary dictionaryWithDictionary:[updatedTrackProperties objectForKey:@"properties"]];
     id timestamp = [properties objectForKey:kAppmetrPropertyTimestamp];
-    
-    NSNumber* ts;
-    if(timestamp != nil && [timestamp isKindOfClass:[NSNumber class]]) {
-        ts = (NSNumber*)timestamp;
+    if(timestamp != nil) {
+        if([timestamp isKindOfClass:[NSNumber class]]) {
+            [updatedTrackProperties setObject:(NSNumber*)timestamp forKey:kAppmetrPropertyUsertime];
+        } else if([timestamp isKindOfClass:[NSDate class]]) {
+            timestamp = [NSNumber numberWithUnsignedLongLong:(unsigned long long) ([(NSDate*)timestamp timeIntervalSince1970] * 1000.0)];
+            [updatedTrackProperties setObject:timestamp forKey:kAppmetrPropertyUsertime];
+        }
         [properties removeObjectForKey:kAppmetrPropertyTimestamp];
-    } else if(timestamp != nil && [timestamp isKindOfClass:[NSDate class]]) {
-        ts = [NSNumber numberWithUnsignedLongLong:(unsigned long long) ([(NSDate*)timestamp timeIntervalSince1970] * 1000.0)];
-        [properties removeObjectForKey:kAppmetrPropertyTimestamp];
-    } else {
-        ts = [NSNumber numberWithUnsignedLongLong:[Utils timestamp]];
     }
-    [updatedTrackProperties setObject:ts forKey:kAppmetrPropertyTimestamp];
+    NSNumber* currentTimestamp = [NSNumber numberWithUnsignedLongLong:[Utils timestamp]];
+    [updatedTrackProperties setObject:currentTimestamp forKey:kAppmetrPropertyTimestamp];
     if(properties.count > 0)
         [updatedTrackProperties setObject:properties forKey:@"properties"];
     else
         [updatedTrackProperties removeObjectForKey:@"properties"];
+    [Utils convertDateToLong:updatedTrackProperties];
 
     @synchronized (mEventStack) {
         [mEventStack addObject:updatedTrackProperties];

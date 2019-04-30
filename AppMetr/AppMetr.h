@@ -9,6 +9,7 @@
  * Public constants
  */
 extern NSString *const kAppmetrPropertyTimestamp;
+extern NSString *const kAppmetrPropertyUsertime;
 
 /**
  * Main library class

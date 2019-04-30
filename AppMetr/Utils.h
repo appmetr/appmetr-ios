@@ -69,4 +69,6 @@
 /** Returns MD5 cache */
 + (NSString *)md5:(NSString *)input;
 
++ (BOOL)convertDateToLong:(NSMutableDictionary*)data;
+
 @end
