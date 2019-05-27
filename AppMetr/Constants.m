@@ -10,7 +10,7 @@ NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;      // 1.5(minutes) 
 NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.12.0";
+NSString *const kAppMetrVersionString = @"1.12.1";
 
 // Generic constants
 

@@ -418,4 +418,25 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     return serverResponse;
 }
 
++ (BOOL)convertDateToLong:(NSMutableDictionary*)data
+{
+    BOOL changed = NO;
+    for(id key in data.allKeys) {
+        id value = [data objectForKey:key];
+        if([value isKindOfClass:[NSDate class]]) {
+            id timestamp = [NSNumber numberWithUnsignedLongLong:(unsigned long long) ([(NSDate*)value timeIntervalSince1970] * 1000.0)];
+            [data setObject:timestamp forKey:key];
+            changed = YES;
+        } else if([value isKindOfClass:[NSDictionary class]]) {
+            NSMutableDictionary* mutableValue = [(NSDictionary*)value mutableCopy];
+            if([self convertDateToLong:mutableValue]) {
+                [data setObject:mutableValue forKey:key];
+                changed = YES;
+            }
+            [mutableValue release];
+        }
+    }
+    return changed;
+}
+
 @end
