@@ -20,6 +20,7 @@
 @synthesize isFirstTrackSessionSent = mIsFirstTrackSessionSent;
 @synthesize sessionDuration = mSessionDuration;
 @synthesize sessionDurationCurrent = mSessionDurationCurrent;
+@synthesize uploadList = mUploadList;
 
 #pragma mark - Initializing
 
@@ -40,6 +41,7 @@
         if (!mFileList) {
             mFileList = [[NSMutableArray alloc] init];
         }
+        mUploadList = [[NSMutableArray alloc] init];
     }
     return self;
 }

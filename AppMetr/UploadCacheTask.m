@@ -49,12 +49,17 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
     }
     
     NSArray* fileList;
+    NSArray* uploadList;
     @synchronized (self.sessionData) {
         fileList = [self.sessionData.fileList mutableCopy];
+        uploadList = [self.sessionData.uploadList mutableCopy];
     }
     
     for (NSString* filePath in fileList) {
         [self processFile:filePath withAddress:address];
+    }
+    for(NSData* uploadData in uploadList) {
+        [self processData:uploadData withAddress:address];
     }
 }
 
@@ -89,6 +94,54 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
     [task resume];
 }
 
+-(void)processData:(NSData*)uploadData withAddress:(NSString*)address
+{
+    if(uploadData == nil || uploadData.length == 0) return;
+    NSURL *url = [NSURL URLWithString:address];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
+    [[[NSURLSession sharedSession] uploadTaskWithRequest:request fromData:uploadData completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if(error) {
+            NSLog(@"Failed to upload batch directly: %@", error.localizedDescription);
+            return;
+        }
+        if (self.logging && data != nil) {
+            NSString *responseText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"Request parameters: '%@' Response: '%@'", [request.URL absoluteString], responseText);
+            [responseText release];
+        }
+        @try {
+            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+            // is HTTP error?
+            if(statusCode >= 400) {
+                NSLog(@"Server error code %d", (int)statusCode);
+            } else if(data == nil) {
+                NSLog(@"Server returned empty response");
+            } else {
+                NSError *jsonError = nil;
+                NSDictionary *serverResponse = [[AMCJSONDeserializer deserializer] deserializeAsDictionary:data error:&jsonError];
+                if (jsonError) {
+                    NSLog(@"Failed to parse server response: %@", jsonError.localizedDescription);
+                } else {
+                    NSString* status = [[serverResponse objectForKey:@"response"] objectForKey:@"status"];
+                    if([status isEqualToString:@"OK"]) {
+                        if(self.sessionData != nil) {
+                            @synchronized (self.sessionData) {
+                                [self.sessionData.uploadList removeObject:uploadData];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Fail to parse server response. Invalid JSON: %@", exception.description);
+        }
+        
+    }] resume];
+}
+
 - (NSURLSession *)backgroundSession {
     static NSURLSession *session = nil;
     static dispatch_once_t onceToken;
@@ -115,7 +168,7 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
     
     if (self.logging && data != nil) {
         NSString *responseText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Request parameters: '%@' Responce: '%@'", [dataTask.originalRequest.URL absoluteString], responseText);
+        NSLog(@"Request parameters: '%@' Response: '%@'", [dataTask.originalRequest.URL absoluteString], responseText);
         [responseText release];
     }
     

@@ -19,6 +19,7 @@
 
 @synthesize fullPath = mFullPath;
 @synthesize contentSize = mContentSize;
+@synthesize streamError = mStreamError;
 
 #pragma mark - Initializing
 
@@ -39,7 +40,6 @@
 
         if (!mOutputStream) {
             NSLog(@"Failed to open file: %@", mFullPath);
-
             [self release];
             self = nil;
         }
@@ -66,8 +66,10 @@
     }
 }
 
-- (void)addChunkData:(NSData *)data {
-    mContentSize += [self writeData:data];
+- (BOOL)addChunkData:(NSData *)data {
+    NSUInteger count = [self writeData:data];
+    mContentSize += count;
+    return count == data.length;
 }
 
 - (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length {
@@ -76,6 +78,7 @@
         [NSException raise:NSGenericException
                     format:@"Failed to write to stream. %@",
                            mOutputStream.streamError.localizedDescription];
+        mStreamError = mOutputStream.streamError;
     }
 
     return length;
@@ -87,6 +90,7 @@
         [NSException raise:NSGenericException
                     format:@"Failed to write to stream. %@",
                            mOutputStream.streamError.localizedDescription];
+        mStreamError = mOutputStream.streamError;
     }
 
     return res;

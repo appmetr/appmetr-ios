@@ -62,7 +62,7 @@ extern TrackingManager *gSharedManager;
     self = [super init];
     if (self) {
         mFlushDataTimeInterval = kDefaultFlashDataDelay;
-        mUploadDataTimeInterval = kDefaultUploadDataDelay;
+        mUploadDataTimeInterval = MAX(kDefaultFlashDataDelay, kDefaultUploadDataDelay);
 
         //initialize main stack
         mEventStack = [[NSMutableArray alloc] init];
@@ -247,17 +247,41 @@ extern TrackingManager *gSharedManager;
         }
     }
 
-    if (chunk) {
+    if (chunk && chunk.length > 0) {
         // lock mutex
         @synchronized (mBatchFileLock) {
-            BatchFile* batchFileStream = [[BatchFile alloc] initWithIndex:[mSessionData nextFileIndex]];
-            [batchFileStream addChunkData:chunk];
-            [batchFileStream close];
-            @synchronized (mSessionData) {
-                [mSessionData.fileList addObject:batchFileStream.fullPath];
-                [mSessionData saveFileList];
+            NSUInteger fileId = [mSessionData nextFileIndex];
+            BatchFile* batchFileStream = [[BatchFile alloc] initWithIndex:fileId];
+            BOOL success;
+            NSError* error = nil;
+            if(batchFileStream != nil) {
+                success = [batchFileStream addChunkData:chunk];
+                [batchFileStream close];
+                if(success) {
+                    @synchronized (mSessionData) {
+                        [mSessionData.fileList addObject:batchFileStream.fullPath];
+                        [mSessionData saveFileList];
+                    }
+                } else {
+                    error = batchFileStream.streamError ?: [NSError errorWithDomain:@"TrackingManager" code:0 userInfo:@{NSLocalizedDescriptionKey: @"Unknown error"}];
+                }
+                [batchFileStream release];
+            } else {
+                success = NO;
+                error = [NSError errorWithDomain:@"BatchFile" code:1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to open output stream"}];
             }
-            [batchFileStream release];
+            if(!success) {
+                @synchronized (mSessionData) {
+                    if(mSessionData.uploadList.count < kUploadInMemoryCount) {
+                        [mSessionData.uploadList addObject:chunk];
+                        if(error != nil)
+                            [self trackError:error];
+                    }
+                    else
+                        NSLog(@"Skip uploading file %lu due to in-memory size limit", (unsigned long)fileId);
+                }
+                
+            }
         }
     }
 }
@@ -571,6 +595,25 @@ extern TrackingManager *gSharedManager;
                forKey:@"state"];
 
     [self track:action];
+}
+
+- (void)trackError:(NSError*)error {
+    NSString* message = [NSString stringWithFormat:@"%@: %@", NSStringFromClass(error.class), error.localizedDescription];
+    [self trackEvent:@"appmetr_error" properties:@{@"message": message}];
+    NSData *chunk = nil;
+    @synchronized (mEventStack) {
+        if ([mEventStack count]) {
+            chunk = [self createBatchData];
+        }
+    }
+    if (chunk && chunk.length > 0) {
+        @synchronized (mSessionData) {
+            if(mSessionData.uploadList.count < kUploadInMemoryCount)
+                [mSessionData.uploadList addObject:chunk];
+            else
+                NSLog(@"Skip uploading error batch due to in-memory size limit");
+        }
+    }
 }
 
 

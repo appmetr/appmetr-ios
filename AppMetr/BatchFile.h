@@ -8,12 +8,15 @@
     NSOutputStream *mOutputStream;
     NSString *mFullPath;
     NSUInteger mContentSize;
+    NSError *mStreamError;
 }
 
 /** The full path to batch file */
 @property(nonatomic, readonly) NSString *fullPath;
 /** The current size of file content */
 @property(nonatomic, readonly) NSUInteger contentSize;
+/** Current error, if writing failed */
+@property(nonatomic, readonly) NSError *streamError;
 
 /**
  * Initializing and return output stream for batch file with specified index
@@ -28,6 +31,6 @@
 /**
  * Adds a new chunk to batch file
  */
-- (void)addChunkData:(NSData *)data;
+- (BOOL)addChunkData:(NSData *)data;
 
 @end

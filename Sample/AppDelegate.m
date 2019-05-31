@@ -16,6 +16,7 @@ NSString *token = @"demo_token";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [AppMetr setupWithToken:token];
+    NSLog(@"Appmetr setup with user id %@", [AppMetr instanceIdentifier]);
     return YES;
 }
 
