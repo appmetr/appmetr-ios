@@ -229,8 +229,6 @@ extern TrackingManager *gSharedManager;
                                                                error:&serializeError];
     if (serializeError) {
         NSLog(@"JSON serializer error: %@", serializeError.description);
-        [NSException raise:NSGenericException
-                    format:@"%@", serializeError.description];
     }
     
     if(data)

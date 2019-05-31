@@ -153,8 +153,6 @@ TrackingManager *gSharedManager = nil;
 
     if (deserializeError) {
         NSLog(@"JSON deserializer error: %@", deserializeError.description);
-        [NSException raise:NSGenericException
-                    format:@"%@", deserializeError.description];
     }
 
     return result;
@@ -166,8 +164,6 @@ TrackingManager *gSharedManager = nil;
 
     if (deserializeError) {
         NSLog(@"JSON deserializer error: %@", deserializeError.description);
-        [NSException raise:NSGenericException
-                    format:@"%@", deserializeError.description];
     }
 
     return result;

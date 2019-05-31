@@ -75,9 +75,7 @@
 - (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length {
     NSUInteger res = (NSUInteger) [mOutputStream write:(const uint8_t *) buffer maxLength:length];
     if (res != length) {
-        [NSException raise:NSGenericException
-                    format:@"Failed to write to stream. %@",
-                           mOutputStream.streamError.localizedDescription];
+        NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
         mStreamError = mOutputStream.streamError;
     }
 
@@ -87,9 +85,7 @@
 - (NSUInteger)writeData:(NSData *)data {
     NSUInteger res = (NSUInteger) [mOutputStream write:data.bytes maxLength:data.length];
     if (res != data.length) {
-        [NSException raise:NSGenericException
-                    format:@"Failed to write to stream. %@",
-                           mOutputStream.streamError.localizedDescription];
+        NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
         mStreamError = mOutputStream.streamError;
     }
 

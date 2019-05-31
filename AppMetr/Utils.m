@@ -406,7 +406,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     NSString *contentType = [[(NSHTTPURLResponse *) response allHeaderFields] objectForKey:@"Content-Type"];
     if (!contentType || ![contentType isKindOfClass:[NSString class]] ||
             [contentType rangeOfString:@"application/json"].location == NSNotFound) {
-        [NSException raise:@"Server Error" format:@"Invalid Content-type"];
+        NSLog(@"Server error: Invalid Content-type");
     }
 
     NSError *jsonError = nil;
