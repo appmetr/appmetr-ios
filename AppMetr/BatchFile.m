@@ -8,18 +8,17 @@
 #pragma mark - Private category
 
 @interface BatchFile ()
-- (NSUInteger)write:(char const *)buffer maxLength:(NSUInteger)length;
+- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length error:(NSError **)outError;
 
-- (NSUInteger)writeData:(NSData *)data;
+- (NSUInteger)writeData:(NSData *)data error:(NSError **)outError;
 
-- (NSUInteger)writeString:(NSString *)string;
+- (NSUInteger)writeString:(NSString *)string error:(NSError **)outError;
 @end
 
 @implementation BatchFile
 
 @synthesize fullPath = mFullPath;
 @synthesize contentSize = mContentSize;
-@synthesize streamError = mStreamError;
 
 #pragma mark - Initializing
 
@@ -66,34 +65,33 @@
     }
 }
 
-- (BOOL)addChunkData:(NSData *)data {
-    NSUInteger count = [self writeData:data];
+- (void)addChunkData:(NSData *)data error:(NSError **)outError {
+    NSUInteger count = [self writeData:data error:outError];
     mContentSize += count;
-    return count == data.length;
 }
 
-- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length {
+- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length error:(NSError **)outError {
     NSUInteger res = (NSUInteger) [mOutputStream write:(const uint8_t *) buffer maxLength:length];
     if (res != length) {
         NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
-        mStreamError = mOutputStream.streamError;
+        *outError = mOutputStream.streamError;
     }
 
     return length;
 }
 
-- (NSUInteger)writeData:(NSData *)data {
+- (NSUInteger)writeData:(NSData *)data error:(NSError **)outError {
     NSUInteger res = (NSUInteger) [mOutputStream write:data.bytes maxLength:data.length];
     if (res != data.length) {
         NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
-        mStreamError = mOutputStream.streamError;
+        *outError = mOutputStream.streamError;
     }
 
     return res;
 }
 
-- (NSUInteger)writeString:(NSString *)string {
-    return [self writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+- (NSUInteger)writeString:(NSString *)string error:(NSError **)outError {
+    return [self writeData:[string dataUsingEncoding:NSUTF8StringEncoding] error:outError];
 }
 
 @end

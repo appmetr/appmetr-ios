@@ -250,30 +250,25 @@ extern TrackingManager *gSharedManager;
         @synchronized (mBatchFileLock) {
             NSUInteger fileId = [mSessionData nextFileIndex];
             BatchFile* batchFileStream = [[BatchFile alloc] initWithIndex:fileId];
-            BOOL success;
             NSError* error = nil;
             if(batchFileStream != nil) {
-                success = [batchFileStream addChunkData:chunk];
+                [batchFileStream addChunkData:chunk error:&error];
                 [batchFileStream close];
-                if(success) {
+                if(error == nil) {
                     @synchronized (mSessionData) {
                         [mSessionData.fileList addObject:batchFileStream.fullPath];
                         [mSessionData saveFileList];
                     }
-                } else {
-                    error = batchFileStream.streamError ?: [NSError errorWithDomain:@"TrackingManager" code:0 userInfo:@{NSLocalizedDescriptionKey: @"Unknown error"}];
                 }
                 [batchFileStream release];
             } else {
-                success = NO;
                 error = [NSError errorWithDomain:@"BatchFile" code:1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to open output stream"}];
             }
-            if(!success) {
+            if(error != nil) {
                 @synchronized (mSessionData) {
                     if(mSessionData.uploadList.count < kUploadInMemoryCount) {
                         [mSessionData.uploadList addObject:chunk];
-                        if(error != nil)
-                            [self trackError:error];
+                        [self trackError:error];
                     }
                     else
                         NSLog(@"Skip uploading file %lu due to in-memory size limit", (unsigned long)fileId);
