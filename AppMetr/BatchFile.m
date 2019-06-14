@@ -8,11 +8,11 @@
 #pragma mark - Private category
 
 @interface BatchFile ()
-- (NSUInteger)write:(char const *)buffer maxLength:(NSUInteger)length;
+- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length error:(NSError **)outError;
 
-- (NSUInteger)writeData:(NSData *)data;
+- (NSUInteger)writeData:(NSData *)data error:(NSError **)outError;
 
-- (NSUInteger)writeString:(NSString *)string;
+- (NSUInteger)writeString:(NSString *)string error:(NSError **)outError;
 @end
 
 @implementation BatchFile
@@ -39,7 +39,6 @@
 
         if (!mOutputStream) {
             NSLog(@"Failed to open file: %@", mFullPath);
-
             [self release];
             self = nil;
         }
@@ -66,34 +65,33 @@
     }
 }
 
-- (void)addChunkData:(NSData *)data {
-    mContentSize += [self writeData:data];
+- (void)addChunkData:(NSData *)data error:(NSError **)outError {
+    NSUInteger count = [self writeData:data error:outError];
+    mContentSize += count;
 }
 
-- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length {
+- (NSUInteger)write:(const char *)buffer maxLength:(NSUInteger)length error:(NSError **)outError {
     NSUInteger res = (NSUInteger) [mOutputStream write:(const uint8_t *) buffer maxLength:length];
     if (res != length) {
-        [NSException raise:NSGenericException
-                    format:@"Failed to write to stream. %@",
-                           mOutputStream.streamError.localizedDescription];
+        NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
+        *outError = mOutputStream.streamError;
     }
 
     return length;
 }
 
-- (NSUInteger)writeData:(NSData *)data {
+- (NSUInteger)writeData:(NSData *)data error:(NSError **)outError {
     NSUInteger res = (NSUInteger) [mOutputStream write:data.bytes maxLength:data.length];
     if (res != data.length) {
-        [NSException raise:NSGenericException
-                    format:@"Failed to write to stream. %@",
-                           mOutputStream.streamError.localizedDescription];
+        NSLog(@"Failed to write to stream. %@", mOutputStream.streamError.localizedDescription);
+        *outError = mOutputStream.streamError;
     }
 
     return res;
 }
 
-- (NSUInteger)writeString:(NSString *)string {
-    return [self writeData:[string dataUsingEncoding:NSUTF8StringEncoding]];
+- (NSUInteger)writeString:(NSString *)string error:(NSError **)outError {
+    return [self writeData:[string dataUsingEncoding:NSUTF8StringEncoding] error:outError];
 }
 
 @end

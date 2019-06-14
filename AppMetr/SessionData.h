@@ -9,6 +9,7 @@
     NSUInteger mBatchIndex;
     NSUInteger mFileIndex;
     NSMutableArray *mFileList;
+    NSMutableArray *mUploadList;
     BOOL mIsInstallURLTracked;
     BOOL mIsFirstTrackSessionSent;
     long mSessionDuration;
@@ -29,6 +30,8 @@
 @property(nonatomic, readwrite) long sessionDuration;
 /** Duration of current session */
 @property(nonatomic, readwrite) long sessionDurationCurrent;
+/** The list of event date for direct upload */
+@property(nonatomic, readwrite) NSMutableArray *uploadList;
 
 /** Returns the index of new batch */
 - (NSUInteger)nextBatchIndex;

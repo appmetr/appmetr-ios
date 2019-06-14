@@ -17,6 +17,8 @@ extern NSTimeInterval const kDefaultFlashDataDelay;
 extern NSTimeInterval const kDefaultUploadDataDelay;
 /** Time in seconds for max pause state, after which starts new session */
 extern NSTimeInterval const kSessionMaxPauseState;
+/** Max batch count for direct upload, stored in memory */
+extern NSUInteger const kUploadInMemoryCount;
 /** The url string of AppMetr api. */
 extern NSString *const kAppMetrDefaultUrl;
 /** The version string of AppMetr library. */

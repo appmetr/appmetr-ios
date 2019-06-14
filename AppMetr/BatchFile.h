@@ -28,6 +28,6 @@
 /**
  * Adds a new chunk to batch file
  */
-- (void)addChunkData:(NSData *)data;
+- (void)addChunkData:(NSData *)data error:(NSError **)outError;
 
 @end

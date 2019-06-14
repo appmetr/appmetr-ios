@@ -8,9 +8,10 @@ NSUInteger const kTokenSizeLimit = 50;
 NSTimeInterval const kDefaultFlashDataDelay = 1.0 * 60.0;       // 1(minutes) * 60(seconds)
 NSTimeInterval const kDefaultUploadDataDelay = 1.5 * 60.0;      // 1.5(minutes) * 60(seconds)
 NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
+NSUInteger const kUploadInMemoryCount = 30; // max batch count for direct upload
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.12.1";
+NSString *const kAppMetrVersionString = @"1.13.0";
 
 // Generic constants
 
