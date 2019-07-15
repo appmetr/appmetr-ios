@@ -69,9 +69,6 @@ extern TrackingManager *gSharedManager;
 
         // restore data from previous sessions
         mSessionData = [[SessionData alloc] init];
-        
-        // safe device identifires
-        mDeviceKey = [[Utils deviceKey] retain];
 
         mBatchFileLock = [[NSLock alloc] init];
 
@@ -175,10 +172,16 @@ extern TrackingManager *gSharedManager;
     }
     else {
         [mToken release];
+        mToken = nil;
     }
     
     if (token != nil && ![token isKindOfClass:[NSNull class]]) {
         mToken = [token copy];
+        
+        // save device identifires
+        if(mDeviceKey != nil)
+            [mDeviceKey release];
+        mDeviceKey = [[Utils deviceKeyForToken:mToken] retain];
     }
 }
 

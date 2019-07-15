@@ -45,7 +45,7 @@
 /**
  * Returns a set of device ids, encoded in a query string
  */
-+ (NSString *)deviceKey;
++ (NSString *)deviceKeyForToken:(NSString*)token;
 
 /**
  * Returns the local MAC address
