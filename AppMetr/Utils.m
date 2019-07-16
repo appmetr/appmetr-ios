@@ -444,7 +444,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
 {
     if(data == nil || data.length == 0)
         return data;
-    const char* dataBytes = [data cStringUsingEncoding:NSUTF8StringEncoding];
+    const char* dataBytes = [[data lowercaseString] cStringUsingEncoding:NSUTF8StringEncoding];
     uint64_t result[2];
     MurmurHash3_x64_128(dataBytes, (int)strlen(dataBytes), 0, result);
     char resultStr[33];
