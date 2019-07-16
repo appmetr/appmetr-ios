@@ -132,7 +132,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     {
         NSString *value = [UIDeviceUtil hardwareString];
         if (value != NULL)
-            requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", useHashes ? [self getHashForStr:value] : value];
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", value];
     }
     
     //ntrf: only use MAC-address if it's available and valid
@@ -147,7 +147,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     if([device respondsToSelector:@selector(uniqueIdentifier)])
     {
         NSString *uniqueIdentifier = [currentDevice performSelector:@selector(uniqueIdentifier)];
-        requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", useHashes ? [self getHashForStr:uniqueIdentifier] : value];
+        requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", useHashes ? [self getHashForStr:uniqueIdentifier] : uniqueIdentifier];
     }
 #endif
     
