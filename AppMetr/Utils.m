@@ -448,7 +448,7 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     uint64_t result[2];
     MurmurHash3_x64_128(dataBytes, (int)strlen(dataBytes), 0, result);
     char resultStr[33];
-    sprintf(resultStr, "%16" PRIx64 "%16" PRIx64, __builtin_bswap64((uint64_t)result[0]), __builtin_bswap64((uint64_t)result[1]));
+    sprintf(resultStr, "%016" PRIx64 "%016" PRIx64, __builtin_bswap64((uint64_t)result[0]), __builtin_bswap64((uint64_t)result[1]));
     return [NSString stringWithUTF8String:resultStr];
 }
 
