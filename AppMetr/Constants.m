@@ -29,6 +29,9 @@ NSString *const kActionTrackOptions = @"trackOptions";
 NSString *const kActionTrackExperiment = @"trackExperiment";
 NSString *const kActionTrackState = @"trackState";
 NSString *const kActionIdentify = @"identify";
+NSString *const kActionAttachEntityAttributes = @"attachEntityAttributes";
+NSString *const kActionEntityNameKey = @"entityName";
+NSString *const kActionEntityValueKey = @"entityValue";
 
 NSString *const kActionCountryKeyName = @"$country";
 NSString *const kActionLanguageKeyName = @"$language";

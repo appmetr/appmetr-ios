@@ -647,6 +647,22 @@ extern TrackingManager *gSharedManager;
     return succeeded;
 }
 
+- (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
+    if(name == nil || name.length == 0 || value == nil || value.length == 0) {
+        NSLog(@"AttachEntityAttributes failed: entity name and value can't be empty");
+        return;
+    }
+    if(properties == nil) {
+        properties = [NSDictionary dictionary];
+    }
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionAttachEntityAttributes forKey:kActionKeyName];
+    [action setObject:name forKey:kActionEntityNameKey];
+    [action setObject:value forKey:kActionEntityValueKey];
+    [action setObject:properties forKey:kActionPropertiesKeyName];
+    [self track:action];
+}
+
 - (void)flushAndUploadAllEvents {
     dispatch_async(mWorkingQueue, ^{
         // flush and send all events
