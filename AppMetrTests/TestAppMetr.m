@@ -153,6 +153,22 @@
     [testLibrary release];
 }
 
+- (void)testAttachEntityAttributes {
+    TrackingManager* testLibrary = [[TrackingManager alloc] initAndStopThread];
+    NSArray* eventStack = [testLibrary getDirtyEventStack];
+    NSString* anyName = @"testEntity";
+    NSString* anyValue = @"testEntityValue";
+    NSDictionary* anyProperties = @{@"testAttrib" : @"testVal"};
+    [testLibrary attachEntityAttributesForName:anyName value:anyValue withProperies:anyProperties];
+    
+    NSDictionary *event = [eventStack lastObject];
+    NSString *actionName = [event objectForKey:@"action"];
+    XCTAssertTrue([actionName isEqualToString:@"attachEntityAttributes"], @"Invalid action");
+    XCTAssertTrue([[event objectForKey:@"entityName"] isEqualToString:anyName], @"Invalid entity name");
+    XCTAssertTrue([[event objectForKey:@"entityValue"] isEqualToString:anyValue], @"Invalid entity value");
+    XCTAssertTrue([[[event objectForKey:@"properties"] objectForKey:@"testAttrib"] isEqualToString:@"testVal"], @"Invalid attribute value");
+}
+
 - (void)testTrackSession {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
@@ -457,7 +473,7 @@
     NSDictionary* resultsLong = [eventStack lastObject];
     XCTAssertTrue([[resultsLong objectForKey:@"action"] isEqualToString:@"trackEvent"], @"Invalid action");
     XCTAssertTrue([[resultsLong objectForKey:@"event"] isEqualToString:@"customTimestamp1"], @"Invalid event name");
-    XCTAssertTrue([[resultsLong objectForKey:@"timestamp"] unsignedLongLongValue] == testDate1, @"Invalid custom date");
+    XCTAssertTrue([[resultsLong objectForKey:@"userTime"] unsignedLongLongValue] == testDate1, @"Invalid custom date");
     
     // test Date as Date
     NSDate* testDate2 = [NSDate dateWithTimeIntervalSince1970:1519851600000];
@@ -466,7 +482,7 @@
     NSDictionary* resultsDate = [eventStack lastObject];
     XCTAssertTrue([[resultsDate objectForKey:@"action"] isEqualToString:@"trackLevel"], @"Invalid action");
     XCTAssertTrue([[resultsDate objectForKey:@"level"] intValue] == 5, @"Invalid level");
-    XCTAssertTrue([[resultsDate objectForKey:@"timestamp"] unsignedLongLongValue] == (unsigned long long)[testDate2 timeIntervalSince1970] * 1000.0, @"Invalid custom date");
+    XCTAssertTrue([[resultsDate objectForKey:@"userTime"] unsignedLongLongValue] == (unsigned long long)[testDate2 timeIntervalSince1970] * 1000.0, @"Invalid custom date");
     
     // test Date as wrong argument
     NSString* testDate3 = @"2018.04.10 12:00";
@@ -475,7 +491,7 @@
     NSDictionary* resultsWrong = [eventStack lastObject];
     XCTAssertTrue([[resultsWrong objectForKey:@"action"] isEqualToString:@"trackEvent"], @"Invalid action");
     XCTAssertTrue([[resultsWrong objectForKey:@"event"] isEqualToString:@"customTimestamp3"], @"Invalid event name");
-    XCTAssertTrue([Utils timestamp] - [[resultsWrong objectForKey:@"timestamp"] unsignedLongLongValue] < 50, @"Invalid custom date");
+    XCTAssertTrue([resultsWrong objectForKey:@"userTime"] == nil, @"Invalid custom date");
     
 }
 

@@ -647,6 +647,24 @@ extern TrackingManager *gSharedManager;
     return succeeded;
 }
 
+- (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
+    if(name == nil || name.length == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"entity name is null or empty" userInfo:nil];
+    }
+    if(value == nil || value.length == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"entity value is null or empty" userInfo:nil];
+    }
+    if(properties == nil || properties.count == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"properties is null or empty" userInfo:nil];
+    }
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionAttachEntityAttributes forKey:kActionKeyName];
+    [action setObject:name forKey:kActionEntityNameKey];
+    [action setObject:value forKey:kActionEntityValueKey];
+    [action setObject:properties forKey:kActionPropertiesKeyName];
+    [self track:action];
+}
+
 - (void)flushAndUploadAllEvents {
     dispatch_async(mWorkingQueue, ^{
         // flush and send all events

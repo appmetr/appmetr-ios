@@ -40,6 +40,9 @@ extern NSString *const kActionTrackOptions;
 extern NSString *const kActionTrackExperiment;
 extern NSString *const kActionTrackState;
 extern NSString *const kActionIdentify;
+extern NSString *const kActionAttachEntityAttributes;
+extern NSString *const kActionEntityNameKey;
+extern NSString *const kActionEntityValueKey;
 
 extern NSString *const kActionCountryKeyName;
 extern NSString *const kActionLanguageKeyName;

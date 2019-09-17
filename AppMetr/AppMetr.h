@@ -132,6 +132,9 @@ extern NSString *const kAppmetrPropertyUsertime;
 */
 + (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
 
+/** Attach attributes to separate entity instead of user */
++ (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties;
+
 /**
 * Force flush events on server
 */

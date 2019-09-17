@@ -123,6 +123,10 @@ TrackingManager *gSharedManager = nil;
                                                     privateKey:privateKey];
 }
 
++ (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
+    [[AppMetr sharedManager] attachEntityAttributesForName:name value:value withProperies:properties];
+}
+
 + (void)flush {
     [[AppMetr sharedManager] flushAndUploadAllEvents];
 }

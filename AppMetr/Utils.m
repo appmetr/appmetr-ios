@@ -146,20 +146,23 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
     // add device uniqueIdentifier
     if([device respondsToSelector:@selector(uniqueIdentifier)])
     {
-        NSString *uniqueIdentifier = [currentDevice performSelector:@selector(uniqueIdentifier)];
-        requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", useHashes ? [self getHashForStr:uniqueIdentifier] : uniqueIdentifier];
+        NSString *uniqueIdentifier = [device performSelector:@selector(uniqueIdentifier)];
+        if(uniqueIdentifier != nil && uniqueIdentifier.length > 0)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", useHashes ? [self getHashForStr:uniqueIdentifier] : uniqueIdentifier];
     }
 #endif
     
     if ([device respondsToSelector:@selector(identifierForVendor)]) {
-        NSString *identifierForVendor = [[device performSelector:@selector(identifierForVendor)] UUIDString];
-        requestParameters = [requestParameters stringByAppendingFormat:@"&mobVendorId=%@", useHashes ? [self getHashForStr:identifierForVendor] : identifierForVendor];
+        NSUUID *identifierForVendor = [device performSelector:@selector(identifierForVendor)];
+        if(identifierForVendor != nil)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobVendorId=%@", useHashes ? [self getHashForStr:[identifierForVendor UUIDString]] : [identifierForVendor UUIDString]];
     }
     
     Class classASIdentifierManager = NSClassFromString(@"ASIdentifierManager");
     if (classASIdentifierManager != nil) {
-        NSString *advertisingIdentifier = [[[classASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvId=%@", useHashes ? [self getHashForStr:advertisingIdentifier] : advertisingIdentifier];
+        NSUUID *advertisingIdentifier = [[classASIdentifierManager sharedManager] advertisingIdentifier];
+        if(advertisingIdentifier != nil)
+            requestParameters = [requestParameters stringByAppendingFormat:@"&mobAdvId=%@", useHashes ? [self getHashForStr:[advertisingIdentifier UUIDString]] : [advertisingIdentifier UUIDString]];
         
         if(!useHashes) {
             BOOL advertisingTrackingEnabled = [[classASIdentifierManager sharedManager] isAdvertisingTrackingEnabled];

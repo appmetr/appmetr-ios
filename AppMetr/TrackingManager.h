@@ -187,4 +187,7 @@
 /** Returns an unique identifier of current installation instance */
 - (NSString *)instanceIdentifier;
 
+/** Attach attributes to separate entity instead of user */
+- (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties;
+
 @end
