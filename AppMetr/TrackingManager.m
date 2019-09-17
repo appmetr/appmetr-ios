@@ -648,12 +648,14 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
-    if(name == nil || name.length == 0 || value == nil || value.length == 0) {
-        NSLog(@"AttachEntityAttributes failed: entity name and value can't be empty");
-        return;
+    if(name == nil || name.length == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"entity name is null or empty" userInfo:nil];
     }
-    if(properties == nil) {
-        properties = [NSDictionary dictionary];
+    if(value == nil || value.length == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"entity value is null or empty" userInfo:nil];
+    }
+    if(properties == nil || properties.count == 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"properties is null or empty" userInfo:nil];
     }
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionAttachEntityAttributes forKey:kActionKeyName];
