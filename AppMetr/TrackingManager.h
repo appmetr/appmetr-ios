@@ -115,26 +115,6 @@
 - (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties;
 
 /**
-* Registering advertising event track
-*/
-- (void)trackAdsEvent:(NSString *)eventName;
-
-/**
- * Registering the URL of game installation
- */
-- (void)trackInstallURL:(NSURL *)url;
-
-/**
-* Registering options processing
-*/
-- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId;
-
-/**
-* Registering options processing error
-*/
-- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message;
-
-/**
 * Registering start of experiment
 */
 - (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group;
@@ -153,11 +133,6 @@
 * Identify user
 */
 - (void)identify:(NSString *)userId;
-
-/**
-* Verify payment
-*/
-- (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
 
 /**
  * Called when application goes into background mode

@@ -452,15 +452,6 @@
     XCTAssertTrue([res isEqualToString:BASE_TEST_RESULT], @"Base64 not URL safe");
 }
 
-- (void)testTrackInstallURL {
-    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
-    [[testLibrary dirtySessionData].fileList removeAllObjects];
-
-    [testLibrary trackInstallURL:[NSURL URLWithString:@"http://AppMetr.mobile/unit/test"]];
-
-    XCTAssertEqual((NSUInteger) 0, [[testLibrary dirtySessionData].fileList count], @"Invalid number of files");
-}
-
 - (void)testSetTimestamp {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     [testLibrary dirtyFlushData];

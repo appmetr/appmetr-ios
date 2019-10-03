@@ -23,9 +23,6 @@
 #include <net/if_dl.h>
 #import <CommonCrypto/CommonDigest.h>
 
-NSString *const kMethodGetCommands = @"server.getCommands";
-NSString *const kMethodVerifyPayment = @"server.verifyPayment";
-
 #define INSTANCE_INDETIFIER_TOKEN_LENGTH (8)
 
 @implementation Utils
@@ -170,27 +167,6 @@ NSString *const kMethodVerifyPayment = @"server.verifyPayment";
         }
     }
     return requestParameters;
-}
-
-+ (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
-                                     token:(NSString *)token
-                            userIdentifier:(NSString *)userIdentifier
-                                  purchase:(NSString *)purchase
-                                   receipt:(NSString *)receipt
-                                      salt:(NSString *)salt
-                                   logging:(BOOL)logging {
-
-    NSString *fullAddress = [Utils requestParametersForMethod:kMethodVerifyPayment
-                                                      address:address
-                                                        token:token
-                                               userIdentifier:userIdentifier];
-
-    fullAddress = [fullAddress stringByAppendingFormat:@"&purchase=%@&receipt=%@&salt=%@",
-                                                       [purchase stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                                                       [receipt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
-                                                       [salt stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
-    return [self sendRequest:fullAddress logging:logging];;
 }
 
 + (unsigned long long)timestamp {

@@ -73,26 +73,6 @@ extern NSString *const kAppmetrPropertyUsertime;
 + (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties;
 
 /**
-* Registering advertising event track
-*/
-+ (void)trackAdsEvent:(NSString *)eventName;
-
-/**
- * Registering the URL of game installation
- */
-+ (void)trackInstallURL:(NSURL *)url;
-
-/**
-* Registering options processing
-*/
-+ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId;
-
-/**
-* Registering options processing error
-*/
-+ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message;
-
-/**
 * Registering start of experiment
 */
 + (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group;
@@ -111,26 +91,6 @@ extern NSString *const kAppmetrPropertyUsertime;
 * Identify user
 */
 + (void)identify:(NSString *)userId;
-
-/**
-* Verify payment
-*
-* @param transaction - SKPaymentTransaction object
-* @param privateKey - set in deploy setting on appmetr server
-* @return YES - if payment is valid, and NO otherwise
-*/
-+ (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey;
-
-/**
-* Verify payment
-*
-* @param productId - Product identifier
-* @param transactionId - Transaction identifier
-* @param receipt - Base64 encoded transaction receipt
-* @param privateKey - set in deploy setting on appmetr server
-* @return YES - if payment is valid, and NO otherwise
-*/
-+ (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey;
 
 /** Attach attributes to separate entity instead of user */
 + (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties;
