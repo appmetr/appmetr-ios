@@ -77,22 +77,6 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackPayment:payment properties:properties];
 }
 
-+ (void)trackAdsEvent:(NSString *)eventName {
-    [[AppMetr sharedManager] trackAdsEvent:eventName];
-}
-
-+ (void)trackInstallURL:(NSURL *)url {
-    [[AppMetr sharedManager] trackInstallURL:url];
-}
-
-+ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId {
-    [[AppMetr sharedManager] trackOptions:options forCommand:commandId];
-}
-
-+ (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
-    [[AppMetr sharedManager] trackOptions:options forCommand:commandId errorCode:code errorMessage:message];
-}
-
 + (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
     [[AppMetr sharedManager] trackExperimentStart:experiment group:group];
 }
@@ -107,20 +91,6 @@ TrackingManager *gSharedManager = nil;
 
 + (void)identify:(NSString *)userId {
     [[AppMetr sharedManager] identify:userId];
-}
-
-+ (BOOL)verifyPayment:(SKPaymentTransaction *)transaction privateKey:(NSString *)privateKey {
-    return [[AppMetr sharedManager] verifyPaymentWithProductId:transaction.payment.productIdentifier
-                                                 transactionId:transaction.transactionIdentifier
-                                                       receipt:[AMBase64Util encode:[transaction transactionReceipt]]
-                                                    privateKey:privateKey];
-}
-
-+ (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey {
-    return [[AppMetr sharedManager] verifyPaymentWithProductId:productId
-                                                 transactionId:transactionId
-                                                       receipt:base64EncodedReceipt
-                                                    privateKey:privateKey];
 }
 
 + (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {

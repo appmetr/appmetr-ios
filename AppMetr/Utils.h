@@ -22,17 +22,6 @@
 + (void)validatePayment:(NSDictionary *)payment;
 
 /**
-* Send verify payment request
-*/
-+ (NSDictionary *)sendVerifyPaymentRequest:(NSString *)address
-                                     token:(NSString *)token
-                            userIdentifier:(NSString *)userIdentifier
-                                  purchase:(NSString *)purchase
-                                   receipt:(NSString *)receipt
-                                      salt:(NSString *)salt
-                                   logging:(BOOL)logging;
-
-/**
  * Returns the timestamp in milliseconds
  */
 + (unsigned long long)timestamp;

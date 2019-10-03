@@ -493,70 +493,6 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
-//Track custom event
-- (void)trackAdsEvent:(NSString *)eventName {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackAdsEvent
-               forKey:kActionKeyName];
-
-    [action setObject:eventName
-               forKey:@"event"];
-
-    [self track:action];
-}
-
-- (void)trackInstallURL:(NSURL *)url {
-    if (!mSessionData.isInstallURLTracked) {
-        NSMutableDictionary *action = [NSMutableDictionary dictionary];
-        [action setObject:kActionTrackInstallURL
-                   forKey:kActionKeyName];
-        NSString *absotuleUrl = [url absoluteString];
-        [action setObject:absotuleUrl
-                   forKey:@"installURL"];
-
-        [self track:action];
-
-        [self flushAndUploadAllEvents];
-        mSessionData.isInstallURLTracked = YES;
-    }
-}
-
-- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackOptions
-               forKey:kActionKeyName];
-    [action setObject:commandId
-               forKey:@"commandId"];
-    [action setObject:@"OK"
-               forKey:@"status"];
-    [action setObject:options
-               forKey:@"options"];
-
-    [self track:action];
-}
-
-- (void)trackOptions:(NSArray *)options forCommand:(NSString *)commandId errorCode:(NSString *)code errorMessage:(NSString *)message {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackOptions
-               forKey:kActionKeyName];
-    [action setObject:commandId
-               forKey:@"commandId"];
-    [action setObject:@"ERROR"
-               forKey:@"status"];
-    [action setObject:options
-               forKey:@"options"];
-
-    NSMutableDictionary *error = [NSMutableDictionary dictionary];
-    [error setObject:code
-              forKey:@"code"];
-    [error setObject:message
-              forKey:@"message"];
-
-    [action setObject:error forKey:@"error"];
-
-    [self track:action];
-}
-
 - (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackExperiment
@@ -612,7 +548,6 @@ extern TrackingManager *gSharedManager;
     }
 }
 
-
 - (void)identify:(NSString *)userId {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionIdentify
@@ -622,29 +557,6 @@ extern TrackingManager *gSharedManager;
 
     [self track:action];
     [self flushAndUploadAllEvents];
-}
-
-- (BOOL)verifyPaymentWithProductId:(NSString *)productId transactionId:(NSString *)transactionId receipt:(NSString *)base64EncodedReceipt privateKey:(NSString *)privateKey {
-    NSString *purchase = [NSString stringWithFormat:@"{\"productId\":\"%@\", \"transactionId\":\"%@\"}",
-                                                    productId, transactionId];
-
-    NSString *salt = [Utils md5:[NSString stringWithFormat:@"123567890:%ldl", time(NULL)]];
-
-    NSDictionary *result = [Utils sendVerifyPaymentRequest:mServerAddress
-                                                     token:mToken
-                                            userIdentifier:mUserID
-                                                  purchase:purchase
-                                                   receipt:base64EncodedReceipt
-                                                      salt:salt
-                                                   logging:mDebugLoggingEnabled];
-
-    BOOL succeeded = NO;
-    if ([[result objectForKey:@"status"] isEqualToString:@"valid"]) {
-        NSString *signature = [Utils md5:[NSString stringWithFormat:@"%@:%@:%@", transactionId, salt, privateKey]];
-        succeeded = [[result objectForKey:@"sig"] isEqualToString:signature];
-    }
-
-    return succeeded;
 }
 
 - (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
