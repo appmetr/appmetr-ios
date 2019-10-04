@@ -53,14 +53,6 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackSessionWithProperties:properties];
 }
 
-+ (void)trackLevel:(int)level {
-    [[AppMetr sharedManager] trackLevel:level];
-}
-
-+ (void)trackLevel:(int)level properties:(NSDictionary *)properties {
-    [[AppMetr sharedManager] trackLevel:level properties:properties];
-}
-
 + (void)trackEvent:(NSString *)trackEvent {
     [[AppMetr sharedManager] trackEvent:trackEvent];
 }
@@ -75,14 +67,6 @@ TrackingManager *gSharedManager = nil;
 
 + (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties {
     [[AppMetr sharedManager] trackPayment:payment properties:properties];
-}
-
-+ (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
-    [[AppMetr sharedManager] trackExperimentStart:experiment group:group];
-}
-
-+ (void)trackExperimentEnd:(NSString *)experiment {
-    [[AppMetr sharedManager] trackExperimentEnd:experiment];
 }
 
 + (void)trackState:(NSDictionary *)state {

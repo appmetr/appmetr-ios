@@ -427,26 +427,6 @@ extern TrackingManager *gSharedManager;
     }
 }
 
-//Track level
-- (void)trackLevel:(int)level {
-    NSMutableDictionary *action = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            kActionTrackLevel, kActionKeyName,
-            [NSNumber numberWithInt:level], @"level", nil];
-    [self track:action];
-}
-
-- (void)trackLevel:(int)level properties:(NSDictionary *)properties {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackLevel
-               forKey:kActionKeyName];
-    [action setObject:[NSNumber numberWithInt:level]
-               forKey:@"level"];
-    [action setObject:properties
-               forKey:kActionPropertiesKeyName];
-
-    [self track:action];
-}
-
 //Track event
 - (void)trackEvent:(NSString *)event {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
@@ -489,32 +469,6 @@ extern TrackingManager *gSharedManager;
 
     [action setObject:properties
                forKey:kActionPropertiesKeyName];
-
-    [self track:action];
-}
-
-- (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackExperiment
-               forKey:kActionKeyName];
-    [action setObject:@"ON"
-               forKey:@"status"];
-    [action setObject:experiment
-               forKey:@"experiment"];
-    [action setObject:group
-               forKey:@"group"];
-
-    [self track:action];
-}
-
-- (void)trackExperimentEnd:(NSString *)experiment {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackExperiment
-               forKey:kActionKeyName];
-    [action setObject:@"END"
-               forKey:@"status"];
-    [action setObject:experiment
-               forKey:@"experiment"];
 
     [self track:action];
 }

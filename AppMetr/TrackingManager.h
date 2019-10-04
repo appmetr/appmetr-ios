@@ -85,16 +85,6 @@
 - (void)trackSessionWithProperties:(NSDictionary *)properties;
 
 /**
- * Registering when the player receive next level.
- */
-- (void)trackLevel:(int)level;
-
-/**
- * Registering when the player receive next level.
- */
-- (void)trackLevel:(int)level properties:(NSDictionary *)properties;
-
-/**
  * Registering custom event
  */
 - (void)trackEvent:(NSString *)event;
@@ -113,16 +103,6 @@
  * Registering when making a payment
  */
 - (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties;
-
-/**
-* Registering start of experiment
-*/
-- (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group;
-
-/**
-* Registering end of experiment
-*/
-- (void)trackExperimentEnd:(NSString *)experiment;
 
 /**
 * Registering user state

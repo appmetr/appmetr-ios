@@ -104,14 +104,6 @@
     [testLibrary trackSessionWithProperties:[self anyProperties]];
     XCTAssertTrue([eventStack count] == 3, @"[trackSessionWithProperties:] failed") ;
 
-    //Track level
-    [testLibrary trackLevel:1];
-    XCTAssertTrue([eventStack count] == 4, @"[trackLevel:] failed");
-
-    [testLibrary trackLevel:2
-                 properties:[self anyProperties]];
-    XCTAssertTrue([eventStack count] == 5, @"[trackLevel:properties] failed");
-
     //Track event
     [testLibrary trackEvent:@"event1"];
     XCTAssertTrue([eventStack count] == 6, @"[trackEvent:] failed");
@@ -191,40 +183,6 @@
     XCTAssertTrue([session2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
 
     NSString *propertyValue = [[session2 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
-
-    [testLibrary release];
-}
-
-- (void)testTrackLevel {
-    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
-    NSArray *eventStack = [testLibrary getDirtyEventStack];
-
-    // test 1
-    [testLibrary trackLevel:81];
-    NSDictionary *action1 = [eventStack lastObject];
-
-    NSString *actionName = [action1 objectForKey:@"action"];
-    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-
-    NSNumber *level1 = [action1 objectForKey:@"level"];
-    XCTAssertTrue([level1 intValue] == 81, @"Invalid level");
-
-
-    // test 2
-    [testLibrary trackLevel:98
-                 properties:[self anyProperties]];
-    NSDictionary *action2 = [eventStack lastObject];
-
-    actionName = [action2 objectForKey:@"action"];
-    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-
-    NSNumber *level2 = [action2 objectForKey:@"level"];
-    XCTAssertTrue([level2 intValue] == 98, @"Invalid level");
-
-    NSString *propertyValue = [[action2 objectForKey:@"properties"] objectForKey:@"prop-key"];
     XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
 
     [testLibrary release];
@@ -465,15 +423,6 @@
     XCTAssertTrue([[resultsLong objectForKey:@"action"] isEqualToString:@"trackEvent"], @"Invalid action");
     XCTAssertTrue([[resultsLong objectForKey:@"event"] isEqualToString:@"customTimestamp1"], @"Invalid event name");
     XCTAssertTrue([[resultsLong objectForKey:@"userTime"] unsignedLongLongValue] == testDate1, @"Invalid custom date");
-    
-    // test Date as Date
-    NSDate* testDate2 = [NSDate dateWithTimeIntervalSince1970:1519851600000];
-    NSDictionary* propertiesDate = @{@"timestamp" : testDate2};
-    [testLibrary trackLevel:5 properties:propertiesDate];
-    NSDictionary* resultsDate = [eventStack lastObject];
-    XCTAssertTrue([[resultsDate objectForKey:@"action"] isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([[resultsDate objectForKey:@"level"] intValue] == 5, @"Invalid level");
-    XCTAssertTrue([[resultsDate objectForKey:@"userTime"] unsignedLongLongValue] == (unsigned long long)[testDate2 timeIntervalSince1970] * 1000.0, @"Invalid custom date");
     
     // test Date as wrong argument
     NSString* testDate3 = @"2018.04.10 12:00";
