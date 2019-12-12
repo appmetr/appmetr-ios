@@ -340,7 +340,7 @@ extern TrackingManager *gSharedManager;
         [updatedTrackProperties removeObjectForKey:@"properties"];
     NSString* userIdentity = mSessionData.userIdentity;
     if(userIdentity != nil && userIdentity.length > 0)
-        [updatedTrackProperties setObject:userIdentity forKey:@"userId"];
+        [updatedTrackProperties setObject:userIdentity forKey:@"serverUserId"];
     [Utils convertDateToLong:updatedTrackProperties];
 
     @synchronized (mEventStack) {
@@ -552,13 +552,15 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)identify:(NSString *)userId {
-    mSessionData.userIdentity = userId;
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionIdentify
                forKey:kActionKeyName];
+    [action setObject:userId
+               forKey:@"userId"];
 
     [self track:action];
     [self flushAndUploadAllEvents];
+    mSessionData.userIdentity = userId;
 }
 
 - (void)attachEntityAttributesForName:(NSString*)name value:(NSString*)value withProperies:(NSDictionary*)properties {
