@@ -44,3 +44,4 @@ NSString *const kPreferencesFirstTrackSessionKeyName = @"AppMetr-FirstTrackSessi
 NSString *const kPreferencesSessionDuration = @"AppMetr-SessionDuration";
 NSString *const kPreferencesSessionDurationCurrent = @"AppMetr-SessionDurationCurrent";
 NSString *const kPreferencesUniqueInstanceIdentifierKeyName = @"AppMetr-UniqueInstanceIdentifier";
+NSString *const kPreferencesUserIdentity = @"AppMetr-UserIdentity";
