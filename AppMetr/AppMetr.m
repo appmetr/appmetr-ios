@@ -53,6 +53,14 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackSessionWithProperties:properties];
 }
 
++ (void)trackLevel:(int)level {
+    [[AppMetr sharedManager] trackLevel:level];
+}
+
++ (void)trackLevel:(int)level properties:(NSDictionary *)properties {
+    [[AppMetr sharedManager] trackLevel:level properties:properties];
+}
+
 + (void)trackEvent:(NSString *)trackEvent {
     [[AppMetr sharedManager] trackEvent:trackEvent];
 }

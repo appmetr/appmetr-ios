@@ -85,6 +85,16 @@
 - (void)trackSessionWithProperties:(NSDictionary *)properties;
 
 /**
+ * Registering when the player receive next level.
+ */
+- (void)trackLevel:(int)level;
+
+/**
+ * Registering when the player receive next level.
+ */
+- (void)trackLevel:(int)level properties:(NSDictionary *)properties;
+
+/**
  * Registering custom event
  */
 - (void)trackEvent:(NSString *)event;

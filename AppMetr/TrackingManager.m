@@ -427,6 +427,26 @@ extern TrackingManager *gSharedManager;
     }
 }
 
+//Track level
+- (void)trackLevel:(int)level {
+    NSMutableDictionary *action = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+            kActionTrackLevel, kActionKeyName,
+            [NSNumber numberWithInt:level], @"level", nil];
+    [self track:action];
+}
+
+- (void)trackLevel:(int)level properties:(NSDictionary *)properties {
+    NSMutableDictionary *action = [NSMutableDictionary dictionary];
+    [action setObject:kActionTrackLevel
+               forKey:kActionKeyName];
+    [action setObject:[NSNumber numberWithInt:level]
+               forKey:@"level"];
+    [action setObject:properties
+               forKey:kActionPropertiesKeyName];
+
+    [self track:action];
+}
+
 //Track event
 - (void)trackEvent:(NSString *)event {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];

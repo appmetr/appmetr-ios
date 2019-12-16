@@ -18,6 +18,7 @@ NSString *const kAppMetrVersionString = @"1.16.0";
 NSString *const kActionKeyName = @"action";
 NSString *const kActionAttachProperties = @"attachProperties";
 NSString *const kActionTrackSession = @"trackSession";
+NSString *const kActionTrackLevel = @"trackLevel";
 NSString *const kActionTrackEvent = @"trackEvent";
 NSString *const kActionTrackPayment = @"trackPayment";
 NSString *const kActionPropertiesKeyName = @"properties";

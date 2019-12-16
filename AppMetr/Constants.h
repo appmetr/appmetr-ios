@@ -28,6 +28,7 @@ extern NSString *const kAppMetrVersionString;
 extern NSString *const kActionKeyName;
 extern NSString *const kActionAttachProperties;
 extern NSString *const kActionTrackSession;
+extern NSString *const kActionTrackLevel;
 extern NSString *const kActionTrackEvent;
 extern NSString *const kActionTrackPayment;
 extern NSString *const kActionPropertiesKeyName;

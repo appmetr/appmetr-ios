@@ -46,6 +46,9 @@
     [AppMetr trackSession];
     [AppMetr trackSessionWithProperties:properties];
 
+    [AppMetr trackLevel:1];
+    [AppMetr trackLevel:1 properties:properties];
+
     [AppMetr trackEvent:@"test"];
     [AppMetr trackEvent:@"test" properties:properties];
 

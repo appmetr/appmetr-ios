@@ -40,6 +40,8 @@
     properties = [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger:80] forKey:@"level"];
     [testLibrary trackSessionWithProperties:properties];
 
+    properties = [NSDictionary dictionaryWithObject:@"blue" forKey:@"abGroup"];
+    [testLibrary trackLevel:81 properties:properties];
     [testLibrary trackEvent:@"test/test"];
 
     [testLibrary dirtyFlushData];
@@ -49,6 +51,8 @@
     [testLibrary attachProperties:properties];
     [testLibrary trackSession];
 
+    properties = [NSDictionary dictionaryWithObject:@"green" forKey:@"abGroup"];
+    [testLibrary trackLevel:82 properties:properties];
     [testLibrary trackEvent:@"test/test2"];
 
     [testLibrary dirtyFlushData];
