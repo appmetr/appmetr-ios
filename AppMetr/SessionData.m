@@ -21,6 +21,7 @@
 @synthesize sessionDuration = mSessionDuration;
 @synthesize sessionDurationCurrent = mSessionDurationCurrent;
 @synthesize uploadList = mUploadList;
+@synthesize userIdentity = mUserIdentity;
 
 #pragma mark - Initializing
 
@@ -37,6 +38,7 @@
         mIsFirstTrackSessionSent = [[preferences objectForKey:kPreferencesFirstTrackSessionKeyName] boolValue];
         mSessionDuration = [[preferences objectForKey:kPreferencesSessionDuration] longValue];
         mSessionDurationCurrent = [[preferences objectForKey:kPreferencesSessionDurationCurrent] longValue];
+        mUserIdentity = [preferences objectForKey:kPreferencesUserIdentity];
 
         if (!mFileList) {
             mFileList = [[NSMutableArray alloc] init];
@@ -92,6 +94,13 @@
 - (void)setSessionDurationCurrent:(long)sessionDurationCurrent {
     [SessionData setPreferences:[NSNumber numberWithLong:sessionDurationCurrent] forKey:kPreferencesSessionDurationCurrent];
     mSessionDurationCurrent = sessionDurationCurrent;
+}
+
+- (void)setUserIdentity:(NSString *)userIdentity
+{
+    if(mUserIdentity != nil && [mUserIdentity isEqualToString:userIdentity]) return;
+    [SessionData setPreferences:userIdentity ?: @"" forKey:kPreferencesUserIdentity];
+    mUserIdentity = userIdentity;
 }
 
 #pragma mark - Class methods

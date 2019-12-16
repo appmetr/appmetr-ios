@@ -14,6 +14,7 @@
     BOOL mIsFirstTrackSessionSent;
     long mSessionDuration;
     long mSessionDurationCurrent;
+    NSString* mUserIdentity;
 }
 
 /** The current batch index */
@@ -31,7 +32,9 @@
 /** Duration of current session */
 @property(nonatomic, readwrite) long sessionDurationCurrent;
 /** The list of event date for direct upload */
-@property(nonatomic, readwrite) NSMutableArray *uploadList;
+@property(nonatomic, readwrite, retain) NSMutableArray *uploadList;
+/** User identifier for all events*/
+@property(nonatomic, readwrite, copy) NSString *userIdentity;
 
 /** Returns the index of new batch */
 - (NSUInteger)nextBatchIndex;
