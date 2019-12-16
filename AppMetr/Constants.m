@@ -23,7 +23,6 @@ NSString *const kActionTrackEvent = @"trackEvent";
 NSString *const kActionTrackPayment = @"trackPayment";
 NSString *const kActionPropertiesKeyName = @"properties";
 NSString *const kActionVersionKeyName = @"$version";
-NSString *const kActionTrackExperiment = @"trackExperiment";
 NSString *const kActionTrackState = @"trackState";
 NSString *const kActionIdentify = @"identify";
 NSString *const kActionAttachEntityAttributes = @"attachEntityAttributes";

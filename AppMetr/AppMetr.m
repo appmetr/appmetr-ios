@@ -77,14 +77,6 @@ TrackingManager *gSharedManager = nil;
     [[AppMetr sharedManager] trackPayment:payment properties:properties];
 }
 
-+ (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
-    [[AppMetr sharedManager] trackExperimentStart:experiment group:group];
-}
-
-+ (void)trackExperimentEnd:(NSString *)experiment {
-    [[AppMetr sharedManager] trackExperimentEnd:experiment];
-}
-
 + (void)trackState:(NSDictionary *)state {
     [[AppMetr sharedManager] trackState:state];
 }

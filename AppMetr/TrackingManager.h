@@ -115,16 +115,6 @@
 - (void)trackPayment:(NSDictionary *)payment properties:(NSDictionary *)properties;
 
 /**
-* Registering start of experiment
-*/
-- (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group;
-
-/**
-* Registering end of experiment
-*/
-- (void)trackExperimentEnd:(NSString *)experiment;
-
-/**
 * Registering user state
 */
 - (void)trackState:(NSDictionary *)state;

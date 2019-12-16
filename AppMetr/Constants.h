@@ -34,7 +34,6 @@ extern NSString *const kActionTrackPayment;
 extern NSString *const kActionPropertiesKeyName;
 extern NSString *const kActionVersionKeyName;
 extern NSString *const kActionTrackInstall;
-extern NSString *const kActionTrackExperiment;
 extern NSString *const kActionTrackState;
 extern NSString *const kActionIdentify;
 extern NSString *const kActionAttachEntityAttributes;

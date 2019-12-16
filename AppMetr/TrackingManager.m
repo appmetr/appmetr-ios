@@ -493,32 +493,6 @@ extern TrackingManager *gSharedManager;
     [self track:action];
 }
 
-- (void)trackExperimentStart:(NSString *)experiment group:(NSString *)group {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackExperiment
-               forKey:kActionKeyName];
-    [action setObject:@"ON"
-               forKey:@"status"];
-    [action setObject:experiment
-               forKey:@"experiment"];
-    [action setObject:group
-               forKey:@"group"];
-
-    [self track:action];
-}
-
-- (void)trackExperimentEnd:(NSString *)experiment {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackExperiment
-               forKey:kActionKeyName];
-    [action setObject:@"END"
-               forKey:@"status"];
-    [action setObject:experiment
-               forKey:@"experiment"];
-
-    [self track:action];
-}
-
 - (void)trackState:(NSDictionary *)state {
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionTrackState
