@@ -11,7 +11,7 @@ NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
 NSUInteger const kUploadInMemoryCount = 30; // max batch count for direct upload
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.16.0";
+NSString *const kAppMetrVersionString = @"1.17.0";
 
 // Generic constants
 
@@ -43,3 +43,4 @@ NSString *const kPreferencesFirstTrackSessionKeyName = @"AppMetr-FirstTrackSessi
 NSString *const kPreferencesSessionDuration = @"AppMetr-SessionDuration";
 NSString *const kPreferencesSessionDurationCurrent = @"AppMetr-SessionDurationCurrent";
 NSString *const kPreferencesUniqueInstanceIdentifierKeyName = @"AppMetr-UniqueInstanceIdentifier";
+NSString *const kPreferencesUserIdentity = @"AppMetr-UserIdentity";
