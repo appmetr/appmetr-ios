@@ -38,7 +38,7 @@
         mIsFirstTrackSessionSent = [[preferences objectForKey:kPreferencesFirstTrackSessionKeyName] boolValue];
         mSessionDuration = [[preferences objectForKey:kPreferencesSessionDuration] longValue];
         mSessionDurationCurrent = [[preferences objectForKey:kPreferencesSessionDurationCurrent] longValue];
-        mUserIdentity = [preferences objectForKey:kPreferencesUserIdentity];
+        mUserIdentity = [[preferences objectForKey:kPreferencesUserIdentity] copy];
 
         if (!mFileList) {
             mFileList = [[NSMutableArray alloc] init];
@@ -100,7 +100,7 @@
 {
     if(mUserIdentity != nil && [mUserIdentity isEqualToString:userIdentity]) return;
     [SessionData setPreferences:userIdentity ?: @"" forKey:kPreferencesUserIdentity];
-    mUserIdentity = userIdentity;
+    mUserIdentity = [userIdentity copy];
 }
 
 #pragma mark - Class methods
