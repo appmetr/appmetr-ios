@@ -18,7 +18,6 @@ NSString *const kAppMetrVersionString = @"1.17.3";
 NSString *const kActionKeyName = @"action";
 NSString *const kActionAttachProperties = @"attachProperties";
 NSString *const kActionTrackSession = @"trackSession";
-NSString *const kActionTrackLevel = @"trackLevel";
 NSString *const kActionTrackEvent = @"trackEvent";
 NSString *const kActionTrackPayment = @"trackPayment";
 NSString *const kActionPropertiesKeyName = @"properties";
@@ -33,6 +32,7 @@ NSString *const kActionCountryKeyName = @"$country";
 NSString *const kActionLanguageKeyName = @"$language";
 NSString *const kActionLocaleKeyName = @"$locale";
 NSString *const kSessionDurationKeyName = @"$duration";
+NSString *const kActionLevelKeyName = @"$level";
 
 NSString *const kPreferencesBatchNumberKeyName = @"AppMetr-BatchID";
 NSString *const kPreferencesFileIndexKeyName = @"AppMetr-FileIndex";

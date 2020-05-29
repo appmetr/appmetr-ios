@@ -432,22 +432,15 @@ extern TrackingManager *gSharedManager;
 
 //Track level
 - (void)trackLevel:(int)level {
-    NSMutableDictionary *action = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            kActionTrackLevel, kActionKeyName,
-            [NSNumber numberWithInt:level], @"level", nil];
-    [self track:action];
+    NSDictionary *properties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithInt:level], kActionLevelKeyName, nil];
+    [self attachProperties:properties];
 }
 
 - (void)trackLevel:(int)level properties:(NSDictionary *)properties {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackLevel
-               forKey:kActionKeyName];
-    [action setObject:[NSNumber numberWithInt:level]
-               forKey:@"level"];
-    [action setObject:properties
-               forKey:kActionPropertiesKeyName];
-
-    [self track:action];
+    NSMutableDictionary *mutableProperties = properties == nil ? [NSMutableDictionary dictionary] : [properties mutableCopy];
+    [mutableProperties setObject:[NSNumber numberWithInt:level] forKey:kActionLevelKeyName];
+    [self attachProperties:mutableProperties];
 }
 
 //Track event

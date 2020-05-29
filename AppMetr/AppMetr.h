@@ -45,12 +45,12 @@ extern NSString *const kAppmetrPropertyUsertime;
 /**
  * Registering when the player receive next level.
  */
-+ (void)trackLevel:(int)level;
++ (void)trackLevel:(int)level __deprecated;
 
 /**
  * Registering when the player receive next level.
  */
-+ (void)trackLevel:(int)level properties:(NSDictionary *)properties;
++ (void)trackLevel:(int)level properties:(NSDictionary *)properties __deprecated;
 
 /**
  * Registering custom event
