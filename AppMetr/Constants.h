@@ -28,7 +28,6 @@ extern NSString *const kAppMetrVersionString;
 extern NSString *const kActionKeyName;
 extern NSString *const kActionAttachProperties;
 extern NSString *const kActionTrackSession;
-extern NSString *const kActionTrackLevel;
 extern NSString *const kActionTrackEvent;
 extern NSString *const kActionTrackPayment;
 extern NSString *const kActionPropertiesKeyName;
@@ -44,6 +43,7 @@ extern NSString *const kActionCountryKeyName;
 extern NSString *const kActionLanguageKeyName;
 extern NSString *const kActionLocaleKeyName;
 extern NSString *const kSessionDurationKeyName;
+extern NSString *const kActionLevelKeyName;
 
 extern NSString *const kPreferencesBatchNumberKeyName;
 extern NSString *const kPreferencesFileIndexKeyName;

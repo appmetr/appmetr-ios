@@ -196,40 +196,6 @@
     [testLibrary release];
 }
 
-- (void)testTrackLevel {
-    TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
-    NSArray *eventStack = [testLibrary getDirtyEventStack];
-
-    // test 1
-    [testLibrary trackLevel:81];
-    NSDictionary *action1 = [eventStack lastObject];
-
-    NSString *actionName = [action1 objectForKey:@"action"];
-    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([action1 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-
-    NSNumber *level1 = [action1 objectForKey:@"level"];
-    XCTAssertTrue([level1 intValue] == 81, @"Invalid level");
-
-
-    // test 2
-    [testLibrary trackLevel:98
-                 properties:[self anyProperties]];
-    NSDictionary *action2 = [eventStack lastObject];
-
-    actionName = [action2 objectForKey:@"action"];
-    XCTAssertTrue([actionName isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([action2 objectForKey:@"timestamp"] != nil, @"Missing timestamp");
-
-    NSNumber *level2 = [action2 objectForKey:@"level"];
-    XCTAssertTrue([level2 intValue] == 98, @"Invalid level");
-
-    NSString *propertyValue = [[action2 objectForKey:@"properties"] objectForKey:@"prop-key"];
-    XCTAssertTrue([propertyValue isEqualToString:@"prop-value"], @"Invalie property value");
-
-    [testLibrary release];
-}
-
 - (void)testTrackEvent {
     TrackingManager *testLibrary = [[TrackingManager alloc] initAndStopThread];
     NSArray *eventStack = [testLibrary getDirtyEventStack];
@@ -469,10 +435,9 @@
     // test Date as Date
     NSDate* testDate2 = [NSDate dateWithTimeIntervalSince1970:1519851600000];
     NSDictionary* propertiesDate = @{@"timestamp" : testDate2};
-    [testLibrary trackLevel:5 properties:propertiesDate];
+    [testLibrary attachProperties:propertiesDate];
     NSDictionary* resultsDate = [eventStack lastObject];
-    XCTAssertTrue([[resultsDate objectForKey:@"action"] isEqualToString:@"trackLevel"], @"Invalid action");
-    XCTAssertTrue([[resultsDate objectForKey:@"level"] intValue] == 5, @"Invalid level");
+    XCTAssertTrue([[resultsDate objectForKey:@"action"] isEqualToString:@"attachProperties"], @"Invalid action");
     XCTAssertTrue([[resultsDate objectForKey:@"userTime"] unsignedLongLongValue] == (unsigned long long)[testDate2 timeIntervalSince1970] * 1000.0, @"Invalid custom date");
     
     // test Date as wrong argument

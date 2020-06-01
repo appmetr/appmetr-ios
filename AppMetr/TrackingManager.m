@@ -355,38 +355,7 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)attachProperties:(NSDictionary *)properties {
-    NSMutableDictionary *userProperties;
-    if (properties != nil)
-        userProperties = [properties mutableCopy];
-    else
-        userProperties = [[NSMutableDictionary alloc] init];
-
-    [userProperties setObject:mVersion forKey:kActionVersionKeyName];
-
-    if ([userProperties objectForKey:kActionCountryKeyName] == nil) {
-        NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
-        if (country) {
-            [userProperties setObject:country
-                               forKey:kActionCountryKeyName];
-        }
-    }
-    
-    if ([userProperties objectForKey:kActionLanguageKeyName] == nil || [userProperties objectForKey:kActionLocaleKeyName] == nil) {
-        NSString* language = [NSLocale preferredLanguages].count > 0 ?[[NSLocale preferredLanguages] objectAtIndex:0] : nil;
-        NSString* locale = [[NSLocale currentLocale] localeIdentifier];
-        if(language) {
-            locale = [language stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
-            language = [[NSLocale componentsFromLocaleIdentifier:language] objectForKey:NSLocaleLanguageCode];
-        }
-        if (language && [userProperties objectForKey:kActionLanguageKeyName] == nil) {
-            [userProperties setObject:language
-                               forKey:kActionLanguageKeyName];
-        }
-        if(locale && [userProperties objectForKey:kActionLocaleKeyName] == nil) {
-            [userProperties setObject:locale forKey:kActionLocaleKeyName];
-        }
-    }
-
+    NSMutableDictionary *userProperties = [self fillProperties:properties];
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionAttachProperties forKey:kActionKeyName];
     [action setObject:userProperties forKey:kActionPropertiesKeyName];
@@ -406,8 +375,7 @@ extern TrackingManager *gSharedManager;
     [action setObject:kActionTrackSession
                forKey:kActionKeyName];
     
-    NSMutableDictionary *mutableProperties = [NSMutableDictionary dictionaryWithDictionary:properties];
-    
+    NSMutableDictionary *mutableProperties = [self fillProperties:properties];
     long duration = [mSessionData sessionDuration];
     [mSessionData setSessionDuration:0];
     //Set -1 for first session or 0-duration session (only tracking params)
@@ -432,22 +400,15 @@ extern TrackingManager *gSharedManager;
 
 //Track level
 - (void)trackLevel:(int)level {
-    NSMutableDictionary *action = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            kActionTrackLevel, kActionKeyName,
-            [NSNumber numberWithInt:level], @"level", nil];
-    [self track:action];
+    NSDictionary *properties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithInt:level], kActionLevelKeyName, nil];
+    [self attachProperties:properties];
 }
 
 - (void)trackLevel:(int)level properties:(NSDictionary *)properties {
-    NSMutableDictionary *action = [NSMutableDictionary dictionary];
-    [action setObject:kActionTrackLevel
-               forKey:kActionKeyName];
-    [action setObject:[NSNumber numberWithInt:level]
-               forKey:@"level"];
-    [action setObject:properties
-               forKey:kActionPropertiesKeyName];
-
-    [self track:action];
+    NSMutableDictionary *mutableProperties = properties == nil ? [NSMutableDictionary dictionary] : [properties mutableCopy];
+    [mutableProperties setObject:[NSNumber numberWithInt:level] forKey:kActionLevelKeyName];
+    [self attachProperties:mutableProperties];
 }
 
 //Track event
@@ -606,6 +567,35 @@ extern TrackingManager *gSharedManager;
     long currentDuration = mSessionData.sessionDurationCurrent;
     mSessionData.sessionDuration = currentDuration;
     mSessionData.sessionDurationCurrent = 0;
+}
+
+- (NSMutableDictionary*)fillProperties:(NSDictionary*)properties
+{
+    NSMutableDictionary *mutableProperties = properties != nil ? [properties mutableCopy] : [NSMutableDictionary dictionary];
+    [mutableProperties setObject:mVersion forKey:kActionVersionKeyName];
+
+    if ([mutableProperties objectForKey:kActionCountryKeyName] == nil) {
+        NSString *country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+        if (country) {
+            [mutableProperties setObject:country forKey:kActionCountryKeyName];
+        }
+    }
+    
+    if ([mutableProperties objectForKey:kActionLanguageKeyName] == nil || [mutableProperties objectForKey:kActionLocaleKeyName] == nil) {
+        NSString* language = [NSLocale preferredLanguages].count > 0 ?[[NSLocale preferredLanguages] objectAtIndex:0] : nil;
+        NSString* locale = [[NSLocale currentLocale] localeIdentifier];
+        if(language) {
+            locale = [language stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+            language = [[NSLocale componentsFromLocaleIdentifier:language] objectForKey:NSLocaleLanguageCode];
+        }
+        if (language && [mutableProperties objectForKey:kActionLanguageKeyName] == nil) {
+            [mutableProperties setObject:language forKey:kActionLanguageKeyName];
+        }
+        if(locale && [mutableProperties objectForKey:kActionLocaleKeyName] == nil) {
+            [mutableProperties setObject:locale forKey:kActionLocaleKeyName];
+        }
+    }
+    return mutableProperties;
 }
 
 #pragma mark - Testing methods

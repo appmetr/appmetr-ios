@@ -11,14 +11,13 @@ NSTimeInterval const kSessionMaxPauseState = 600.0; // 10 minutes
 NSUInteger const kUploadInMemoryCount = 30; // max batch count for direct upload
 
 NSString *const kAppMetrDefaultUrl = @"https://appmetr.com/api";
-NSString *const kAppMetrVersionString = @"1.17.3";
+NSString *const kAppMetrVersionString = @"1.18.0";
 
 // Generic constants
 
 NSString *const kActionKeyName = @"action";
 NSString *const kActionAttachProperties = @"attachProperties";
 NSString *const kActionTrackSession = @"trackSession";
-NSString *const kActionTrackLevel = @"trackLevel";
 NSString *const kActionTrackEvent = @"trackEvent";
 NSString *const kActionTrackPayment = @"trackPayment";
 NSString *const kActionPropertiesKeyName = @"properties";
@@ -33,6 +32,7 @@ NSString *const kActionCountryKeyName = @"$country";
 NSString *const kActionLanguageKeyName = @"$language";
 NSString *const kActionLocaleKeyName = @"$locale";
 NSString *const kSessionDurationKeyName = @"$duration";
+NSString *const kActionLevelKeyName = @"$level";
 
 NSString *const kPreferencesBatchNumberKeyName = @"AppMetr-BatchID";
 NSString *const kPreferencesFileIndexKeyName = @"AppMetr-FileIndex";
