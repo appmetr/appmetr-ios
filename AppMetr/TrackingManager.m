@@ -359,10 +359,7 @@ extern TrackingManager *gSharedManager;
     NSMutableDictionary *action = [NSMutableDictionary dictionary];
     [action setObject:kActionAttachProperties forKey:kActionKeyName];
     [action setObject:userProperties forKey:kActionPropertiesKeyName];
-
     [self track:action];
-
-    [userProperties release];
 }
 
 //Track session

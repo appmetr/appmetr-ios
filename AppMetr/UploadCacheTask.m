@@ -12,23 +12,23 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
 
 @interface UploadCacheTask() <NSURLSessionDataDelegate>
 
-+(void)load;
 @property (readonly, getter=backgroundSession) NSURLSession* backgroundSession;
 
 @end
 
 @implementation UploadCacheTask
 
-static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
-
 @synthesize sessionData, logging;
 
-+(void)load
++(NSMutableDictionary<NSNumber*, NSString*>*)sharedAppmetrUploadTasks
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        appmetrUploadTasks = [[NSMutableDictionary alloc] init];
-    });
+    static NSMutableDictionary<NSNumber*, NSString*>* _sharedAppmetrUploadTasks = nil;
+    @synchronized (self) {
+        if(_sharedAppmetrUploadTasks == nil) {
+            _sharedAppmetrUploadTasks = [[NSMutableDictionary alloc] init];
+        }
+    }
+    return _sharedAppmetrUploadTasks;
 }
 
 -(instancetype)initWithSession:(SessionData *)session
@@ -66,7 +66,7 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
 -(void)processFile:(NSString*)fileName withAddress:(NSString*)address
 {
     // check if task already exists
-    if([appmetrUploadTasks.allValues containsObject:fileName])
+    if([[UploadCacheTask sharedAppmetrUploadTasks].allValues containsObject:fileName])
         return;
     
     NSError* error = nil;
@@ -90,7 +90,7 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     NSURLSessionDataTask* task = [self.backgroundSession uploadTaskWithRequest:request fromFile:[NSURL fileURLWithPath:fileName]];
-    appmetrUploadTasks[[self getIdForTask:task]] = fileName;
+    [UploadCacheTask sharedAppmetrUploadTasks][[self getIdForTask:task]] = fileName;
     [task resume];
 }
 
@@ -215,7 +215,7 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
     if (error) {
         NSLog(@"Network error: %@", error.localizedDescription);
     }
-    [appmetrUploadTasks removeObjectForKey:[self getIdForTask:task]];
+    [[UploadCacheTask sharedAppmetrUploadTasks] removeObjectForKey:[self getIdForTask:task]];
 }
 
 #pragma mark - Private functions
@@ -228,8 +228,8 @@ static NSMutableDictionary<NSNumber*, NSString*>* appmetrUploadTasks;
 - (NSString*)fileNameForTask:(NSURLSessionTask*)task
 {
     id taskId = [self getIdForTask:task];
-    if([appmetrUploadTasks objectForKey:taskId])
-        return appmetrUploadTasks[taskId];
+    if([[UploadCacheTask sharedAppmetrUploadTasks] objectForKey:taskId])
+        return [UploadCacheTask sharedAppmetrUploadTasks][taskId];
     else
         return nil;
 }

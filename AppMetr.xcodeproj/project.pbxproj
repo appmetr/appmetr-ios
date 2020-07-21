@@ -536,7 +536,7 @@
 						TestTargetID = D26B22C917C4E9BD0062B852;
 					};
 					D26B22C917C4E9BD0062B852 = {
-						DevelopmentTeam = 4LURLURZHS;
+						DevelopmentTeam = P3Y7DAS287;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -817,7 +817,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11800;
+				CURRENT_PROJECT_VERSION = 11801;
+				DEVELOPMENT_TEAM = P3Y7DAS287;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -826,9 +827,11 @@
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Sample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MARKETING_VERSION = 1.18.0;
+				MARKETING_VERSION = 1.18.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.keystorm.platformtest;
 				PRODUCT_NAME = test;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = com.keystorm.platformtest;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -840,7 +843,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11800;
+				CURRENT_PROJECT_VERSION = 11801;
+				DEVELOPMENT_TEAM = P3Y7DAS287;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -849,10 +853,12 @@
 				GCC_PREFIX_HEADER = "Sample/Sample-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Sample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MARKETING_VERSION = 1.18.0;
+				MARKETING_VERSION = 1.18.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_BUNDLE_IDENTIFIER = com.keystorm.platformtest;
 				PRODUCT_NAME = test;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = com.keystorm.platformtest;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
