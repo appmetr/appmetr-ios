@@ -5,8 +5,6 @@
 
 // Library configuration
 
-#define ENABLDE_DEVICE_UNIQUE_IDENTIFIER 0
-
 /* Max size of a batch on default. Size of created files should not exceed this value. */
 extern NSUInteger const kDefaultBatchFileMaxSize;
 /** Max size of token for application. */

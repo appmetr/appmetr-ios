@@ -9,6 +9,4 @@
 /** This method retruns the hardware type */
 + (NSString *)hardwareString;
 
-/** This method returns the readable description of hardware string */
-+ (NSString *)hardwareDescription;
 @end
