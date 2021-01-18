@@ -47,23 +47,31 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
         NSLog(@"Session data is null. Upload canceled");
         return;
     }
-    
-    NSArray* fileList;
-    NSArray* uploadList;
+    NSURL *url = [NSURL URLWithString:address];
+    [self uploadWithUrl:url];
+}
+
+-(void)uploadWithUrl:(NSURL*)url
+{
+    NSString* fileName;
     @synchronized (self.sessionData) {
-        fileList = [self.sessionData.fileList mutableCopy];
-        uploadList = [self.sessionData.uploadList mutableCopy];
+        fileName = self.sessionData.fileList.firstObject;
     }
-    
-    for (NSString* filePath in fileList) {
-        [self processFile:filePath withAddress:address];
+    if(fileName != nil && fileName.length > 0) {
+        [self processFile:fileName withUrl:url];
+        return;
     }
-    for(NSData* uploadData in uploadList) {
-        [self processData:uploadData withAddress:address];
+    NSData* uploadData;
+    @synchronized (self.sessionData) {
+        uploadData = self.sessionData.uploadList.firstObject;
+    }
+    if(uploadData != nil && uploadData.length > 0) {
+        [self processData:uploadData withUrl:url];
+        return;
     }
 }
 
--(void)processFile:(NSString*)fileName withAddress:(NSString*)address
+-(void)processFile:(NSString*)fileName withUrl:(NSURL*)url
 {
     // check if task already exists
     if([[UploadCacheTask sharedAppmetrUploadTasks].allValues containsObject:fileName])
@@ -82,10 +90,10 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
                 [self.sessionData saveFileList];
             }
         }
+        [self uploadWithUrl:url];
         return;
     }
     
-    NSURL *url = [NSURL URLWithString:address];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
@@ -94,10 +102,8 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
     [task resume];
 }
 
--(void)processData:(NSData*)uploadData withAddress:(NSString*)address
+-(void)processData:(NSData*)uploadData withUrl:(NSURL*)url
 {
-    if(uploadData == nil || uploadData.length == 0) return;
-    NSURL *url = [NSURL URLWithString:address];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
@@ -131,6 +137,7 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
                                 [self.sessionData.uploadList removeObject:uploadData];
                             }
                         }
+                        [self uploadWithUrl:url];
                     }
                 }
             }
@@ -146,11 +153,8 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
     static NSURLSession *session = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURLSessionConfiguration *sessionConfiguration;
-        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-            sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kAppmetrBackgroundSessionIdentifier];
-        else
-            sessionConfiguration = [NSURLSessionConfiguration backgroundSessionConfiguration:kAppmetrBackgroundSessionIdentifier];
+        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration
+                                                           backgroundSessionConfigurationWithIdentifier:kAppmetrBackgroundSessionIdentifier];
         sessionConfiguration.sessionSendsLaunchEvents = NO;
         sessionConfiguration.allowsCellularAccess = YES;
         sessionConfiguration.HTTPMaximumConnectionsPerHost = 1;
@@ -200,6 +204,10 @@ NSString *const kAppmetrBackgroundSessionIdentifier = @"com.appmetr.BackgroundSe
                                 [self.sessionData saveFileList];
                             }
                         }
+                    }
+                    NSURLRequest* taskRequest = dataTask.originalRequest;
+                    if(taskRequest != nil && taskRequest.URL != nil) {
+                        [self uploadWithUrl:taskRequest.URL];
                     }
                 }
             }
