@@ -6,7 +6,6 @@
 #import "Utils.h"
 #import "Constants.h"
 #import "CJSONDeserializer.h"
-#import "PAM_OpenUDID.h"
 #import "JSONException.h"
 #import "ServerError.h"
 #import "UIDeviceUtil.h"
@@ -122,11 +121,6 @@
 {
     NSString* requestParameters = @"";
     {
-        NSString *value = [PAM_OpenUDID value];
-        if (value != NULL)
-            requestParameters = [requestParameters stringByAppendingFormat:@"&mobOpenUDID=%@", useHashes ? [self getHashForStr:value] : value];
-    }
-    {
         NSString *value = [UIDeviceUtil hardwareString];
         if (value != NULL)
             requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", value];
@@ -138,16 +132,6 @@
         if (value != NULL)
             requestParameters = [requestParameters stringByAppendingFormat:@"&mobMac=%@", useHashes ? [self getHashForStr:value] : value];
     }
-    
-#if ENABLDE_DEVICE_UNIQUE_IDENTIFIER
-    // add device uniqueIdentifier
-    if([device respondsToSelector:@selector(uniqueIdentifier)])
-    {
-        NSString *uniqueIdentifier = [device performSelector:@selector(uniqueIdentifier)];
-        if(uniqueIdentifier != nil && uniqueIdentifier.length > 0)
-            requestParameters = [requestParameters stringByAppendingFormat:@"&mobUDID=%@", useHashes ? [self getHashForStr:uniqueIdentifier] : uniqueIdentifier];
-    }
-#endif
     
     if ([device respondsToSelector:@selector(identifierForVendor)]) {
         NSUUID *identifierForVendor = [device performSelector:@selector(identifierForVendor)];
