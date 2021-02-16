@@ -431,4 +431,20 @@
     return [NSString stringWithUTF8String:resultStr];
 }
 
++ (NSInteger)convertObjectToInt:(id)object
+{
+    if ([object isKindOfClass:[NSNumber class]]) {
+      return ((NSNumber *)object).integerValue;
+    } else if ([object isKindOfClass:[NSString class]]) {
+      return ((NSString *)object).integerValue;
+    } else {
+      return 0;
+    }
+}
+
++ (NSDictionary *)convertObjectToDict:(id)object
+{
+    return (NSDictionary *)([object isKindOfClass:[NSDictionary class]] ? object : nil);
+}
+
 @end

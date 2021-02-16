@@ -55,3 +55,4 @@ extern NSString *const kPreferencesSessionDuration;
 extern NSString *const kPreferencesSessionDurationCurrent;
 extern NSString *const kPreferencesUniqueInstanceIdentifierKeyName;
 extern NSString *const kPreferencesUserIdentity;
+extern NSString *const kPreferencesConversionValue;
