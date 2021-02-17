@@ -15,6 +15,7 @@
     long mSessionDuration;
     long mSessionDurationCurrent;
     NSString* mUserIdentity;
+    NSInteger mConversionValue;
 }
 
 /** The current batch index */
@@ -35,6 +36,8 @@
 @property(nonatomic, readwrite, retain) NSMutableArray *uploadList;
 /** User identifier for all events*/
 @property(nonatomic, readwrite, copy) NSString *userIdentity;
+/** Last tracked conversion value */
+@property(nonatomic, readwrite) NSInteger conversionValue;
 
 /** Returns the index of new batch */
 - (NSUInteger)nextBatchIndex;

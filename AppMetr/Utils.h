@@ -60,4 +60,8 @@
 
 + (BOOL)convertDateToLong:(NSMutableDictionary*)data;
 
++ (NSInteger)convertObjectToInt:(id)object;
+
++ (NSDictionary *)convertObjectToDict:(id)object;
+
 @end

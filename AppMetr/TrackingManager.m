@@ -241,6 +241,7 @@ extern TrackingManager *gSharedManager;
 }
 
 - (void)flushData {
+    [self checkConversionValue];
     NSData *chunk = nil;
     @synchronized (mEventStack) {
         if ([mEventStack count]) {
@@ -593,6 +594,26 @@ extern TrackingManager *gSharedManager;
         }
     }
     return mutableProperties;
+}
+
+- (void)checkConversionValue
+{
+    if (@available(iOS 14.0, *)) {
+        id cachedReportData = [[NSUserDefaults standardUserDefaults] objectForKey:@"com.facebook.sdk:FBSDKSKAdNetworkReporter"];
+        if(cachedReportData == nil || ![cachedReportData isKindOfClass:[NSData class]]) {
+            NSLog(@"Appmetr can't find Facebook cached SKAdNetwork report data");
+            return;
+        }
+        NSDictionary<NSString*, id> *data = [Utils convertObjectToDict:[NSKeyedUnarchiver unarchiveObjectWithData:cachedReportData]];
+        if(data == nil) {
+            NSLog(@"Appmetr can't unarchive Facebook cached SKAdNetwork report data");
+            return;
+        }
+        NSInteger conversionValue = [Utils convertObjectToInt:data[@"conversion_value"]];;
+        if(conversionValue == 0 || conversionValue == mSessionData.conversionValue) return;
+        [self trackEvent:@"SKAdNetwork" properties:@{@"conversion_value":[NSNumber numberWithInteger:conversionValue]}];
+        mSessionData.conversionValue = conversionValue;
+    }
 }
 
 #pragma mark - Testing methods
