@@ -64,4 +64,6 @@
 
 + (NSDictionary *)convertObjectToDict:(id)object;
 
++ (void)getDiskSpaceAvailable:(NSNumber**)availableSpace total:(NSNumber**)totalSpace;
+
 @end
