@@ -447,4 +447,19 @@
     return (NSDictionary *)([object isKindOfClass:[NSDictionary class]] ? object : nil);
 }
 
++ (void) getDiskSpaceAvailable:(NSNumber**) availableSpace total:(NSNumber**) totalSpace
+{
+    NSError *error = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
+
+    if (dictionary) {
+        *availableSpace = [dictionary objectForKey:NSFileSystemFreeSize];
+        *totalSpace = [dictionary objectForKey:NSFileSystemSize];
+    } else {
+        NSLog(@"Failed to obtain disk space: Error Domain = %@ Code = %ld", [error domain], (long)[error code]);
+    }
+}
+
+
 @end

@@ -374,6 +374,12 @@ extern TrackingManager *gSharedManager;
                forKey:kActionKeyName];
     
     NSMutableDictionary *mutableProperties = [self fillProperties:properties];
+    NSNumber* totalDisk = nil;
+    NSNumber* availDisk = nil;
+    [Utils getDiskSpaceAvailable:&availDisk total:&totalDisk];
+    [mutableProperties setValue:totalDisk forKey:@"$diskTotal"];
+    [mutableProperties setValue:availDisk forKey:@"$diskFree"];
+    
     long duration = [mSessionData sessionDuration];
     [mSessionData setSessionDuration:0];
     //Set -1 for first session or 0-duration session (only tracking params)
