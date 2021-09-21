@@ -432,8 +432,10 @@ extern TrackingManager *gSharedManager;
                forKey:kActionKeyName];
     [action setObject:event
                forKey:@"event"];
-    [action setObject:properties
-               forKey:@"properties"];
+    if(properties != nil) {
+        [action setObject:properties
+                   forKey:@"properties"];
+    }
     [self track:action];
 }
 
