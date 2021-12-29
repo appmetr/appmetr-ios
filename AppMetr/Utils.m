@@ -132,13 +132,6 @@
             requestParameters = [requestParameters stringByAppendingFormat:@"&mobDeviceType=%@", value];
     }
     
-    //ntrf: only use MAC-address if it's available and valid
-    {
-        NSString *value = [Utils stringWithDeviceMACAddress];
-        if (value != NULL)
-            requestParameters = [requestParameters stringByAppendingFormat:@"&mobMac=%@", useHashes ? [self getHashForStr:value] : value];
-    }
-    
 #if ENABLDE_DEVICE_UNIQUE_IDENTIFIER
     // add device uniqueIdentifier
     if([device respondsToSelector:@selector(uniqueIdentifier)])
