@@ -37,11 +37,6 @@
 + (NSString *)deviceKeyForToken:(NSString*)token;
 
 /**
- * Returns the local MAC address
- */
-+ (NSString *)stringWithDeviceMACAddress;
-
-/**
  * Compressing the specified data
  */
 + (NSData *)compressData:(NSData *)data;
